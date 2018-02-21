@@ -1,0 +1,43 @@
+<!--
+  written by: McDaniel
+  date:       august 2017
+
+  templated html for Jobs, News and Resume pages.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>News</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="app-background">
+  <ion-refresher (ionRefresh)="refreshData($event)">
+    <ion-refresher-content
+                  pullingIcon="arrow-dropdown"
+                  pullingText="Pull to refresh"
+                  refreshingSpinner="circles"
+                  refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="post">
+    <ion-card>
+      <img src="{{ post.featured_media_url }}">
+      <ion-card-content>
+        <ion-card-title>
+          {{ post.title.rendered }}
+        </ion-card-title>
+        <p class="publish-date">{{ post.date | date:"MMM dd, yyyy" }}</p>
+        <hr />
+        <p class="article" text-wrap [innerHtml]="post.content.rendered | safeHtml"></p>
+      </ion-card-content>
+    </ion-card>
+
+  </div> <!-- *ngIf="posts" -->
+
+  <div *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{ errMess }}</h4>
+  </div>
+</ion-content>

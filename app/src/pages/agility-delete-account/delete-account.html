@@ -1,0 +1,37 @@
+<!--
+  Generated template for the DeleteAccountPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>CLOSE YOUR ACCOUNT</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="app-background">
+  <h2 text-center style="color: red; text-style: bold;">PERMANENTLY DELETE ACCOUNT</h2>
+  <ion-card>
+    <ion-card-content text-center>
+      <h1 style="margin-bottom: 50px;">We're sorry to see you go.</h1>
+      <div class="logo">
+        <img src="assets/img/agility360-logo-transparent-512x512.png" />
+      </div>
+      <form (submit)="deleteAccount()">
+        <h1 style="margin-bottom: 50px;">Are you sure you want to delete your account?</h1>
+        <p>Your account, including all data that you have entered and resumes that you have uploaded will be permanently deleted. Your data cannot be retrieved afterward.</p>
+        <h4><strong>To confirm, please press the button below.</strong></h4>
+        <ion-list>
+          <div padding>
+            <button ion-button color="danger" block class="close-button">Delete My Account</button>
+          </div>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

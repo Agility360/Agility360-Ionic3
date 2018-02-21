@@ -1,0 +1,77 @@
+<!--
+  Generated template for the ResumeUploaderPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Resume Uploader</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="app-background">
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+                  pullingIcon="arrow-dropdown"
+                  pullingText="Pull to refresh"
+                  refreshingSpinner="circles"
+                  refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-list>
+    <ion-list *ngIf="candidate && !candidate.resume_filename">
+      <ion-item-divider></ion-item-divider>
+      <div>
+        <ion-item no-lines>
+          <ion-card>
+            <p class="promote-box" text-wrap>Click the <code>Choose File</code> button to upload your resume.</p>
+          </ion-card>
+        </ion-item>
+      </div>
+    </ion-list>
+
+    <div *ngIf="fileMetaData">
+      <ion-item no-lines>
+        <p class="thank-you" text-center>Thank You! We've received your resume.</p>
+      </ion-item>
+      <ion-item-divider></ion-item-divider>
+      <ion-item no-lines>
+        <ion-label class="agility-label">Filename: </ion-label>
+        <div item-content>
+          {{ this.fileMetaData.name }}
+        </div>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label class="agility-label">Uploaded: </ion-label>
+        <div item-content>
+          {{ this.fileMetaData.uploadDate | date:"MMM dd, yyyy h:mma" }}
+        </div>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label class="agility-label">Size: </ion-label>
+        <div item-content>
+          {{ this.fileMetaData.size | number : 0 }} Kb
+        </div>
+      </ion-item>
+      <ion-item no-lines>
+        <ion-label class="agility-label">Last Modified: </ion-label>
+        <div item-content>
+          {{ this.fileMetaData.lastModifiedDate | date:"MMM dd, yyyy h:mma" }}
+        </div>
+      </ion-item>
+    </div>
+    <ion-item-divider></ion-item-divider>
+    <ion-item no-lines>
+      <input right #resume type="file" (change)="uploadFromFile($event)" />
+    </ion-item>
+  </ion-list>
+
+  <pdf-viewer src="{{ url }}"></pdf-viewer>
+
+</ion-content>

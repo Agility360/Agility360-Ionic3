@@ -1,0 +1,23 @@
+page-profile-edit {
+  form {
+    padding: 0 !important;
+  }
+
+
+  .form-label {
+    margin-top: 10px;
+  }
+  .editable-field {
+    color: green;
+    font-weight: bolder;
+    margin-bottom: 5px;
+  }
+
+  .description {
+    min-height: 100px;
+  }
+
+  ion-select {
+    max-width: 90% !important;
+  }
+}

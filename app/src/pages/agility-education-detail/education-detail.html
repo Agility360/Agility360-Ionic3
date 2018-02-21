@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-capitalize>{{ action }} Education History</ion-title>
+    <ion-buttons end>
+      <button
+        ion-button
+        icon-left
+        clear
+        small
+        [disabled]="!formGroup.valid"
+        (click)="processForm()">
+        <ion-icon name="create"></ion-icon>
+        <div>Save</div>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="app-background">
+
+  <form [formGroup]="formGroup">
+    <ion-item>
+      <ion-label stacked class="form-label">Instituion Name</ion-label>
+      <ion-input
+        class="editable-field"
+        type="text"
+        [(ngModel)]="obj.institution_name"
+        formControlName="institution_name"
+        name="institution_name"
+        placeholder="Institution Name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Degree Earned</ion-label>
+      <ion-input
+        class="editable-field"
+        type="text"
+        [(ngModel)]="obj.degree"
+        formControlName="degree"
+        name="degree"
+        placeholder="Degree"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Graduated</ion-label>
+      <ion-checkbox
+        class="editable-field"
+        [(ngModel)]="graduated"
+        formControlName="graduated"
+        name="graduated"></ion-checkbox>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Start Date</ion-label>
+      <ion-datetime
+        class="editable-field"
+        displayFormat="MMMM D, YYYY"
+        [(ngModel)]="start_date"
+        formControlName="start_date"
+        name="start_date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">End Date</ion-label>
+      <ion-datetime
+        class="editable-field"
+        displayFormat="MMMM D, YYYY"
+        [(ngModel)]="end_date"
+        formControlName="end_date"
+        name="end_date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Description</ion-label>
+      <ion-textarea
+        class="editable-field description"
+        [(ngModel)]="obj.description"
+        formControlName="description"
+        name="description"
+        placeholder="Optional: provide us with a few sentences about this degree program."></ion-textarea>
+    </ion-item>
+  </form>
+
+</ion-content>

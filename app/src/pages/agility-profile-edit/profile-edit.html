@@ -1,0 +1,120 @@
+<!--
+  Generated template for the ProfileEditPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-left clear small (click)="save()">
+        <ion-icon name="create"></ion-icon>
+        <div>Save</div>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="app-background">
+  <form (submit)="save()" padding>
+    <strong><p class="error-message" *ngIf="error">{{error.message}}</p></strong>
+
+    <ion-list>
+      <ion-item>
+        <ion-label>Are you job hunting?</ion-label>
+        <ion-select class="editable-field" [(ngModel)]="obj.job_hunting" name="job_hunting">
+          <ion-option value="1">Yes</ion-option>
+          <ion-option value="0">No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>First Name</ion-label>
+        <ion-input class="editable-field" type="text" [(ngModel)]="obj.first_name" autocorrect="off" autocapitalize="none" name="first_name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Middle Name</ion-label>
+        <ion-input class="editable-field" type="text" [(ngModel)]="obj.middle_name" autocorrect="off" autocapitalize="none" name="middle_name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Last Name</ion-label>
+        <ion-input class="editable-field" type="text" [(ngModel)]="obj.last_name" autocorrect="off" autocapitalize="none" name="last_name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Your Current City of Residence</ion-label>
+        <ion-input class="editable-field" type="text" [(ngModel)]="obj.city" autocorrect="off" autocapitalize="none" name="city"></ion-input>
+      </ion-item>
+
+        <ion-item-divider>Your Current State of Residence</ion-item-divider>
+        <ion-item no-lines>
+          <ion-select
+              class="editable-field"
+              [(ngModel)]="obj.state"
+              name="state">
+            <ion-option *ngFor="let i of states" value="{{ i.id }}">{{ i.description }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+      <ion-item>
+        <ion-label floating>Phone Number: (123) 456-7890</ion-label>
+        <ion-input
+          class="editable-field"
+          type="tel"
+          [textMask]="{mask: telephoneMask}"
+          maxlength="14"
+          minlength="14"
+          pattern="06([0-9]{8})"
+          [(ngModel)]="obj.phone_number"
+          autocorrect="off"
+          autocapitalize="none"
+          name="phone_number">
+        </ion-input>
+      </ion-item>
+
+
+      <ion-item-divider>Your Industry</ion-item-divider>
+      <ion-item no-lines>
+        <ion-select
+            class="editable-field"
+            [(ngModel)]="obj.industry_id"
+            (ionChange)='industryIdDidChange()'
+            name="industry_id">
+          <ion-option *ngFor="let i of industries" value="{{ i.id }}">{{ i.description }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item no-lines *ngIf="getSubIndustrySize > 0">
+        <ion-select
+            class="editable-field"
+            [(ngModel)]="obj.subindustry_id"
+            name="subindustry_id">
+          <ion-option *ngFor="let i of subIndustries" value="{{ i.id }}">{{ i.description }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item-divider>Your Profession</ion-item-divider>
+      <ion-item no-lines>
+        <ion-select
+            class="editable-field"
+            [(ngModel)]="obj.profession_id"
+            (ionChange)='professionIdDidChange()'
+            name="profession_id">
+          <ion-option *ngFor="let p of professions" value="{{ p.id }}">{{ p.description }}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item no-lines *ngIf="getSubProfessionSize > 0">
+        <ion-select
+            class="editable-field"
+            [(ngModel)]="obj.subprofession_id"
+            name="subprofession_id">
+          <ion-option *ngFor="let p of subProfessions" value="{{ p.id }}">{{ p.description }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+    </ion-list>
+  </form>
+
+</ion-content>

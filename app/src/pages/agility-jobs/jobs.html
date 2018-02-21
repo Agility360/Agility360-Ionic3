@@ -1,0 +1,48 @@
+<!--
+  written by: McDaniel
+  date:       august 2017
+
+  templated html for Jobs, News and Resume pages.
+-->
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Jobs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="app-background">
+  <ion-refresher (ionRefresh)="refreshData($event)">
+    <ion-refresher-content
+                  pullingIcon="arrow-dropdown"
+                  pullingText="Pull to refresh"
+                  refreshingSpinner="circles"
+                  refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="leader">
+    <h3 style="color: #2897C2;">A thoughtful question?</h3>
+    <p>Migas tattooed hot chicken chia, raclette flannel DIY pug gluten-free kombucha yuccie. Bushwick viral unicorn ugh pitchfork cardigan austin microdosing salvia put a bird on it 90's direct trade authentic normcore. </p>
+  </div>
+
+  <div *ngIf="posts">
+    <ion-list *ngFor="let post of posts">
+
+      <button ion-item (click)="viewPost(post)">
+        <ion-avatar item-start>
+          <img src="https://cdn.agility360app.net/">
+        </ion-avatar>
+        <h2 text-wrap>{{ post.title.rendered }}</h2>
+        <p style="margin-top: 10px;">Posted: {{ post.date | date:"MMM dd, yyyy" }}</p>
+      </button>
+
+    </ion-list> <!-- *ngFor="let post of posts" -->
+  </div> <!-- *ngIf="posts" -->
+
+  <div *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{ errMess }}</h4>
+  </div>
+</ion-content>

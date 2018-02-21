@@ -1,0 +1,40 @@
+page-jobhistory {
+
+  .card-title-block {
+    margin-left: 2px;
+    margin-right: 2px;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+  }
+
+  .title {
+    text-align: center;
+  }
+
+  .department {
+    text-align: center;
+  }
+
+  .salary {
+    padding: 5px;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+  }
+
+  .salary p {
+    font-weight: bold;
+  }
+
+  .description {
+    text-align: justify;
+  }
+
+  .leader {
+    background-color: rgba(255, 255, 255, 1);
+    padding: 25px;
+    margin-bottom: 25px;
+  }
+
+}

@@ -33,6 +33,27 @@ import {
 
 /* Addded by McDaniel */
 /* ------------------------------------------------------- */
+/* Added by McDaniel */
+import { ProfilePage } from '../pages/agility-profile/profile';
+import { ProfileEditPage } from '../pages/agility-profile-edit/profile-edit';
+import { JobsPage } from '../pages/agility-jobs/jobs';
+import { NewsPage } from '../pages/agility-news/news';
+import { ResumeTipsPage } from '../pages/agility-resume-tips/resume-tips';
+import { NotificationsPage } from '../pages/agility-notifications/notifications';
+import { CertificationsPage } from '../pages/agility-certifications/certifications';
+import { EducationPage } from '../pages/agility-education/education';
+import { JobhistoryPage } from '../pages/agility-jobhistory/jobhistory';
+import { JobhistoryDetailPage } from '../pages/agility-jobhistory-detail/jobhistory-detail';
+import { ResumeUploaderPage } from '../pages/agility-resume-uploader/resume-uploader';
+import { EducationDetailPage } from '../pages/agility-education-detail/education-detail';
+import { CertificationDetailPage } from '../pages/agility-certification-detail/certification-detail';
+import { HttpErrorPage } from '../pages/agility-http-error/http-error';
+import { DeleteAccountPage } from '../pages/agility-delete-account/delete-account';
+import { PrivacyPolicyPage } from '../pages/agility-privacy-policy/privacy-policy';
+import { TermsOfUsePage } from '../pages/agility-terms-of-use/terms-of-use';
+import { JobsDetailPage } from '../pages/agility-jobs-detail/jobs-detail';
+import { NewsDetailPage } from '../pages/agility-news-detail/news-detail';
+
 import { apiURL, cmsURL } from '../shared/constants';
 import { ProcessHttpmsgProvider } from '../providers/process-httpmsg';
 import { CandidateProvider } from '../providers/candidate';
@@ -47,6 +68,7 @@ import { SafeHtmlPipe } from "../shared/pipe.safehtml";
 import { XHRBackend, RequestOptions } from '@angular/http';
 import { TextMaskModule } from 'angular2-text-mask';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
+
 
 /*
 export function httpFactory(

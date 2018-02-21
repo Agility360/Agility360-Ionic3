@@ -1,0 +1,28 @@
+page-news-detail {
+
+  p.publish-date {
+    color: gray;
+    font-style: italic;
+  }
+
+  p.article {
+    text-align: justify;
+    padding: 10px;
+  }
+
+  ion-card-title {
+    font-size: 1.25em !important;
+  }
+
+  ion-card {
+    margin: 0 !important;
+    width: 100% !important
+  }
+
+  ion-card-content {
+    padding: 0 !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+  }
+
+}

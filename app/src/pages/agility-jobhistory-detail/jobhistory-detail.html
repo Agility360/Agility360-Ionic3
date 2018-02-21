@@ -1,0 +1,109 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title text-capitalize>{{ action }} Job</ion-title>
+    <ion-buttons end>
+      <button
+        ion-button
+        icon-left
+        clear
+        small
+        [disabled]="!formGroup.valid"
+        (click)="processForm()">
+        <ion-icon name="create"></ion-icon>
+        <div>Save</div>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding class="app-background">
+
+  <form [formGroup]="formGroup">
+    <ion-item>
+      <ion-label stacked class="form-label">Company Name</ion-label>
+      <ion-input
+        class="editable-field"
+        type="text"
+        [(ngModel)]="obj.company_name"
+        formControlName="company_name"
+        name="company_name"
+        placeholder="Company Name"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Department</ion-label>
+      <ion-input
+        class="editable-field"
+        type="text"
+        [(ngModel)]="obj.department"
+        formControlName="department"
+        name="department"
+        placeholder="Optional: department/division"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Job Title</ion-label>
+      <ion-input
+        class="editable-field"
+        type="text"
+        [(ngModel)]="obj.job_title"
+        formControlName="job_title"
+        name="job_title"
+        placeholder="Final job title"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Start Date</ion-label>
+      <ion-datetime
+        class="editable-field"
+        displayFormat="MMMM D, YYYY"
+        [max]="end_date"
+        [(ngModel)]="start_date"
+        formControlName="start_date"
+        name="start_date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">End Date</ion-label>
+      <ion-datetime
+        class="editable-field"
+        displayFormat="MMMM D, YYYY"
+        [min]="start_date"
+        [(ngModel)]="end_date"
+        formControlName="end_date"
+        name="end_date"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Final Compensation</ion-label>
+      <ion-input
+        class="editable-field"
+        type="number"
+        [(ngModel)]="obj.final_salary"
+        formControlName="final_salary"
+        name="final_salary"
+        placeholder="Optional: your final salary"
+        min=0></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label stacked class="form-label">Compensation Type</ion-label>
+      <ion-select
+        [(ngModel)]="obj.compensation_type"
+        formControlName="compensation_type"
+        name="compensation_type"
+        >
+        <ion-option value="1">Hourly</ion-option>
+        <ion-option value="2">Monthly</ion-option>
+        <ion-option value="3">Annually</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked class="form-label">Description</ion-label>
+      <ion-textarea
+        class="editable-field"
+        class="description"
+        [(ngModel)]="obj.description"
+        formControlName="description"
+        name="description"
+        placeholder="Optional: provide us with a few sentences about your role and responsibilities for this position."></ion-textarea>
+    </ion-item>
+  </form>
+
+</ion-content>

@@ -1,0 +1,55 @@
+<!--
+  written by: McDaniel
+  date:       august 2017
+
+-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>Privacy Policy</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="app-background">
+  <ion-refresher (ionRefresh)="refreshData($event)">
+    <ion-refresher-content
+                  pullingIcon="arrow-dropdown"
+                  pullingText="Pull to refresh"
+                  refreshingSpinner="circles"
+                  refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div *ngIf="posts">
+    <ion-list *ngFor="let post of posts">
+      <ion-card>
+        <div class="card-title-block">
+          <ion-item>
+            <ion-avatar item-start>
+              <img src="assets/img/agility360-logo-transparent-512x512.png" />
+            </ion-avatar>
+            <p>Updated: {{ post.date.toString().replace("None", "") | date:"MMM dd, yyyy" }}</p>
+          </ion-item>
+        </div>
+
+        <ion-card-content>
+          <ion-item>
+            <ion-row>
+              <ion-col>
+                <img src="{{ post.featured_media_url }}">
+              <div class="wordpress" text-wrap [innerHtml]="post.content.rendered | safeHtml"></div>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-list> <!-- *ngFor="let post of posts" -->
+  </div> <!-- *ngIf="posts" -->
+
+  <div *ngIf="errMess">
+    <h2>Error</h2>
+    <h4>{{ errMess }}</h4>
+  </div>
+</ion-content>

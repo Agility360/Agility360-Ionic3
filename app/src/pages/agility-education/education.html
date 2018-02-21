@@ -1,0 +1,99 @@
+<!--
+  written by: mcdaniel
+  date:       august 2017
+
+  usage:      template page construction for user profile pages
+              Job History, Education, and Certifications
+-->
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Education History</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="add()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="app-background">
+  <ion-refresher (ionRefresh)="refresh($event)">
+    <ion-refresher-content
+                  pullingIcon="arrow-dropdown"
+                  pullingText="Pull to refresh"
+                  refreshingSpinner="circles"
+                  refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <div class="leader">
+    <h3 style="color: #2897C2;">Why Provide Your Education History?</h3>
+    <p>By providing Agility 360 with accurate details of your education history we are able to blah blah blah.</p>
+    <p>Research shows that blah blah blah.</p>
+  </div>
+
+
+  <div *ngIf="cards">
+    <ion-list *ngFor="let card of cards">
+      <ion-card>
+        <ion-item>
+          <ion-avatar item-start>
+            <ion-icon name="school" item-start></ion-icon>
+          </ion-avatar>
+          <h2>{{ card.institution_name || uppercase }}</h2>
+          <p>{{ card.degree}}</p>
+          <p>{{ card.graduated.toString().replace("1", "Graduate").replace("0", "Some coursework completed.") }}</p>
+        </ion-item>
+
+        <ion-card-content>
+          <ion-item>
+            <ion-row>
+              <ion-col text-left>
+                <p>Start Date</p>
+              </ion-col>
+              <ion-col text-right>
+                <p>{{ card.start_date | date:"MMM dd, yyyy" }}</p>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="card.end_date">
+              <ion-col text-left>
+                <p>End Date</p>
+              </ion-col>
+              <ion-col text-right>
+                <p>{{ card.end_date | date:"MMM dd, yyyy" }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+          <ion-item>
+            <ion-row>
+              <ion-col>
+                <p class="description" text-wrap> {{ card.description }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-card-content>
+
+        <ion-row>
+          <ion-col>
+            <button ion-button icon-left clear small (click)="edit(card)">
+              <ion-icon name="create"></ion-icon>
+              <div>Edit</div>
+            </button>
+          </ion-col>
+          <ion-col text-right>
+            <button ion-button icon-left clear small color="danger" (click)="delete(card)">
+              <ion-icon name="trash"></ion-icon>
+              <div>Delete</div>
+            </button>
+          </ion-col>
+        </ion-row>
+      </ion-card>
+
+    </ion-list> <!-- *ngFor="let job of jobs" -->
+  </div> <!-- *ngIf="jobs" -->
+
+</ion-content>
