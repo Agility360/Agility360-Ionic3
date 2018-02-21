@@ -1,5 +1,5 @@
 import { NgModule }                    from '@angular/core';
-import { IonicApp, IonicModule }       from 'ionic-angular';
+import { IonicApp, IonicModule, App, LoadingController, AlertController }       from 'ionic-angular';
 import { MyApp }                       from './app.component';
 import { HttpModule, URLSearchParams } from "@angular/http";
 import { BrowserTab }                  from '@ionic-native/browser-tab';
@@ -31,6 +31,35 @@ import {
   NoAuthorizationClient
 } from "../services/spacefinder-api.service";
 
+/* Addded by McDaniel */
+/* ------------------------------------------------------- */
+import { apiURL, cmsURL } from '../shared/constants';
+import { ProcessHttpmsgProvider } from '../providers/process-httpmsg';
+import { CandidateProvider } from '../providers/candidate';
+import { CertificationHistoryProvider } from '../providers/certificationhistory';
+import { EducationHistoryProvider } from '../providers/educationhistory';
+import { JobHistoryProvider } from '../providers/jobhistory';
+import { WordpressProvider } from '../providers/wordpress';
+import { IndustriesProvider } from '../providers/industries';
+import { ProfessionsProvider } from '../providers/professions';
+import { StatesProvider } from '../providers/states';
+import { SafeHtmlPipe } from "../shared/pipe.safehtml";
+import { XHRBackend, RequestOptions } from '@angular/http';
+import { TextMaskModule } from 'angular2-text-mask';
+import { PdfViewerComponent } from 'ng2-pdf-viewer';
+
+/*
+export function httpFactory(
+  backend: XHRBackend,
+  defaultOptions: RequestOptions,
+  app: App,
+  loadingCtrl: LoadingController,
+  alertCtrl: AlertController) {
+  return new HttpService(backend, defaultOptions, app, loadingCtrl);
+}
+*/
+
+/* ------------------------------------------------------- */
 @NgModule({
   declarations: [
     AccountConfirmationCodePage,

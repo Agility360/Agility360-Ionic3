@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.ionicframework.spacefindermobileapp260912" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>spacefinder-mobile-app</name>
-    <description>An awesome Ionic/Cordova app.</description>
-    <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
+<widget id="net.agility360app.cea" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>agility360</name>
+    <description>Ionic3 code base + Agility 360 identities</description>
+    <author email="lpm0073@gmail.com" href="https://lawrencemcdaniel.com/">Lawrence McDaniel</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
@@ -109,8 +109,8 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <allow-navigation href="http://192.168.1.120:8100" />
     <allow-navigation href="http://10.88.24.188:8100" />
-    <engine name="ios" spec="~4.5.4" />
-    <engine name="android" spec="~6.4.0" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <engine name="android" spec="^6.4.0" />
+    <engine name="ios" spec="^4.5.4" />
 </widget>
