@@ -1,7 +1,7 @@
 'use strict';
 
 var defaults = {
-  AWS_PROFILE: 'default',
+  AWS_PROFILE: 'agility360',
   AWS_REGION: 'us-east-1',
   ENVIRONMENT_STAGE: 'development',
   PROJECT_PREFIX: 'spacefinder-',
