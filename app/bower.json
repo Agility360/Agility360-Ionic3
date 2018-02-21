@@ -1,13 +1,12 @@
 {
-  "name": "spacefinder",
-  "description": "SpaceFinder: Book conference rooms, desks and more",
+  "name": "agility360",
+  "description": "Ionic3 Code Base & AWS Sample App",
   "main": "",
   "authors": [
-    "Jim Tran",
-    "Justin Pirtle"
+    "Lawrence McDaniel"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/justonian/spacefinder",
+  "homepage": "http://www.agility360app.net/",
   "ignore": [
     "**/.*",
     "node_modules",
