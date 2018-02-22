@@ -6,6 +6,7 @@
 *.swp
 Thumbs.db
 app/.tmp/
+app/.sourcemaps
 app/node_modules/
 app/platforms/
 app/plugins/

@@ -99,7 +99,31 @@ export function httpFactory(
     MyApp,
     TabsPage,
     WelcomePage,
-    NavbarComponent
+    NavbarComponent,
+
+    ProfilePage,
+    ProfileEditPage,
+    TabsPage,
+    JobsPage,
+    NewsPage,
+    ResumeTipsPage,
+    NotificationsPage,
+    CertificationsPage,
+    EducationPage,
+    JobhistoryPage,
+    JobhistoryDetailPage,
+    EducationDetailPage,
+    CertificationDetailPage,
+    ResumeUploaderPage,
+    HttpErrorPage,
+    DeleteAccountPage,
+    PrivacyPolicyPage,
+    TermsOfUsePage,
+    JobsDetailPage,
+    NewsDetailPage,
+    SafeHtmlPipe,
+    PdfViewerComponent
+
   ],
   imports: [
     HttpModule,

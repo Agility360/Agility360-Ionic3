@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { Candidate } from '../../shared/candidate';
 import { CandidateProvider } from '../../providers/candidate';
-import { ProfileEditPage } from '../profile-edit/profile-edit';
+import { ProfileEditPage } from '../agility-profile-edit/profile-edit';
 
 /**
  * Generated class for the ProfilePage page.
