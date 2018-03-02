@@ -1,4 +1,32 @@
-# SpaceFinder - Serverless Auth Reference App
+# Agility 360 Client Engagement App
+
+Forked from the AWS SpaceFinder - Serverless Auth Reference App
+
+[Agility360 Logo](https://raw.githubusercontent.com/Agility360/CEA/master/assets/logo/logo7868398_sm.png "Agility360 Logo")
+## Client Engagement App
+### Ionic for iOS and Android
+
+Build the app:
+```
+npm run build
+aws s3 sync ./www s3://web.agility360app.net --profile agility360
+```
+
+View the webapp: (https://web.agility360app.net)
+
+Note: Applicant Stack api creds
+ID:careers@agility
+PW:agility36@
+
+### Application Resources
+ - [Project web site](https://www.agility360app.net/)
+ - [web app](https://app.agility360app.net/)
+ - [REST api](https://api.agility360app.net/beta)
+ - [Front end repository and documentation](https://github.com/Agility360/Ionic)
+ - [Back end repository and documentation](https://github.com/Agility360/CEA/tree/master/backend)
+ - ![iOS Connect (App ID 1270138260)](https://itunesconnect.apple.com/WebObjects/iTunesConnect.woa/ra/ng/app/1270138260)
+ - Pending: Download the Android app
+
 
 **SpaceFinder** is a reference mobile app that allows users to book conference rooms, work desks, and other shared resources. The app showcases **serverless authentication and authorization** using the AWS platform.
 
@@ -99,7 +127,7 @@ Enable the browser developer console (or remote debugging for Android) to view a
 The log messages will show you all tokens retrieved as part of the sign-in process, as well as all API calls made and the corresponding authorization for each call.
 
 [AWS Cognito]:https://aws.amazon.com/cognito/
-[AWS Lambda]:https://aws.amazon.com/lambda/ 
+[AWS Lambda]:https://aws.amazon.com/lambda/
 [Amazon DynamoDB]:https://aws.amazon.com/dynamodb/
 [Amazon API Gateway]:https://aws.amazon.com/api-gateway/
 [AWS CloudFormation]:https://aws.amazon.com/cloudformation/
