@@ -1,0 +1,77 @@
+<ion-content  class="app-background">
+  <p></p>
+  <form (submit)="signup()" padding [formGroup]="formGroup">
+    <strong><p class="error-message" *ngIf="errMsg" >{{errMsg}}</p></strong>
+    <ion-list>
+      <!-- --------------------- Username ----------------------------------- -->
+      <ion-item>
+        <ion-label floating>
+          Username
+          <ion-icon name="checkmark" *ngIf="formGroup.controls.username.valid && isUsernameAvailable" class="valid"></ion-icon>
+        </ion-label>
+        <ion-input type="text"
+              [class.valid]="formGroup.controls.username.valid && isUsernameAvailable"
+              [(ngModel)]="userDetails.username"
+              (ionBlur)="usernameDidBlur($event)"
+              formControlName="username"
+              autocorrect="off"
+              autocapitalize="none"
+              name="username">
+        </ion-input>
+      </ion-item>
+
+      <!-- --------------------- email address ----------------------------------- -->
+      <ion-item>
+        <ion-label floating>
+          Email
+          <ion-icon name="checkmark" *ngIf="formGroup.controls.email.valid && isEmailAvailable" class="valid"></ion-icon>
+        </ion-label>
+        <ion-input type="email"
+              [class.valid]="formGroup.controls.email.valid && isEmailAvailable"
+              [(ngModel)]="userDetails.email"
+              (ionBlur)="emailDidBlur($event)"
+              formControlName="email"
+              autocorrect="off"
+              autocapitalize="none"
+              name="email">
+        </ion-input>
+      </ion-item>
+
+       <!-- --------------------- password ----------------------------------- -->
+      <ion-item>
+        <ion-label floating>
+          Password
+          <ion-icon name="checkmark" *ngIf="formGroup.controls.password.valid" class="valid"></ion-icon>
+        </ion-label>
+
+        <ion-input type="password"
+              [class.valid]="formGroup.controls.password.valid"
+              [(ngModel)]="userDetails.password"
+              (ionBlur)="passwordDidBlur($event)"
+              formControlName="password"
+              autocorrect="off"
+              autocapitalize="none"
+              name="password">
+        </ion-input>
+      </ion-item>
+
+    </ion-list>
+  </form>
+  <div class="error-message" *ngIf="errorMsg">
+    <p style="color: red;">{{errorMsg}}</p>
+  </div>
+  <ion-footer>
+    <div padding style="background-color: white;">
+      <p text-center>By clicking Sign Up, you agree to Agility 360's User Agreement, Privacy Policy and Cookie Policy</p>
+      <button ion-button
+              (click)="signup()"
+              color="primary"
+              block
+              [disabled]="!formGroup.valid">Sign Up</button>
+
+      <div text-center>
+        <p><a (click)="login()">Return to login page</a>
+      </div>
+    </div>
+  </ion-footer>
+</ion-content>

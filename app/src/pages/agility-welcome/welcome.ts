@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { SignupPage } from '../signup/signup';
-import { LoginPage } from '../login/login';
+import { SignupPage } from '../agility-signup/signup';
+import { LoginPage } from '../agility-login/login';
 
 import { DEBUG_MODE } from '../../shared/constants';
 

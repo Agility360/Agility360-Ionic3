@@ -9,7 +9,7 @@ import { IonicPage, NavController, NavParams, ToastController, AlertController }
 import { DEBUG_MODE } from '../../shared/constants';
 import { Education } from '../../shared/education';
 import { EducationHistoryProvider } from '../../providers/educationhistory';
-import { EducationDetailPage } from '../education-detail/education-detail';
+import { EducationDetailPage } from '../agility-education-detail/education-detail';
 
 
 @IonicPage()
@@ -72,7 +72,7 @@ export class EducationPage {
       obj: obj,
       action: 'Edit'
     });
-  } 
+  }
 
 
   delete(obj: Education) {

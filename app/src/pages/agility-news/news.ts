@@ -14,7 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
-import { NewsDetailPage } from '../news-detail/news-detail';
+import { NewsDetailPage } from '../agility-news-detail/news-detail';
 
 @IonicPage()
 @Component({

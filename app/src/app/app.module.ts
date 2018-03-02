@@ -1,11 +1,15 @@
 import { NgModule }                    from '@angular/core';
-import { IonicApp, IonicModule, App, LoadingController, AlertController }       from 'ionic-angular';
+import { IonicApp,
+         IonicModule,
+         App,
+         LoadingController,
+         AlertController }             from 'ionic-angular';
 import { MyApp }                       from './app.component';
 import { HttpModule, URLSearchParams } from "@angular/http";
 import { BrowserTab }                  from '@ionic-native/browser-tab';
 import { Deeplinks }                   from '@ionic-native/deeplinks';
-import { ComponentsModule }            from "../components/components.module";
-import { NavbarComponent }             from "../components/navbar/navbar";
+import { ComponentsModule }            from '../components/components.module';
+import { NavbarComponent }             from '../components/navbar/navbar';
 
 import { AboutPage }                   from '../pages/about/about';
 import { AccountConfirmationCodePage } from '../pages/account-confirmation-code/account-confirmation-code';
@@ -22,8 +26,8 @@ import { ResourceAddPage }             from '../pages/resource-add/resource-add'
 import { ResourceAvailabilityPage }    from '../pages/resource-availability/resource-availability';
 import { TabsPage }                    from '../pages/tabs/tabs';
 import { WelcomePage }                 from '../pages/welcome/welcome';
-import { BrowserModule }               from "@angular/platform-browser";
-import { HttpService }                 from "../services/http-service";
+import { BrowserModule }               from '@angular/platform-browser';
+import { HttpService }                 from '../services/http-service';
 import {
   IamAuthorizerClient,
   CustomAuthorizerClient,
@@ -68,6 +72,8 @@ import { SafeHtmlPipe } from "../shared/pipe.safehtml";
 import { XHRBackend, RequestOptions } from '@angular/http';
 import { TextMaskModule } from 'angular2-text-mask';
 import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 /*
@@ -128,7 +134,8 @@ export function httpFactory(
   imports: [
     HttpModule,
     IonicModule.forRoot(MyApp),
-    BrowserModule
+    BrowserModule,
+    TextMaskModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -146,7 +153,29 @@ export function httpFactory(
     ResourceAvailabilityPage,
     MyApp,
     TabsPage,
-    WelcomePage
+    WelcomePage,
+
+    ProfilePage,
+    ProfileEditPage,
+    TabsPage,
+    JobsPage,
+    NewsPage,
+    ResumeTipsPage,
+    NotificationsPage,
+    CertificationsPage,
+    EducationPage,
+    JobhistoryPage,
+    JobhistoryDetailPage,
+    EducationDetailPage,
+    CertificationDetailPage,
+    ResumeUploaderPage,
+    HttpErrorPage,
+    DeleteAccountPage,
+    PrivacyPolicyPage,
+    TermsOfUsePage,
+    JobsDetailPage,
+    NewsDetailPage
+
   ],
   providers: [
     BrowserTab,
@@ -157,6 +186,20 @@ export function httpFactory(
     { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },
     { provide: UserPoolsAuthorizerClient, useClass: UserPoolsAuthorizerClient },
     { provide: NoAuthorizationClient, useClass: NoAuthorizationClient },
+
+     StatusBar,
+     SplashScreen,
+     CandidateProvider,
+      CertificationHistoryProvider,
+      EducationHistoryProvider,
+      JobHistoryProvider,
+      { provide: 'apiURL', useValue: apiURL },
+      { provide: 'CMSURL', useValue: cmsURL },
+      WordpressProvider,
+      IndustriesProvider,
+      ProfessionsProvider,
+      StatesProvider
+
   ]
 })
 export class AppModule {}

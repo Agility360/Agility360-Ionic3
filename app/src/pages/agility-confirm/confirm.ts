@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController, App } from 'ionic-angular';
-import { LoginPage } from '../login/login';
+import { LoginPage } from '../agility-login/login';
 import { User } from '../../providers/user';
 
 /*-----------------------------------------------------------------------

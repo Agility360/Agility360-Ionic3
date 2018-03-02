@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, AlertController }
 import { DEBUG_MODE } from '../../shared/constants';
 import { Certification } from '../../shared/certification';
 import { CertificationHistoryProvider } from '../../providers/certificationhistory';
-import { CertificationDetailPage } from '../certification-detail/certification-detail';
+import { CertificationDetailPage } from '../agility-certification-detail/certification-detail';
 
 
 @IonicPage()
