@@ -1,6 +1,6 @@
 # Agility 360 Client Engagement App
 
-Forked from the AWS SpaceFinder - Serverless Auth Reference App
+Forked from SpaceFinder: AWS Serverless reference app and backend API, showcasing authentication and authorization patterns using Amazon Cognito, Amazon API Gateway, AWS Lambda, and AWS IAM.
 
 [Agility360 Logo](https://raw.githubusercontent.com/Agility360/CEA/master/assets/logo/logo7868398_sm.png "Agility360 Logo")
 ## Client Engagement App

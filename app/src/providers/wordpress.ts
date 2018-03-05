@@ -65,7 +65,7 @@ export class WordpressProvider {
     return this.http.get(page, {
       params: params
     })
-      .retry(HTTP_RETRIES)
+    /*  .retry(HTTP_RETRIES) */
       .map(res => {
         if (DEBUG_MODE) console.log('WordpressProvider.getPage() - success', res);
         return this.ProcessHttpmsgService.extractData(res)
@@ -81,7 +81,7 @@ export class WordpressProvider {
     return this.http.get(this.urlPosts(), {
       params: params
     })
-      .retry(HTTP_RETRIES)
+    /*  .retry(HTTP_RETRIES) */
       .map(res => {
         if (DEBUG_MODE) console.log('WordpressProvider.getPosts() - success', res);
         return this.ProcessHttpmsgService.extractData(res)

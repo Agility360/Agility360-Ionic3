@@ -5,6 +5,9 @@ import { WelcomePage }       from '../welcome/welcome';
 import { LocationListPage } from '../location-list/location-list';
 import { AccountPage }       from '../account/account';
 
+import { TermsOfUsePage } from '../agility-terms-of-use/terms-of-use';
+
+
 @Component({
   templateUrl: 'tabs.html'
 })
@@ -16,6 +19,7 @@ export class TabsPage {
   tab2Root: any = LocationListPage;
   tab3Root: any = BookingsPage;
   tab4Root: any = AccountPage;
+  tab5Root: any = TermsOfUsePage;
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {

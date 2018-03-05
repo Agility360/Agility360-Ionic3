@@ -2,7 +2,8 @@
   "name": "agility360",
   "app_id": "73ac5e25",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "gulp": {}
   },
   "type": "ionic-angular"
 }

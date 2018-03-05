@@ -198,8 +198,8 @@ export function httpFactory(
       WordpressProvider,
       IndustriesProvider,
       ProfessionsProvider,
-      StatesProvider
-
+      StatesProvider,
+      ProcessHttpmsgProvider
   ]
 })
 export class AppModule {}
