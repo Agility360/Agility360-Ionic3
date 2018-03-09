@@ -14,3 +14,37 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+.logo {
+  display: block;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  padding: 20px 0px 0px 0px;
+
+  img {
+    max-width: 150px;
+  }
+}
+
+
+.app-background {
+  background: #f1f1f1; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left top, #f1f1f1, #f1f1f1, rgba(0, 127, 166, .15), rgba(0, 127, 166, .30), rgba(0, 127, 166, .35), rgba(0, 127, 166, .5) 100%), url("https://cdn.agility360app.net/app/agility360-background-image.jpg") center repeat; /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #f1f1f1, #f1f1f1, rgba(0, 127, 166, .15), rgba(0, 127, 166, .30), rgba(0, 127, 166, .35), rgba(0, 127, 166, .5) 100%), url("https://cdn.agility360app.net/app/agility360-background-image.jpg") center repeat; /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #f1f1f1, #f1f1f1, rgba(0, 127, 166, .15) , rgba(0, 127, 166, .30), rgba(0, 127, 166, .35), rgba(0, 127, 166, .5) 100%), url("https://cdn.agility360app.net/app/agility360-background-image.jpg") center repeat; /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, rgba(0, 127, 166, .05), rgba(0, 127, 166, .15), rgba(0, 127, 166, .30), rgba(0, 127, 166, .5), rgba(0, 127, 166, .5) 100%), url("https://cdn.agility360app.net/app/agility360-background-image.jpg") center repeat; /* Standard syntax */
+}
+
+.agility-label {
+  color: #2897C2;
+  padding-left: 10px;
+}
+
+.promote-box {
+  margin: auto !important;
+  border: 2px solid rgba(253, 242, 160, 1) !important;
+  padding: 15px;
+  font-size: 1.25em;
+  background-color: rgba(253, 242, 160, .5);
+  color: #333;
+  text-align: center;
+}

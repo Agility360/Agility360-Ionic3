@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Profile
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="app-background">
+  <div class="heading">
+    <div>
+      <h6 text-center>
+        <span style="color: #2897C2;">Username:</span>
+        <span style="color: gray;">{{ this.username }}</span>
+      </h6>
+    </div>
+    <div>
+      <h6 text-center>
+        <span style="color: #2897C2;">Email:</span>
+        <span style="color: gray;">{{ this.email }}</span>
+        <span *ngIf="this.email_verified"><ion-icon style="color: green;" name="checkmark"></ion-icon></span>
+    </h6>
+    </div>
+  </div>
+  <div text-center>
+    <div *ngIf="avatarPhoto" class="avatar" [style.background-image]="'url('+ avatarPhoto +')'"></div>
+    <button ion-button clear (click)="selectAvatar()">Change photo</button>
+    <input #avatar class="avatar-input" type="file" (change)="uploadFromFile($event)" />
+  </div>
+
+  <ion-list padding>
+    <button ion-item [navPush]="profilePage">
+      <ion-icon name="contact" item-start></ion-icon>
+      <ion-label>Candidate Profile</ion-label>
+    </button>
+    <button ion-item [navPush]="jobhistoryPage">
+      <ion-icon name="briefcase" item-start></ion-icon>
+      <ion-label>Job History</ion-label>
+    </button>
+    <button ion-item [navPush]="educationPage">
+      <ion-icon name="school" item-start></ion-icon>
+      <ion-label>Education</ion-label>
+    </button>
+    <button ion-item [navPush]="certificationsPage">
+      <ion-icon name="ribbon" item-start></ion-icon>
+      <ion-label>Certifications</ion-label>
+    </button>
+    <button ion-item [navPush]="resumeUploaderPage">
+      <ion-icon name="cloud-upload" item-start></ion-icon>
+      <ion-label>Resume Uploader</ion-label>
+    </button>
+
+  </ion-list>
+
+  <ion-list padding>
+    <button ion-item [navPush]="passwordChangePage" no-lines>
+      <ion-icon name="lock" item-start></ion-icon>
+      <ion-label>Change Password</ion-label>
+    </button>
+    <button ion-item (click)="logout()" no-lines>
+      <ion-icon name="log-out" item-start></ion-icon>
+      <ion-label>Logout</ion-label>
+    </button>
+  </ion-list>
+
+  <ion-list padding>
+    <button ion-item [navPush]="privacyPolicyPage">
+      <ion-icon name="" item-start></ion-icon>
+      <ion-label>Privacy Policy</ion-label>
+    </button>
+    <button ion-item [navPush]="termsOfUsePage">
+      <ion-icon name="" item-start></ion-icon>
+      <ion-label>Terms of Use</ion-label>
+    </button>
+    <button ion-item [navPush]="deleteAccountPage">
+      <ion-icon name="trash" item-start></ion-icon>
+      <ion-label color="danger">Delete Account</ion-label>
+    </button>
+  </ion-list>
+
+</ion-content>

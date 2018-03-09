@@ -1,23 +1,9 @@
 <ion-header>
-  <navbar [title]="globals.userId === '' ? '': 'SpaceFinder'"></navbar>
+  <navbar [title]="globals.userId === '' ? '': 'Agility360'"></navbar>
 </ion-header>
 
 <ion-content class='main'>
   <div id='main-content'>
     <img width='100%' src='assets/images/conference_room_unsplash.jpg'>
-    <div id='top'>
-      <span class='title' *ngIf="globals.userId == ''">Welcome to SpaceFinder!</span>
-      <span class='title' *ngIf="globals.userId !== ''">Welcome, {{globals.getUserFirstName()}} {{globals.getUserLastName()}}</span>
-      <table border="0">
-      <tr>
-        <td><img src="assets/images/noun_46945_cc.png" width="100"/></td>
-        <td>&nbsp;&nbsp;&nbsp;Book a conference room<br/>&nbsp;&nbsp;&nbsp;for your team meeting. </td>
-      </tr>
-      <tr>
-        <td><img src="assets/images/noun_82305_cc.png" width="100"/></td>
-        <td>&nbsp;&nbsp;&nbsp;Visiting a remote office?<br/>&nbsp;&nbsp;&nbsp;You can book a desk in advance.</td>
-      </tr>
-      </table>
-    </div>
   </div><!-- main-content -->
 </ion-content>

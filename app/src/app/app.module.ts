@@ -57,6 +57,7 @@ import { PrivacyPolicyPage } from '../pages/agility-privacy-policy/privacy-polic
 import { TermsOfUsePage } from '../pages/agility-terms-of-use/terms-of-use';
 import { JobsDetailPage } from '../pages/agility-jobs-detail/jobs-detail';
 import { NewsDetailPage } from '../pages/agility-news-detail/news-detail';
+import { SettingsPage } from '../pages/agility-settings/settings';
 
 import { apiURL, cmsURL } from '../shared/constants';
 import { ProcessHttpmsgProvider } from '../providers/process-httpmsg';
@@ -127,6 +128,7 @@ export function httpFactory(
     TermsOfUsePage,
     JobsDetailPage,
     NewsDetailPage,
+    SettingsPage,
     SafeHtmlPipe,
     PdfViewerComponent
 
@@ -174,7 +176,8 @@ export function httpFactory(
     PrivacyPolicyPage,
     TermsOfUsePage,
     JobsDetailPage,
-    NewsDetailPage
+    NewsDetailPage,
+    SettingsPage
 
   ],
   providers: [

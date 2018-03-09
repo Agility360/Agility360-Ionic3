@@ -1,11 +1,17 @@
 import { Component }         from '@angular/core';
 import { NavParams, Tab, Tabs } from 'ionic-angular';
-import { BookingsPage }      from '../bookings/bookings';
-import { WelcomePage }       from '../welcome/welcome';
-import { LocationListPage } from '../location-list/location-list';
-import { AccountPage }       from '../account/account';
 
-import { TermsOfUsePage } from '../agility-terms-of-use/terms-of-use';
+//import { BookingsPage }      from '../bookings/bookings';
+import { WelcomePage }       from '../welcome/welcome';
+//import { LocationListPage } from '../location-list/location-list';
+//import { AccountPage }       from '../account/account';
+
+
+import { SettingsPage } from '../agility-settings/settings';
+import { JobsPage } from '../agility-jobs/jobs';
+import { NewsPage } from '../agility-news/news';
+import { ResumeTipsPage } from '../agility-resume-tips/resume-tips';
+import { NotificationsPage } from '../agility-notifications/notifications';
 
 
 @Component({
@@ -16,10 +22,10 @@ export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
   tab1Root: any = WelcomePage;
-  tab2Root: any = LocationListPage;
-  tab3Root: any = BookingsPage;
-  tab4Root: any = AccountPage;
-  tab5Root: any = TermsOfUsePage;
+  tab2Root = NewsPage;
+  tab3Root = ResumeTipsPage;
+  tab4Root = NotificationsPage;
+  tab5Root = SettingsPage;
   mySelectedIndex: number;
 
   constructor(navParams: NavParams) {

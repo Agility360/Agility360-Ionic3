@@ -111,7 +111,7 @@
     <allow-navigation href="http://10.88.24.188:8100" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashShowOnlyFirstTime" value="false" />
+    <plugin name="cordova-plugin-document-viewer" spec="^0.9.8" />
     <engine name="android" spec="^6.4.0" />
     <engine name="ios" spec="^4.5.4" />
-    <plugin name="cordova-plugin-document-viewer" spec="^0.9.8" />
 </widget>
