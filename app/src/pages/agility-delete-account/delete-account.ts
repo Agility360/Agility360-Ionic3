@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic
 import { User } from '../../providers/providers';
 import { DEBUG_MODE } from '../../shared/constants';
 import { LoginPage } from '../agility-login/login';
-import { Cognito } from '../../providers/aws.cognito';
+import { CognitoUtil } from '../../services/account-management.service';
+import { GlobalStateService } from '../../services/global-state.service';
 
 
 /**
@@ -19,21 +20,17 @@ import { Cognito } from '../../providers/aws.cognito';
   templateUrl: 'delete-account.html',
 })
 export class DeleteAccountPage {
-
   private username: string;
-  private cognitoUser: any;
+  private cognitoUtil: any;
 
   constructor(public navCtrl: NavController,
-    public user: User,
     public app: App,
-    public cognito: Cognito,
     private alertCtrl: AlertController,
+    private globals: GlobalStateService,
     public navParams: NavParams) {
 
       if (DEBUG_MODE) console.log('DeleteAccountPage.constructor()');
 
-      this.username = navParams.get('username');
-      this.cognitoUser = this.cognito.makeUser(this.username);
   }
 
   ionViewDidLoad() {
@@ -57,8 +54,9 @@ export class DeleteAccountPage {
           text: 'Delete',
           handler: () => {
 
-
-            this.cognitoUser.deleteUser(function(err, result) {
+            // hack workaround: instantiation so that the code can be loaded in time for the IonViewDidEnter() method
+            this.cognitoUtil = new CognitoUtil();
+            this.cognitoUtil.getCognitoUser().deleteUser(function(err, result) {
                 if (err) {
                     let alert = this.alertCtrl.create({
                       title: 'Error',
@@ -76,11 +74,9 @@ export class DeleteAccountPage {
                 });
 
                 alert.present(alert);
-                return;
+                this.globals.logout(this.navCtrl);
             });
 
-            this.user.logout();
-            this.app.getRootNav().setRoot(LoginPage);
           }
         }
       ]

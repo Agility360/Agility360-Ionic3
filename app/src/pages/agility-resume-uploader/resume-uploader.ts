@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 import { DEBUG_MODE } from '../../shared/constants';
 import { Candidate } from '../../shared/candidate';
 import { CandidateProvider } from '../../providers/candidate';
-import { User } from '../../providers/providers';
 import { S3File } from '../../shared/s3file';
+import { GlobalStateService } from '../../services/global-state.service';
 
 declare var AWS: any;
 declare const aws_user_files_s3_bucket;
@@ -41,9 +41,9 @@ export class ResumeUploaderPage {
   public username: string;
 
   constructor(
-    public user: User,
     public navCtrl: NavController,
     public navParams: NavParams,
+    private globals: GlobalStateService,
     public loadingCtrl: LoadingController,
     private candidateProvider: CandidateProvider) {
 
@@ -61,7 +61,7 @@ export class ResumeUploaderPage {
         title: 'My Resume'
       };
 
-      this.username = user.getUser().getUsername().toString();
+      this.username = this.globals.getUsername();
       this.getResume();
 
   }

@@ -4,7 +4,7 @@
 * For candidate entity from agility REST api
 * ====================================================================*/
 import { Injectable } from '@angular/core';
-import { Cognito } from './aws.cognito';
+import { GlobalStateService } from '../services/global-state.service';
 import { Candidate } from '../shared/candidate';
 import { Observable } from 'rxjs/Observable';
 import { HttpService } from '../services/http-service';
@@ -21,7 +21,7 @@ export class CandidateProvider {
   config: string;
 
   constructor(public http: HttpService,
-    private cognito: Cognito,
+    private globals: GlobalStateService,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
     if (DEBUG_MODE) console.log('CandidateProvider.constructor()');
@@ -135,8 +135,7 @@ export class CandidateProvider {
 
   username() {
     if (DEBUG_MODE) console.log('CandidateProvider.username()');
-    var user = this.cognito.getCurrentUser();
-    return user.username;
+    return this.globals.getUsername();
   }
 
   checkEmailAvailability(emailAddress): Observable<boolean> {

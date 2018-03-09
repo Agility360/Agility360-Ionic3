@@ -4,7 +4,7 @@
 * For Education array from agility REST api
 * ====================================================================*/
 import { Injectable } from '@angular/core';
-import { Cognito } from './aws.cognito';
+import { GlobalStateService } from '../services/global-state.service';
 import { Education } from '../shared/education';
 import { Observable } from 'rxjs/Observable';
 import { HttpService } from '../services/http-service';
@@ -20,7 +20,7 @@ export class EducationHistoryProvider {
 
 
   constructor(public http: HttpService,
-    private cognito: Cognito,
+    private globals: GlobalStateService,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
     if (DEBUG_MODE) console.log('constructor - EducationHistoryProvider');
@@ -106,7 +106,6 @@ export class EducationHistoryProvider {
   }
 
   username() {
-    var user = this.cognito.getCurrentUser();
-    return user.username;
+    return this.globals.getUsername();
   }
 }

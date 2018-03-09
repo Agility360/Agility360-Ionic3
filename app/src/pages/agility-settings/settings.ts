@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Config, LoadingController, NavController, App, AlertController } from 'ionic-angular';
+import { LoadingController, NavController, App, AlertController } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 
 import { LoginPage } from '../agility-login/login';
@@ -14,13 +14,15 @@ import { PrivacyPolicyPage } from '../agility-privacy-policy/privacy-policy';
 import { TermsOfUsePage } from '../agility-terms-of-use/terms-of-use';
 import { HttpErrorPage } from '../agility-http-error/http-error';
 
-import { DynamoDB, User } from '../../providers/providers';
+import { GlobalStateService } from '../../services/global-state.service';
 import { CandidateProvider } from '../../providers/candidate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
+import { Config } from '../../config/config';
+
 declare var AWS: any;
-declare const aws_user_files_s3_bucket;
-declare const aws_user_files_s3_bucket_region;
+//declare const aws_user_files_s3_bucket;
+//declare const aws_user_files_s3_bucket_region;
 
 
 @Component({
@@ -53,10 +55,8 @@ export class SettingsPage {
 
 
   constructor(public navCtrl: NavController,
-    public user: User,
+    private globals: GlobalStateService,
     public app: App,
-    public db: DynamoDB,
-    public config: Config,
     public camera: Camera,
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController) {
@@ -68,24 +68,14 @@ export class SettingsPage {
     this.selectedPhoto = null;
     this.s3 = new AWS.S3({
       'params': {
-        'Bucket': aws_user_files_s3_bucket
+        'Bucket': Config['PROFILE_IMAGES_S3_BUCKET']
       },
-      'region': aws_user_files_s3_bucket_region
+      'region': Config['REGION']
     });
 
     this.sub = AWS.config.credentials.identityId;
 
-    user.getUser().getUserAttributes((err, data) => {
-      if (DEBUG_MODE) console.log('SettingsPage.constructor() - getUserAttributes: ', data);
-      this.attributes = data;
-      this.username = user.getUser().getUsername().toString();
-      for (let element of data) {
-        if (element.Name == "email") this.email = element.Value;
-        if (element.Name == "email_verified") this.email_verified = element.Value;
-      }
-      if (DEBUG_MODE) console.log('SettingsPage.constructor() - getUserAttributes: email, verified', this.email, this.email_verified);
-      this.refreshAvatar();
-    });
+    this.refreshAvatar();
 
 
   }
@@ -93,8 +83,7 @@ export class SettingsPage {
 
   logout() {
     if (DEBUG_MODE) console.log('SettingsPage.logout()');
-    this.user.logout();
-    this.app.getRootNav().setRoot(LoginPage);
+    this.globals.logout(this.navCtrl);
   }
 
   changePassword() {
@@ -118,8 +107,7 @@ export class SettingsPage {
         {
           text: 'Delete',
           handler: () => {
-            this.user.logout();
-            this.app.getRootNav().setRoot(LoginPage);
+            this.navCtrl.push(DeleteAccountPage);
           }
         }
       ]

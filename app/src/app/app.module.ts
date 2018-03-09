@@ -18,12 +18,12 @@ import { AccountForgotPasswordPage }   from '../pages/account-forgot-password/ac
 import { AccountPage }                 from '../pages/account/account';
 import { AccountSigninPage }           from '../pages/account-signin/account-signin';
 import { AccountSignupPage }           from '../pages/account-signup/account-signup';
-import { BookingsPage }                from '../pages/bookings/bookings';
-import { LocationListPage }            from '../pages/location-list/location-list';
-import { LocationAddPage }             from '../pages/location-add/location-add';
-import { ResourceListPage }            from '../pages/resource-list/resource-list';
-import { ResourceAddPage }             from '../pages/resource-add/resource-add';
-import { ResourceAvailabilityPage }    from '../pages/resource-availability/resource-availability';
+//import { BookingsPage }                from '../pages/bookings/bookings';
+//import { LocationListPage }            from '../pages/location-list/location-list';
+//import { LocationAddPage }             from '../pages/location-add/location-add';
+//import { ResourceListPage }            from '../pages/resource-list/resource-list';
+//import { ResourceAddPage }             from '../pages/resource-add/resource-add';
+//import { ResourceAvailabilityPage }    from '../pages/resource-availability/resource-availability';
 import { TabsPage }                    from '../pages/tabs/tabs';
 import { WelcomePage }                 from '../pages/welcome/welcome';
 import { BrowserModule }               from '@angular/platform-browser';
@@ -38,6 +38,7 @@ import {
 /* Addded by McDaniel */
 /* ------------------------------------------------------- */
 /* Added by McDaniel */
+import { Camera } from '@ionic-native/camera';
 import { ProfilePage } from '../pages/agility-profile/profile';
 import { ProfileEditPage } from '../pages/agility-profile-edit/profile-edit';
 import { JobsPage } from '../pages/agility-jobs/jobs';
@@ -97,12 +98,12 @@ export function httpFactory(
     AccountPage,
     AccountSigninPage,
     AccountSignupPage,
-    BookingsPage,
-    LocationAddPage,
-    LocationListPage,
-    ResourceAddPage,
-    ResourceListPage,
-    ResourceAvailabilityPage,
+//    BookingsPage,
+//    LocationAddPage,
+//    LocationListPage,
+//    ResourceAddPage,
+//    ResourceListPage,
+//    ResourceAvailabilityPage,
     MyApp,
     TabsPage,
     WelcomePage,
@@ -147,12 +148,12 @@ export function httpFactory(
     AccountPage,
     AccountSigninPage,
     AccountSignupPage,
-    BookingsPage,
-    LocationAddPage,
-    LocationListPage,
-    ResourceAddPage,
-    ResourceListPage,
-    ResourceAvailabilityPage,
+//    BookingsPage,
+//    LocationAddPage,
+//    LocationListPage,
+//    ResourceAddPage,
+//    ResourceListPage,
+//    ResourceAvailabilityPage,
     MyApp,
     TabsPage,
     WelcomePage,
@@ -184,6 +185,7 @@ export function httpFactory(
     BrowserTab,
     Deeplinks,
     ComponentsModule,
+    Camera,
     { provide: HttpService, useClass: HttpService },
     { provide: CustomAuthorizerClient, useClass: CustomAuthorizerClient },
     { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },

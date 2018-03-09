@@ -20,6 +20,10 @@ export class GlobalStateService {
   constructor(public alertCtrl: AlertController, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
   }
 
+  getUser() {
+    return CognitoUtil.getUserProfile();
+  }
+
   getUserId(): string {
     return CognitoUtil.getUserId();
   }
@@ -65,6 +69,10 @@ export class GlobalStateService {
     return this.isAdminRole() || this.viewAdminFeaturesOverride;
   }
 
+  isLoggedIn() {
+    if (CognitoUtil.getUserId() !== '') return true;
+    return false;
+  }
 
   isAdminRole(): boolean {
     return CognitoUtil.getUserGroup() == 'adminGroup';

@@ -34,7 +34,7 @@ export class TabsPage {
   }
 
   isLoggedIn() {
-    if (this.globals.userId !== '') return true;
+    if (this.globals.isLoggedIn()) return true;
     return false;
   }
 
