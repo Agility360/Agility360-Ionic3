@@ -1,5 +1,6 @@
 import { Component }         from '@angular/core';
 import { NavParams, Tab, Tabs } from 'ionic-angular';
+import { GlobalStateService } from '../../services/global-state.service';
 
 //import { BookingsPage }      from '../bookings/bookings';
 import { WelcomePage }       from '../welcome/welcome';
@@ -28,8 +29,13 @@ export class TabsPage {
   tab5Root = SettingsPage;
   mySelectedIndex: number;
 
-  constructor(navParams: NavParams) {
+  constructor(navParams: NavParams, public globals: GlobalStateService) {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
+  }
+
+  isLoggedIn() {
+    if (this.globals.userId !== '') return true;
+    return false;
   }
 
   showRoot(tabs : Tabs, index : number) {

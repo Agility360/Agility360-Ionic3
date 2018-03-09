@@ -26,8 +26,8 @@ export class AccountSigninPage {
   alertCtrl : AlertController = this.globals.getAlertController();
 
   public userData: IUserLogin = {
-    username: "user1",
-    password: "Test123!"
+    username: null,
+    password: null
   };
 
   signInButtonClicked: boolean = false;
@@ -87,12 +87,16 @@ export class AccountSigninPage {
       .then(() => {
         // Login was successful
         return this.globals.dismissLoader().then(() => {
-          return this.showLoginSuccessAlert(this.userData.username, () => {
-            this.globals.userId = this.globals.getUserId();
-            this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
-            this.navCtrl.popToRoot({animate: false});
+          this.globals.userId = this.globals.getUserId();
+          this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
+          this.navCtrl.popToRoot({animate: false});
+
+          //return this.showLoginSuccessAlert(this.userData.username, () => {
+          //  this.globals.userId = this.globals.getUserId();
+          //  this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
+          //  this.navCtrl.popToRoot({animate: false});
             // this.navCtrl.push(WelcomePage);
-          });
+          //});
         });
       }).catch((err: Error): void => {
         // Login was unsuccessful
@@ -178,22 +182,20 @@ export class AccountSigninPage {
           handler: data => {
             UserRegistrationService.confirmSignUp(data.verificationCode)
             .then(() => {
-              // this.showLoginSuccessAlert(this.userData.username, () => {
                 // now, sign in
               UserLoginService.signIn(this.userData).then(() => {
                 // Login was successful
-                this.showLoginSuccessAlert(this.userData.username, () => {
-                  this.globals.userId = this.globals.getUserId();
-                  this.navCtrl.popToRoot({animate: false});
+                //this.showLoginSuccessAlert(this.userData.username, () => {
+                //  this.globals.userId = this.globals.getUserId();
+                //  this.navCtrl.popToRoot({animate: false});
                   // this.navCtrl.push(WelcomePage);
-                });
+                //});
               }).catch((err: Error): void => {
                 // Login was unsuccessful
                 this.displayAlertError(err);
               });
               // this.navCtrl.popToRoot({animate: false});
               // this.navCtrl.pop();
-              // });
             }).catch((err: Error) => {
               console.error(err);
               this.showConfirmationFailureAlert(err);

@@ -3,7 +3,7 @@ import { NavController, LoadingController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { SignupPage } from '../agility-signup/signup';
 import { ConfirmPage } from '../agility-confirm/confirm';
-import { ForgotPasswordPage } from '../agility-forgot-password/forgot-password';
+import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
 import { User } from '../../providers/providers';
 
 export class LoginDetails {
@@ -102,7 +102,7 @@ export class LoginPage {
 
   forgotPassword() {
     if (DEBUG_MODE) console.log('LoginPage.forgotPassword()');
-    this.navCtrl.push(ForgotPasswordPage);
+    this.navCtrl.push(AccountForgotPasswordPage);
   }
 
 }
