@@ -22,8 +22,6 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Config } from '../../config/config';
 
 declare var AWS: any;
-//declare const aws_user_files_s3_bucket;
-//declare const aws_user_files_s3_bucket_region;
 
 
 @Component({
@@ -39,7 +37,6 @@ export class SettingsPage {
   public avatarPhoto: string;
   public selectedPhoto: Blob;
   public attributes: any;
-  public sub: string = null;
   public username: string;
   public email: string;
   public email_verified: boolean;
@@ -68,6 +65,7 @@ export class SettingsPage {
     this.attributes = [];
     this.avatarPhoto = null;
     this.selectedPhoto = null;
+
     this.s3 = new AWS.S3({
       'params': {
         'Bucket': Config['PROFILE_IMAGES_S3_BUCKET']
@@ -75,10 +73,7 @@ export class SettingsPage {
       'region': Config['REGION']
     });
 
-    this.sub = AWS.config.credentials.identityId;
-
     this.refreshAvatar();
-
 
   }
 
@@ -122,10 +117,20 @@ export class SettingsPage {
 
   refreshAvatar() {
     if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar()');
-    this.s3.getSignedUrl('getObject', { 'Key': 'protected/' + this.sub + '/avatar.jpg' }, (err, url) => {
+
+    /*
+    this.s3.getSignedUrl('getObject', { 'Key': 'protected/' + this.globals.getUserId() + '/avatar.jpg' }, (err, url) => {
       this.avatarPhoto = url;
       if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar() - url: ', url);
     });
+    */
+
+    this.globals.setCandidateAvatarUrl()
+    .then(() => {
+      if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar() - set was successful. now setting the image in this object.');
+      this.avatarPhoto = this.globals.getCandidateAvatarUrl();
+    });
+
   }
 
   dataURItoBlob(dataURI) {
@@ -185,7 +190,7 @@ export class SettingsPage {
 
     if (this.selectedPhoto) {
       this.s3.upload({
-        'Key': 'protected/' + this.sub + '/avatar.jpg',
+        'Key': 'protected/' + this.globals.getUserId() + '/avatar.jpg',
         'Body': this.selectedPhoto,
         'ContentType': 'image/jpeg'
       }).promise()

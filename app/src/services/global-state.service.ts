@@ -4,7 +4,9 @@ import { CognitoUtil, UserLoginService, LocalStorage } from './account-managemen
 import { Logger } from './logger.service';
 import { DEBUG_MODE } from '../shared/constants';
 import { WelcomePage } from '../pages/welcome/welcome';
+import { Config } from '../config/config';
 
+declare var AWS: any;
 
 @Injectable()
 export class GlobalStateService {
@@ -12,6 +14,7 @@ export class GlobalStateService {
 
   private viewAdminFeaturesOverride: boolean = false;
   private loader = null;
+  private s3: any;
 
   // this needs to be a variable in order to support two-way binding,
   // to refresh the Angular2 templates when this value changes
@@ -24,6 +27,20 @@ export class GlobalStateService {
     public loadingCtrl: LoadingController) {
 
       if (DEBUG_MODE) console.log('GlobalStateService.constructor()');
+      console.log('AWS.config.credentials', AWS.config.credentials);
+
+      //This prevents a race situation from occurring with assignment of AWS.config.credentials in account-management.service
+      UserLoginService.getAwsCredentials().then(() => {
+        this.s3 = new AWS.S3({
+          'credentials': AWS.config.credentials,
+          'params': {
+            'Bucket': Config['PROFILE_IMAGES_S3_BUCKET']
+          },
+          'region': Config['REGION']
+        });
+      });
+
+
 
   }
 
@@ -35,6 +52,29 @@ export class GlobalStateService {
     if (DEBUG_MODE) console.log('GlobalStateService.setCandidate()', candidate);
     CognitoUtil.setCandidate(candidate);
   }
+
+  getCandidateAvatarUrl() : string {
+    if (DEBUG_MODE) console.log('GlobalStateService.getCandidateAvatarUrl()');
+    return CognitoUtil.getCandidateAvatarUrl();
+  }
+
+  setCandidateAvatarUrl() {
+    if (DEBUG_MODE) console.log('CognitoUtil.setCandidateAvatarUrl()', this.s3);
+
+
+    let promise: Promise<void> = new Promise<void>((resolve, reject) => {
+
+      this.s3.getSignedUrl('getObject', { 'Key': 'protected/' + CognitoUtil.getUserId() + '/avatar.jpg' }, (err, url) => {
+        if (DEBUG_MODE) console.log('CognitoUtil.setCandidateAvatarUrl() - url: ', url, err);
+        CognitoUtil.setCandidateAvatarUrl(url);
+        resolve();
+      });
+
+    });
+    return promise;
+
+  }
+
 
   getUser() {
     return CognitoUtil.getUserProfile();

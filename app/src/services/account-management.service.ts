@@ -133,6 +133,23 @@ export class CognitoUtil {
     return {};
   }
 
+
+  public static setCandidateAvatarUrl(url: string) {
+    if (CognitoUtil.isSignedIn()) {
+      if (DEBUG_MODE) console.log('CognitoUtil.setCandidateAvatarUrl()', url);
+      LocalStorage.set('candidateAvatarUrl', url);
+    }
+  }
+
+  public static getCandidateAvatarUrl(): string {
+    if (CognitoUtil.isSignedIn()) {
+      if (DEBUG_MODE) console.log('CognitoUtil.getCandidateAvatarUrl()');
+      return LocalStorage.get('candidateAvatarUrl');
+    }
+    return null;
+  }
+
+
   public static getUserProfile(): Object {
     // Retrieve user profile attributes from local storage
     return LocalStorage.getObject('userProfile');

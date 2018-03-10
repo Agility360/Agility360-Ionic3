@@ -1,3 +1,15 @@
+.profile-list ion-icon {
+  color: color($colors, primary);
+}
+
+.account-list ion-icon {
+  color: color($colors, secondary);
+}
+
+.delete-list ion-icon {
+  color: color($colors, danger);
+}
+
 .avatar-input {
   display: none;
 }

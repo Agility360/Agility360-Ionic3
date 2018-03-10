@@ -24,7 +24,7 @@
     <input #avatar class="avatar-input" type="file" (change)="uploadFromFile($event)" />
   </div>
 
-  <ion-list padding>
+  <ion-list class="profile-list" padding>
     <button ion-item [navPush]="profilePage">
       <ion-icon name="contact" item-start></ion-icon>
       <ion-label>Candidate Profile</ion-label>
@@ -48,7 +48,7 @@
 
   </ion-list>
 
-  <ion-list padding>
+  <ion-list padding class="account-list" >
     <button ion-item [navPush]="passwordChangePage" no-lines>
       <ion-icon name="lock" item-start></ion-icon>
       <ion-label>Change Password</ion-label>
@@ -59,7 +59,7 @@
     </button>
   </ion-list>
 
-  <ion-list padding>
+  <ion-list padding class="delete-list" >
     <button ion-item [navPush]="privacyPolicyPage">
       <ion-icon name="" item-start></ion-icon>
       <ion-label>Privacy Policy</ion-label>
