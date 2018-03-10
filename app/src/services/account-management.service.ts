@@ -3,6 +3,7 @@ import {Http, Headers} from '@angular/http';
 import {Config} from '../config/config'
 import {Logger} from './logger.service';
 import * as sjcl from '../assets/vendor/sjcl';
+import { DEBUG_MODE } from '../shared/constants';
 
 declare const AWS: any;
 declare const AWSCognito: any;
@@ -115,6 +116,21 @@ export class CognitoUtil {
   public static getUserId(): string {
     // Retrieve user ID from local storage. Return null if it does not exist
     return LocalStorage.get('userId');
+  }
+
+  public static setCandidate(candidate: object) {
+    if (CognitoUtil.isSignedIn()) {
+      if (DEBUG_MODE) console.log('CognitoUtil.setCandidate()', candidate);
+      LocalStorage.setObject('candidate', candidate);
+    }
+  }
+
+  public static getCandidate(): object {
+    if (CognitoUtil.isSignedIn()) {
+      if (DEBUG_MODE) console.log('CognitoUtil.getCandidate()');
+      return LocalStorage.getObject('candidate');
+    }
+    return {};
   }
 
   public static getUserProfile(): Object {

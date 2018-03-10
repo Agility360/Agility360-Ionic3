@@ -49,7 +49,6 @@ export class JobHistoryProvider {
     if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.get() with username: ', this.username());
 
     return this.http.get(this.url(), apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => { return this.ProcessHttpmsgService.extractData(res) })
       .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
   }
@@ -59,7 +58,6 @@ export class JobHistoryProvider {
     if (DEBUG_MODE) console.log('JobHistoryProvider.add() - adding', job);
 
     return this.http.post(this.url(), job, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(
       res => {
         if (DEBUG_MODE) console.log('JobHistoryProvider.add() - success', res);
@@ -79,7 +77,6 @@ export class JobHistoryProvider {
     if (DEBUG_MODE) console.log('JobHistoryProvider.update() - updating', this.url() + job.id.toString(), apiHttpOptions, job);
 
     return this.http.patch(this.url() + job.id.toString(), job, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => {
         if (DEBUG_MODE) console.log('JobHistoryProvider.update() - updated. result: ', res);
         return this.ProcessHttpmsgService.extractData(res)
@@ -95,7 +92,6 @@ export class JobHistoryProvider {
     if (DEBUG_MODE) console.log('JobHistoryProvider.delete()', this.url() + id.toString(), apiHttpOptions);
 
     return this.http.delete(this.url() + id.toString(), apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => {
         if (DEBUG_MODE) console.log('JobHistoryProvider.delete() - success.', res);
         return this.ProcessHttpmsgService.extractData(res)

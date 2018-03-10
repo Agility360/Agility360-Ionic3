@@ -37,7 +37,6 @@ export class EducationHistoryProvider {
     if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.get() with username: ', this.username());
 
     return this.http.get(this.url(), apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => { return this.ProcessHttpmsgService.extractData(res) })
       .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
   }
@@ -47,7 +46,6 @@ export class EducationHistoryProvider {
     if (DEBUG_MODE) console.log('EducationHistoryProvider.add() - adding', obj);
 
     return this.http.post(this.url(), obj, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(
       res => {
         if (DEBUG_MODE) console.log('EducationHistoryProvider.add() - success', res);
@@ -66,7 +64,6 @@ export class EducationHistoryProvider {
   update(job: Education): Observable<Education> {
 
     return this.http.patch(this.url() + job.id.toString(), job, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => { return this.ProcessHttpmsgService.extractData(res) })
       .catch(error => {
         if (DEBUG_MODE) console.log('EducationHistoryProvider.update() - error while posting', this.url() + job.id.toString(), apiHttpOptions, job, error);
@@ -78,7 +75,6 @@ export class EducationHistoryProvider {
   delete(id: number): Observable<Education[]> {
 
     return this.http.delete(this.url() + id.toString(), apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => {
         if (DEBUG_MODE) console.log('EducationHistoryProvider.delete() - success.', res);
         return this.ProcessHttpmsgService.extractData(res)

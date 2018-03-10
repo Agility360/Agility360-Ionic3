@@ -3,7 +3,7 @@ import { NavParams, Tab, Tabs } from 'ionic-angular';
 import { GlobalStateService } from '../../services/global-state.service';
 
 //import { BookingsPage }      from '../bookings/bookings';
-import { WelcomePage }       from '../welcome/welcome';
+//import { WelcomePage }       from '../welcome/welcome';
 //import { LocationListPage } from '../location-list/location-list';
 //import { AccountPage }       from '../account/account';
 
@@ -22,7 +22,7 @@ import { NotificationsPage } from '../agility-notifications/notifications';
 export class TabsPage {
   // this tells the tabs component which Pages
   // should be each tab's root Page
-  tab1Root: any = WelcomePage;
+  tab1Root: any = JobsPage;
   tab2Root = NewsPage;
   tab3Root = ResumeTipsPage;
   tab4Root = NotificationsPage;

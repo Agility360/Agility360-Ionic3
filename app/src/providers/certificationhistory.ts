@@ -37,7 +37,6 @@ export class CertificationHistoryProvider {
     if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.get() with username: ', this.username());
 
     return this.http.get(this.url(), apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => { return this.ProcessHttpmsgService.extractData(res) })
       .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
   }
@@ -47,7 +46,6 @@ export class CertificationHistoryProvider {
     if (DEBUG_MODE) console.log('CertificationHistoryProvider.add() - adding', obj);
 
     return this.http.post(this.url(), obj, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(
       res => {
         if (DEBUG_MODE) console.log('CertificationHistoryProvider.add() - success', res);
@@ -68,7 +66,6 @@ export class CertificationHistoryProvider {
     if (DEBUG_MODE) console.log('CertificationHistoryProvider.update() - error while posting', this.url() + obj.id.toString(), apiHttpOptions, obj);
 
     return this.http.patch(this.url() + obj.id.toString(), obj, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => { return this.ProcessHttpmsgService.extractData(res) })
       .catch(error => {
         if (DEBUG_MODE) console.log('CertificationHistoryProvider.update() - error while posting', this.url() + obj.id.toString(), apiHttpOptions, obj, error);
@@ -80,7 +77,6 @@ export class CertificationHistoryProvider {
   delete(id: number): Observable<Certification[]> {
 
     return this.http.delete(this.url() + id.toString(), apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => {
         if (DEBUG_MODE) console.log('CertificationHistoryProvider.delete() - success.', res);
         return this.ProcessHttpmsgService.extractData(res)

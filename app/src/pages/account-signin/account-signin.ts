@@ -16,6 +16,10 @@ import {
 import { Logger } from '../../services/logger.service';
 import { Config } from '../../config/config';
 
+import { Candidate } from '../../shared/candidate';
+import { CandidateProvider } from '../../providers/candidate';
+
+
 @Component({
   templateUrl: 'account-signin.html',
 })
@@ -36,7 +40,10 @@ export class AccountSigninPage {
   signInButtonClicked: boolean = false;
   forgotPasswordButtonClicked: boolean = false;
 
-  constructor(public navCtrl: NavController, private globals: GlobalStateService) {
+  constructor(
+    public navCtrl: NavController,
+    private globals: GlobalStateService,
+    private candidateProvider: CandidateProvider) {
     if (DEBUG_MODE) console.log('AccountSigninPage.constructor()');
 
   }
@@ -96,16 +103,20 @@ export class AccountSigninPage {
         // Login was successful
         return this.globals.dismissLoader().then(() => {
           this.globals.userId = this.globals.getUserId();
+          // set candidate to local storage
+          this.candidateProvider.get()
+            .subscribe(
+            result => {
+              this.globals.setCandidate(result);
+              if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidate()', result);
+            },
+            err => {
+              if (DEBUG_MODE) console.log('AccountSigninPage.login() - error: ', err);
+            });
+
           this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
           this.navCtrl.setRoot(TabsPage);
           this.navCtrl.popToRoot({animate: false});
-
-          //return this.showLoginSuccessAlert(this.userData.username, () => {
-          //  this.globals.userId = this.globals.getUserId();
-          //  this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
-          //  this.navCtrl.popToRoot({animate: false});
-            // this.navCtrl.push(WelcomePage);
-          //});
         });
       }).catch((err: Error): void => {
         // Login was unsuccessful

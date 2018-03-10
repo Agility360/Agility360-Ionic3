@@ -36,7 +36,6 @@ export class StatesProvider {
     let url: string = this.url();
 
     return this.http.get(url, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => {
         if (DEBUG_MODE) console.log('StatesProvider.get() - success', res);
         return this.ProcessHttpmsgService.extractData(res)

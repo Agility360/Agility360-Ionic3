@@ -37,7 +37,6 @@ export class ProfessionsProvider {
     if (parent != null) url = this.url() + parent + '/';
 
     return this.http.get(url, apiHttpOptions)
-      .retry(HTTP_RETRIES)
       .map(res => {
         if (DEBUG_MODE) console.log('ProfessionsProvider.get() - success', res);
         return this.ProcessHttpmsgService.extractData(res)

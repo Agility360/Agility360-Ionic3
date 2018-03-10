@@ -27,6 +27,15 @@ export class GlobalStateService {
 
   }
 
+  getCandidate() : object {
+    if (DEBUG_MODE) console.log('GlobalStateService.getCandidate()');
+    return CognitoUtil.getCandidate();
+  }
+  setCandidate(candidate: object) {
+    if (DEBUG_MODE) console.log('GlobalStateService.setCandidate()', candidate);
+    CognitoUtil.setCandidate(candidate);
+  }
+
   getUser() {
     return CognitoUtil.getUserProfile();
   }

@@ -39,6 +39,8 @@ import {
 /* Addded by McDaniel */
 /* ------------------------------------------------------- */
 /* Added by McDaniel */
+import { GlobalStateService } from '../services/global-state.service';
+
 import { Camera } from '@ionic-native/camera';
 import { ProfilePage } from '../pages/agility-profile/profile';
 import { ProfileEditPage } from '../pages/agility-profile-edit/profile-edit';
@@ -183,6 +185,7 @@ export function httpFactory(
 
   ],
   providers: [
+    GlobalStateService,
     BrowserTab,
     Deeplinks,
     ComponentsModule,
