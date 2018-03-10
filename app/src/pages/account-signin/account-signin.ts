@@ -5,7 +5,10 @@ import { AlertController } from 'ionic-angular';
 import { GlobalStateService } from '../../services/global-state.service';
 import { AccountForgotPasswordPage } from '../account-forgot-password/account-forgot-password';
 import { AccountSignupPage } from '../account-signup/account-signup';
+import { DEBUG_MODE } from '../../shared/constants';
+
 // import { WelcomePage } from '../welcome/welcome';
+
 import {
   UserLoginService, IUserLogin, UserState,
   UserRegistrationService, CognitoUtil
@@ -32,6 +35,11 @@ export class AccountSigninPage {
 
   signInButtonClicked: boolean = false;
   forgotPasswordButtonClicked: boolean = false;
+
+  constructor(public navCtrl: NavController, private globals: GlobalStateService) {
+    if (DEBUG_MODE) console.log('AccountSigninPage.constructor()');
+
+  }
 
   onSignIn(form) {
     this.signInButtonClicked = true;
@@ -89,6 +97,7 @@ export class AccountSigninPage {
         return this.globals.dismissLoader().then(() => {
           this.globals.userId = this.globals.getUserId();
           this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
+          this.navCtrl.setRoot(TabsPage);
           this.navCtrl.popToRoot({animate: false});
 
           //return this.showLoginSuccessAlert(this.userData.username, () => {
@@ -139,7 +148,7 @@ export class AccountSigninPage {
     let alert = this.alertCtrl.create({
       title: 'Success!',
       subTitle: subtitle,
-      message: `Username: <b>${username}</b><br/>First name: <b>${this.globals.getUserFirstName()}</b><br/>Last name: <b>${this.globals.getUserLastName()}</b>`,
+      message: `Username: <b>${username}</b>`,
       buttons: [{
           text: 'OK',
           handler: data => {
@@ -255,9 +264,6 @@ export class AccountSigninPage {
     });
   }
 
-  constructor(public navCtrl: NavController, private globals: GlobalStateService) {
-
-  }
 
   ionViewDidEnter() {
     Logger.banner("Sign-In");

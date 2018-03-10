@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { AlertController } from 'ionic-angular';
-import { ToastController } from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
+import { App, AlertController, ToastController, LoadingController } from 'ionic-angular';
 import { CognitoUtil, UserLoginService, LocalStorage } from './account-management.service';
 import { Logger } from './logger.service';
+import { DEBUG_MODE } from '../shared/constants';
+import { WelcomePage } from '../pages/welcome/welcome';
 
 
 @Injectable()
@@ -17,7 +17,14 @@ export class GlobalStateService {
   // to refresh the Angular2 templates when this value changes
   public userId = '';
 
-  constructor(public alertCtrl: AlertController, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+  constructor(
+    public app: App,
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController) {
+
+      if (DEBUG_MODE) console.log('GlobalStateService.constructor()');
+
   }
 
   getUser() {
@@ -37,6 +44,7 @@ export class GlobalStateService {
     return CognitoUtil.getUsername();
   }
 
+/*
   getUserFirstName(): string {
     if (CognitoUtil.getUserProfile() && CognitoUtil.getUserProfile()['given_name']) {
       return (CognitoUtil.getUserProfile()['given_name'])
@@ -57,7 +65,7 @@ export class GlobalStateService {
     }
     return null;
   }
-
+*/
   getViewAdminFeaturesOverride() {
     return this.viewAdminFeaturesOverride;
   }
@@ -69,9 +77,8 @@ export class GlobalStateService {
     return this.isAdminRole() || this.viewAdminFeaturesOverride;
   }
 
-  isLoggedIn() {
-    if (CognitoUtil.getUserId() !== '') return true;
-    return false;
+  isSignedIn(): boolean {
+    return CognitoUtil.isSignedIn();
   }
 
   isAdminRole(): boolean {
@@ -82,14 +89,14 @@ export class GlobalStateService {
     return this.alertCtrl;
   }
 
-  logout(navController = null) {
+  logout() {
     Logger.banner("Sign Out");
     this.showLogoutAlert();
     UserLoginService.signOut();
     this.userId = '';
-    if (navController) {
-      navController.popToRoot({animate: false});
-    }
+
+    this.app.getRootNav().setRoot(WelcomePage);
+    this.app.getRootNav().popToRoot({animate: false});
   }
 
   showLogoutAlert(): void {

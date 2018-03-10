@@ -83,7 +83,7 @@ export class SettingsPage {
 
   logout() {
     if (DEBUG_MODE) console.log('SettingsPage.logout()');
-    this.globals.logout(this.navCtrl);
+    this.globals.logout();
   }
 
   changePassword() {

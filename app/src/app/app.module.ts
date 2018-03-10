@@ -2,6 +2,7 @@ import { NgModule }                    from '@angular/core';
 import { IonicApp,
          IonicModule,
          App,
+         NavController,
          LoadingController,
          AlertController }             from 'ionic-angular';
 import { MyApp }                       from './app.component';

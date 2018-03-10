@@ -6,7 +6,6 @@ import { LoginPage } from '../agility-login/login';
 import { CognitoUtil } from '../../services/account-management.service';
 import { GlobalStateService } from '../../services/global-state.service';
 
-
 /**
  * Generated class for the DeleteAccountPage page.
  *
@@ -23,7 +22,8 @@ export class DeleteAccountPage {
   private username: string;
   private cognitoUtil: any;
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public app: App,
     private alertCtrl: AlertController,
     private globals: GlobalStateService,
@@ -74,7 +74,7 @@ export class DeleteAccountPage {
                 });
 
                 alert.present(alert);
-                this.globals.logout(this.navCtrl);
+                this.globals.logout();
             });
 
           }

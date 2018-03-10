@@ -73,7 +73,7 @@ export class CognitoUtil {
           break;
       }
       headers.append('Content-Type', 'application/x-www-form-urlencoded');
-      let body = 
+      let body =
         'grant_type=authorization_code&' +
         'client_id=' + CognitoUtil._CLIENT_ID + '&' +
         'redirect_uri=' + requestRedirectUri + '&' +
@@ -127,6 +127,10 @@ export class CognitoUtil {
     return LocalStorage.get("userGroup");
   }
 
+  public static isSignedIn(): boolean {
+    if (this.getUserState() == UserState.SignedIn) return true;
+    return false;
+  }
   public static getUserState(): UserState {
     // Retrieve user state from local storage. Return null if it does not exist
     switch (parseInt(LocalStorage.get('userState'))) {
@@ -530,7 +534,7 @@ export class UserLoginService {
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
       // TODO: Integrate this method as needed into the overall module
       // Add the User's Id token to the Cognito credentials login map
-      let logins = {};  
+      let logins = {};
       logins['cognito-idp.' + CognitoUtil.getRegion() + '.amazonaws.com/' + CognitoUtil.getUserPoolId()] = LocalStorage.get('userTokens.idToken');;
 
       // Set Cognito Identity Pool details

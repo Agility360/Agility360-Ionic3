@@ -33,9 +33,8 @@ export class TabsPage {
     this.mySelectedIndex = navParams.data.tabIndex || 0;
   }
 
-  isLoggedIn() {
-    if (this.globals.isLoggedIn()) return true;
-    return false;
+  isLoggedIn(): boolean {
+    return this.globals.isSignedIn();
   }
 
   showRoot(tabs : Tabs, index : number) {

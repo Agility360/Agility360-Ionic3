@@ -11,6 +11,7 @@ import { Logger } from '../../services/logger.service';
 import { BrowserTab } from '@ionic-native/browser-tab';
 import { Deeplinks } from '@ionic-native/deeplinks';
 import { Platform } from 'ionic-angular';
+import { DEBUG_MODE } from '../../shared/constants';
 
 @Component({
   selector: 'navbar',
@@ -28,6 +29,8 @@ export class NavbarComponent {
   cognitoUtil = null;
 
   constructor(public navCtrl: NavController, public globals: GlobalStateService, private browserTab: BrowserTab, private deeplinks: Deeplinks, private http: Http, private platform: Platform) {
+    if (DEBUG_MODE) console.log('NavbarComponent.constructor()');
+
     // hack workaround: instantiation so that the code can be loaded in time for the IonViewDidEnter() method
     this.cognitoUtil = new CognitoUtil();
 
@@ -139,7 +142,7 @@ export class NavbarComponent {
     let alert = this.alertCtrl.create({
       title: 'Success!',
       subTitle: subtitle,
-      message: `Username: <b>${username}</b><br/>First name: <b>${this.globals.getUserFirstName()}</b><br/>Last name: <b>${this.globals.getUserLastName()}</b>`,
+      message: `Username: <b>${username}</b>`,
       buttons: [{
         text: 'OK',
         handler: data => {

@@ -1,20 +1,24 @@
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { TabsPage } from '../pages/tabs/tabs';
+/* import { TabsPage } from '../pages/tabs/tabs'; */
+import { WelcomePage } from '../pages/welcome/welcome';
 import { UserRegistrationService }     from '../services/account-management.service';
 import { Logger }     from '../services/logger.service';
 import { GlobalStateService } from '../services/global-state.service';
+import { DEBUG_MODE } from '../shared/constants';
 
 @Component({
   template: `<ion-nav [root]="rootPage"></ion-nav>`,
   providers: [UserRegistrationService, GlobalStateService, Logger]
 })
 export class MyApp {
-  rootPage = TabsPage;
+  rootPage = WelcomePage;
 
   constructor(platform: Platform) {
+    if (DEBUG_MODE) console.log('MyApp.constructor()');
     platform.ready().then(() => {
+      if (DEBUG_MODE) console.log('MyApp.constructor() => platform.ready()');
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       new StatusBar().styleDefault();
