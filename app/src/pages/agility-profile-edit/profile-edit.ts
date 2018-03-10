@@ -11,6 +11,8 @@ import { CandidateProvider } from '../../providers/candidate';
 import { IndustriesProvider } from '../../providers/industries';
 import { ProfessionsProvider } from '../../providers/professions';
 import { StatesProvider } from '../../providers/states';
+import { NavbarComponent } from '../../components/navbar';
+
 
 @IonicPage()
 @Component({

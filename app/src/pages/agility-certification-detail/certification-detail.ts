@@ -4,6 +4,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { Certification } from '../../shared/certification';
 import { CertificationHistoryProvider } from '../../providers/certificationhistory';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NavbarComponent } from '../../components/navbar';
 
 
 @IonicPage()

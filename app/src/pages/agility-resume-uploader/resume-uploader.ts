@@ -8,6 +8,7 @@ import { Candidate } from '../../shared/candidate';
 import { CandidateProvider } from '../../providers/candidate';
 import { S3File } from '../../shared/s3file';
 import { GlobalStateService } from '../../services/global-state.service';
+import { NavbarComponent } from '../../components/navbar';
 
 declare var AWS: any;
 declare const aws_user_files_s3_bucket;
@@ -34,6 +35,7 @@ export class ResumeUploaderPage {
   private fileMetaData: any;
   public errMess: string;
   private documentViewerOptions: any;
+  public pageTitle = "Resume Uploader";
 
   /* AWS variables */
   private s3: any;

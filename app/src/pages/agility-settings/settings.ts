@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { LoadingController, NavController, App, AlertController } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
+import { NavbarComponent } from '../../components/navbar';
 
 import { LoginPage } from '../agility-login/login';
 import { ProfilePage } from '../agility-profile/profile';
@@ -32,6 +33,7 @@ export class SettingsPage {
 
   @ViewChild('avatar') avatarInput;
   provider: CandidateProvider;
+  public pageTitle = "Candidate Profile";
 
   private s3: any;
   public avatarPhoto: string;

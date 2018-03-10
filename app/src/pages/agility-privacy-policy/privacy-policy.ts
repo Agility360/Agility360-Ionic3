@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
+import { NavbarComponent } from '../../components/navbar';
+
 
 @IonicPage()
 @Component({
@@ -14,6 +16,7 @@ export class PrivacyPolicyPage {
   posts: WPPost[];
   errMess: string;
   showLoading: boolean;
+  public pageTitle = "Privacy Policy";
 
   constructor(
     public navCtrl: NavController,

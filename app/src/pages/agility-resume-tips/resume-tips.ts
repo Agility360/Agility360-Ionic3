@@ -14,6 +14,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
+import { NavbarComponent } from '../../components/navbar';
 
 @IonicPage()
 @Component({
@@ -25,6 +26,8 @@ export class ResumeTipsPage {
 
   posts: WPPost[];
   errMess: string;
+  public pageTitle = "Resume Tips";
+
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

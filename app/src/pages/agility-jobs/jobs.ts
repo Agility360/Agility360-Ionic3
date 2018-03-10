@@ -15,6 +15,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
 import { JobsDetailPage } from '../agility-jobs-detail/jobs-detail';
+import { NavbarComponent } from '../../components/navbar';
 
 @IonicPage()
 @Component({
@@ -27,6 +28,7 @@ export class JobsPage {
   posts: WPPost[];
   errMess: string;
   showLoading: boolean;
+  public pageTitle = "Jobs";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

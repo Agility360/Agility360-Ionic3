@@ -8,6 +8,9 @@ import { NavbarComponent } from '../../components/navbar';
   templateUrl: 'welcome.html',
 })
 export class WelcomePage {
+
+  public pageTitle = "Welcome";
+
   constructor(public navCtrl: NavController, public globals: GlobalStateService) {
 
   }

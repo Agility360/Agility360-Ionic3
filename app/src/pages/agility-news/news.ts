@@ -15,6 +15,8 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
 import { NewsDetailPage } from '../agility-news-detail/news-detail';
+import { NavbarComponent } from '../../components/navbar';
+
 
 @IonicPage()
 @Component({
@@ -26,6 +28,7 @@ export class NewsPage {
 
   posts: WPPost[];
   errMess: string;
+  public pageTitle = "News";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

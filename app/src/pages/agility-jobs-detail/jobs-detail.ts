@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
+import { NavbarComponent } from '../../components/navbar';
 
 
 @IonicPage()
@@ -13,6 +14,7 @@ export class JobsDetailPage {
 
   post: WPPost;
   errMess: string;
+  public pageTitle = "Jobs";
 
   constructor(
       public navCtrl: NavController,

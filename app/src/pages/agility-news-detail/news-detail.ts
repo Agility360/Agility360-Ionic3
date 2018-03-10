@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
+import { NavbarComponent } from '../../components/navbar';
 
 @IonicPage()
 @Component({
@@ -12,6 +13,7 @@ export class NewsDetailPage {
 
   post: WPPost;
   errMess: string;
+  public pageTitle = "News";
 
   constructor(
       public navCtrl: NavController,

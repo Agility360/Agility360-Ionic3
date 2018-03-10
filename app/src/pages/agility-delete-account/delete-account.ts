@@ -5,6 +5,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { LoginPage } from '../agility-login/login';
 import { CognitoUtil } from '../../services/account-management.service';
 import { GlobalStateService } from '../../services/global-state.service';
+import { NavbarComponent } from '../../components/navbar';
 
 /**
  * Generated class for the DeleteAccountPage page.

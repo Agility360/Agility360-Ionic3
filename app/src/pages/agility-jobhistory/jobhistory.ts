@@ -4,6 +4,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { Job } from '../../shared/job';
 import { JobHistoryProvider } from '../../providers/jobhistory';
 import { JobhistoryDetailPage } from '../agility-jobhistory-detail/jobhistory-detail';
+import { NavbarComponent } from '../../components/navbar';
 
 
 @IonicPage()

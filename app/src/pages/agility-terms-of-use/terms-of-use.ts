@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
+import { NavbarComponent } from '../../components/navbar';
 
 
 @IonicPage()
@@ -15,6 +16,7 @@ export class TermsOfUsePage {
   posts: WPPost[];
   errMess: string;
   showLoading: boolean;
+  public pageTitle = "Terms of Use";
 
   constructor(
     public navCtrl: NavController,

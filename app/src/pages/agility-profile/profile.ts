@@ -4,6 +4,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { Candidate } from '../../shared/candidate';
 import { CandidateProvider } from '../../providers/candidate';
 import { ProfileEditPage } from '../agility-profile-edit/profile-edit';
+import { NavbarComponent } from '../../components/navbar';
 
 /**
  * Generated class for the ProfilePage page.

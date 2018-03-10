@@ -10,6 +10,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { Education } from '../../shared/education';
 import { EducationHistoryProvider } from '../../providers/educationhistory';
 import { EducationDetailPage } from '../agility-education-detail/education-detail';
+import { NavbarComponent } from '../../components/navbar';
 
 
 @IonicPage()

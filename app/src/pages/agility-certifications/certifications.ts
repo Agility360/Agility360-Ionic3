@@ -4,6 +4,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { Certification } from '../../shared/certification';
 import { CertificationHistoryProvider } from '../../providers/certificationhistory';
 import { CertificationDetailPage } from '../agility-certification-detail/certification-detail';
+import { NavbarComponent } from '../../components/navbar';
 
 
 @IonicPage()

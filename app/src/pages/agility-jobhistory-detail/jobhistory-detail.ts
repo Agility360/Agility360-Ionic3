@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DEBUG_MODE } from '../../shared/constants';
 import { Job } from '../../shared/job';
 import { JobHistoryProvider } from '../../providers/jobhistory';
+import { NavbarComponent } from '../../components/navbar';
 
 @IonicPage()
 @Component({
