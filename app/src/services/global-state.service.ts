@@ -5,6 +5,7 @@ import { Logger } from './logger.service';
 import { DEBUG_MODE } from '../shared/constants';
 import { WelcomePage } from '../pages/welcome/welcome';
 import { Config } from '../config/config';
+import { Candidate } from '../shared/candidate';
 
 declare var AWS: any;
 
@@ -44,11 +45,12 @@ export class GlobalStateService {
 
   }
 
-  getCandidate() : object {
+  getCandidate() : Candidate {
     if (DEBUG_MODE) console.log('GlobalStateService.getCandidate()');
-    return CognitoUtil.getCandidate();
+    return <Candidate>CognitoUtil.getCandidate();
   }
-  setCandidate(candidate: object) {
+
+  setCandidate(candidate: Candidate) {
     if (DEBUG_MODE) console.log('GlobalStateService.setCandidate()', candidate);
     CognitoUtil.setCandidate(candidate);
   }
@@ -59,13 +61,13 @@ export class GlobalStateService {
   }
 
   setCandidateAvatarUrl() {
-    if (DEBUG_MODE) console.log('CognitoUtil.setCandidateAvatarUrl()', this.s3);
+    if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl()', this.s3);
 
 
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
 
       this.s3.getSignedUrl('getObject', { 'Key': 'protected/' + CognitoUtil.getUserId() + '/avatar.jpg' }, (err, url) => {
-        if (DEBUG_MODE) console.log('CognitoUtil.setCandidateAvatarUrl() - url: ', url, err);
+        if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl() - successfully retrieve signed URL from S3: ', url, err);
         CognitoUtil.setCandidateAvatarUrl(url);
         resolve();
       });
@@ -93,28 +95,19 @@ export class GlobalStateService {
     return CognitoUtil.getUsername();
   }
 
-/*
+
   getUserFirstName(): string {
-    if (CognitoUtil.getUserProfile() && CognitoUtil.getUserProfile()['given_name']) {
-      return (CognitoUtil.getUserProfile()['given_name'])
-    }
-    return '';
+    return this.getCandidate().first_name;
   }
 
   getUserLastName(): string {
-    if (CognitoUtil.getUserProfile() && CognitoUtil.getUserProfile()['family_name']) {
-      return CognitoUtil.getUserProfile()['family_name'];
-    }
-    return null;
+    return this.getCandidate().last_name;
   }
 
   getUserFullName(): string {
-    if (CognitoUtil.getUserProfile() && CognitoUtil.getUserProfile()['given_name'] && CognitoUtil.getUserProfile()['family_name']) {
-      return CognitoUtil.getUserProfile()['given_name'] + ' ' + CognitoUtil.getUserProfile()['family_name'];
-    }
-    return null;
+    return this.getCandidate().first_name + ' ' + this.getCandidate().last_name;
   }
-*/
+
   getViewAdminFeaturesOverride() {
     return this.viewAdminFeaturesOverride;
   }
@@ -138,9 +131,11 @@ export class GlobalStateService {
     return this.alertCtrl;
   }
 
-  logout() {
-    Logger.banner("Sign Out");
-    this.showLogoutAlert();
+  logout(quiet?: boolean) {
+    if (!quiet) {
+      Logger.banner("Sign Out");
+      this.showLogoutAlert();
+    }
     UserLoginService.signOut();
     this.userId = '';
 

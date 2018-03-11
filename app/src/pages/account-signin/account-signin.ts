@@ -101,18 +101,28 @@ export class AccountSigninPage {
       UserLoginService.signIn(this.userData)
       .then(() => {
         // Login was successful
+
+        // set candidate to local storage
+        this.candidateProvider.get()
+          .subscribe(
+          result => {
+            if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidate(). Setting candidate to local storage.', result);
+            this.globals.setCandidate(result);
+
+            if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidateAvatarUrl(). Setting candidate profile image signed URL to local storage.');
+            this.globals.setCandidateAvatarUrl()
+            .then(() => {
+              if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidateAvatarUrl(). signed URL should now be set to local storage.');
+            });
+
+
+          },
+          err => {
+            if (DEBUG_MODE) console.log('AccountSigninPage.login() - error: ', err);
+          });
+
         return this.globals.dismissLoader().then(() => {
           this.globals.userId = this.globals.getUserId();
-          // set candidate to local storage
-          this.candidateProvider.get()
-            .subscribe(
-            result => {
-              this.globals.setCandidate(result);
-              if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidate()', result);
-            },
-            err => {
-              if (DEBUG_MODE) console.log('AccountSigninPage.login() - error: ', err);
-            });
 
           this.globals.setViewAdminFeaturesOverride(this.globals.isAdminRole());
           this.navCtrl.setRoot(TabsPage);

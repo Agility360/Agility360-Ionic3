@@ -27,8 +27,16 @@ export class NavbarComponent {
   alertCtrl : AlertController = this.globals.getAlertController();
   initialized = false;
   cognitoUtil = null;
+  profileImageUrl: string;
 
-  constructor(public navCtrl: NavController, public globals: GlobalStateService, private browserTab: BrowserTab, private deeplinks: Deeplinks, private http: Http, private platform: Platform) {
+  constructor(
+    public navCtrl: NavController,
+    public globals: GlobalStateService,
+    private browserTab: BrowserTab,
+    private deeplinks: Deeplinks,
+    private http: Http,
+    private platform: Platform) {
+
     if (DEBUG_MODE) console.log('NavbarComponent.constructor()');
 
     // hack workaround: instantiation so that the code can be loaded in time for the IonViewDidEnter() method
@@ -36,6 +44,8 @@ export class NavbarComponent {
 
     this.platform.ready().then((readySource) => {
       // Platform now ready, execute any required native code
+
+      this.profileImageUrl = this.globals.getCandidateAvatarUrl();
 
       if (this.platform.is('cordova')) {
         // App running on mobile device; Deep linking supported with custom URL schemes

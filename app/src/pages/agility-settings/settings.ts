@@ -117,6 +117,7 @@ export class SettingsPage {
 
   refreshAvatar() {
     if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar()');
+    this.avatarPhoto = this.globals.getCandidateAvatarUrl();
 
     /*
     this.s3.getSignedUrl('getObject', { 'Key': 'protected/' + this.globals.getUserId() + '/avatar.jpg' }, (err, url) => {
@@ -125,11 +126,13 @@ export class SettingsPage {
     });
     */
 
+    /*
     this.globals.setCandidateAvatarUrl()
     .then(() => {
       if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar() - set was successful. now setting the image in this object.');
       this.avatarPhoto = this.globals.getCandidateAvatarUrl();
     });
+    */
 
   }
 

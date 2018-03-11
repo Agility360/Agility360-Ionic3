@@ -1,5 +1,16 @@
   <ion-navbar>
-    <ion-title>{{ title }}</ion-title>
+    <ion-title>
+
+      <ion-row>
+          <ion-col col-auto>
+              <span left *ngIf="profileImageUrl" class="avatar" [style.background-image]="'url('+ profileImageUrl +')'"></span>
+          </ion-col>
+          <ion-col col-auto>
+      	{{ title }}
+          </ion-col>
+      </ion-row>
+
+    </ion-title>
     <ion-buttons right *ngIf="!globals.isSignedIn()">
       <button ion-button *ngIf="showSignup" icon-left class="myButton" [navPush]="accountSignupPage">
         <ion-icon name="contact"></ion-icon>Sign-Up

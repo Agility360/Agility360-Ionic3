@@ -15,13 +15,19 @@ import { DEBUG_MODE } from '../shared/constants';
 export class MyApp {
   rootPage = WelcomePage;
 
-  constructor(platform: Platform) {
+  constructor(
+    platform: Platform,
+    globals: GlobalStateService
+  ) {
     if (DEBUG_MODE) console.log('MyApp.constructor()');
     platform.ready().then(() => {
       if (DEBUG_MODE) console.log('MyApp.constructor() => platform.ready()');
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       new StatusBar().styleDefault();
+      if (globals.isSignedIn()) {
+        globals.logout(true);
+      }
     });
   }
 }

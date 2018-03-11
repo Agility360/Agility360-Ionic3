@@ -16,6 +16,7 @@ import { WPPost } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
 import { JobsDetailPage } from '../agility-jobs-detail/jobs-detail';
 import { NavbarComponent } from '../../components/navbar';
+import { GlobalStateService } from '../../services/global-state.service';
 
 @IonicPage()
 @Component({
@@ -32,9 +33,12 @@ export class JobsPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private wpservice: WordpressProvider
+    private wpservice: WordpressProvider,
+    public globals: GlobalStateService
   ) {
     if (DEBUG_MODE) console.log('JobsPage.constructor()');
+
+    this.pageTitle = globals.getUserFirstName() + "'s Job Opportunities"
     this.showLoading = true;
     this.getPosts();
   }
