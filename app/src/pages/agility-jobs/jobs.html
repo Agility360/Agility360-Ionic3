@@ -38,6 +38,11 @@
     </ion-list> <!-- *ngFor="let post of posts" -->
   </div> <!-- *ngIf="posts" -->
 
+  <div>
+    <p>Job Applications array:</p>
+    <p>{{ this.jobApplications }}</p>
+  </div>
+
   <div *ngIf="errMess">
     <h2>Error</h2>
     <h4>{{ errMess }}</h4>

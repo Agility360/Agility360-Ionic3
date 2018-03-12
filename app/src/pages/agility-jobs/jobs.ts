@@ -13,7 +13,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
 import { WPPost } from '../../shared/wppost';
+import { JobApplications } from '../../shared/job-applications';
 import { WordpressProvider } from '../../providers/wordpress';
+import { JobApplicationsProvider } from '../../providers/job-applications';
 import { JobsDetailPage } from '../agility-jobs-detail/jobs-detail';
 import { NavbarComponent } from '../../components/navbar';
 import { GlobalStateService } from '../../services/global-state.service';
@@ -27,29 +29,51 @@ import { GlobalStateService } from '../../services/global-state.service';
 export class JobsPage {
 
   posts: WPPost[];
+  jobApplications: JobApplications[];
   errMess: string;
   showLoading: boolean;
   public pageTitle = "Jobs";
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private wpservice: WordpressProvider,
+    private wpService: WordpressProvider,
+    private jobApplicationsService: JobApplicationsProvider,
     public globals: GlobalStateService
   ) {
     if (DEBUG_MODE) console.log('JobsPage.constructor()');
 
     this.pageTitle = globals.getUserFirstName() + "'s Job Opportunities"
     this.showLoading = true;
-    this.getPosts();
+    this.refreshData(null);
   }
 
   refreshData(refresher) {
     setTimeout(() => {
       if (DEBUG_MODE) console.log('JobsPage.refreshData()');
+      this.getJobApplications();
       this.getPosts();
-      refresher.complete();
+      if (refresher) {
+        refresher.complete();
+      }
     }, 500);
   }
+
+  getJobApplications() {
+    if (DEBUG_MODE) console.log('JobsPage.getJobApplications()');
+    this.errMess = null;
+
+    this.jobApplicationsService.get()
+      .subscribe(
+      results => {
+        if (DEBUG_MODE) console.log('JobsPage.getJobApplications() - success', results);
+        this.jobApplications = results;
+      },
+      err => {
+        if (DEBUG_MODE) console.log('JobsPage.getJobApplications() - error', err);
+        this.errMess = <any>err;
+      });
+  }
+
 
   getPosts() {
     if (DEBUG_MODE) console.log('JobsPage.getPosts()');
@@ -60,13 +84,13 @@ export class JobsPage {
         paramsNews()
         paramsResume()
     */
-    let params = this.wpservice.paramsJobs();
+    let params = this.wpService.paramsJobs();
 
-    this.wpservice.getPosts(params)
+    this.wpService.getPosts(params)
       .subscribe(
       results => {
         if (DEBUG_MODE) console.log('JobsPage.getPosts() - success', results);
-        this.posts = results
+        this.posts = results;
         var self = this;
         this.posts.forEach(function(post, id) {
           /* if (DEBUG_MODE) console.log(post); */
@@ -75,7 +99,7 @@ export class JobsPage {
       },
       err => {
         if (DEBUG_MODE) console.log('JobsPage.getPosts() - error', err);
-        this.errMess = <any>err
+        this.errMess = <any>err;
       });
   }
 
@@ -83,11 +107,11 @@ export class JobsPage {
 
     if (DEBUG_MODE) console.log('JobsPage.getMedia()', post);
     if (post.featured_media == 0) {
-      post.featured_media_obj = this.wpservice.newMedia();
+      post.featured_media_obj = this.wpService.newMedia();
       return;
     };
 
-    this.wpservice.getMedia(post.featured_media)
+    this.wpService.getMedia(post.featured_media)
       .subscribe(
       results => {
         if (DEBUG_MODE) console.log('JobsPage.getMedia() - success', results);

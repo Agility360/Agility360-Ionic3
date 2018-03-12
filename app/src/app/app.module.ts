@@ -69,10 +69,12 @@ import { CandidateProvider } from '../providers/candidate';
 import { CertificationHistoryProvider } from '../providers/certificationhistory';
 import { EducationHistoryProvider } from '../providers/educationhistory';
 import { JobHistoryProvider } from '../providers/jobhistory';
+import { JobApplicationsProvider } from '../providers/job-applications';
 import { WordpressProvider } from '../providers/wordpress';
 import { IndustriesProvider } from '../providers/industries';
 import { ProfessionsProvider } from '../providers/professions';
 import { StatesProvider } from '../providers/states';
+
 import { SafeHtmlPipe } from "../shared/pipe.safehtml";
 import { XHRBackend, RequestOptions } from '@angular/http';
 import { TextMaskModule } from 'angular2-text-mask';
@@ -202,6 +204,7 @@ export function httpFactory(
       CertificationHistoryProvider,
       EducationHistoryProvider,
       JobHistoryProvider,
+      JobApplicationsProvider,
       { provide: 'apiURL', useValue: apiURL },
       { provide: 'CMSURL', useValue: cmsURL },
       WordpressProvider,
