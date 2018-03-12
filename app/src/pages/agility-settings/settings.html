@@ -45,21 +45,13 @@
       <ion-icon name="cloud-upload" item-start></ion-icon>
       <ion-label>Resume Uploader</ion-label>
     </button>
-
   </ion-list>
 
-  <ion-list padding class="account-list" >
-    <button ion-item [navPush]="passwordChangePage" no-lines>
-      <ion-icon name="lock" item-start></ion-icon>
-      <ion-label>Change Password</ion-label>
+  <ion-list padding class="profile-list" >
+    <button ion-item [navPush]="accountPage">
+      <ion-icon name="folder" item-start></ion-icon>
+      <ion-label>Account Management</ion-label>
     </button>
-    <button ion-item (click)="logout()" no-lines>
-      <ion-icon name="log-out" item-start></ion-icon>
-      <ion-label>Logout</ion-label>
-    </button>
-  </ion-list>
-
-  <ion-list padding class="delete-list" >
     <button ion-item [navPush]="privacyPolicyPage">
       <ion-icon name="" item-start></ion-icon>
       <ion-label>Privacy Policy</ion-label>
@@ -67,10 +59,6 @@
     <button ion-item [navPush]="termsOfUsePage">
       <ion-icon name="" item-start></ion-icon>
       <ion-label>Terms of Use</ion-label>
-    </button>
-    <button ion-item [navPush]="deleteAccountPage">
-      <ion-icon name="trash" item-start></ion-icon>
-      <ion-label color="danger">Delete Account</ion-label>
     </button>
   </ion-list>
 

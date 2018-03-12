@@ -1,19 +1,17 @@
 import { Component, ViewChild } from '@angular/core';
 import { LoadingController, NavController, App, AlertController } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
-import { NavbarComponent } from '../../components/navbar';
+//import { NavbarComponent } from '../../components/navbar';
 
-import { LoginPage } from '../agility-login/login';
+//import { LoginPage } from '../agility-login/login';
 import { ProfilePage } from '../agility-profile/profile';
 import { CertificationsPage } from '../agility-certifications/certifications';
 import { EducationPage } from '../agility-education/education';
 import { JobhistoryPage } from '../agility-jobhistory/jobhistory';
 import { ResumeUploaderPage } from '../agility-resume-uploader/resume-uploader';
-import { AccountChangePasswordPage } from '../account-change-password/account-change-password';
-import { DeleteAccountPage } from '../agility-delete-account/delete-account';
 import { PrivacyPolicyPage } from '../agility-privacy-policy/privacy-policy';
 import { TermsOfUsePage } from '../agility-terms-of-use/terms-of-use';
-import { HttpErrorPage } from '../agility-http-error/http-error';
+import { AccountPage } from '../account/account';
 
 import { GlobalStateService } from '../../services/global-state.service';
 import { CandidateProvider } from '../../providers/candidate';
@@ -41,19 +39,19 @@ export class SettingsPage {
   public email: string;
   public email_verified: boolean;
 
+  public accountPage = AccountPage;
   public profilePage = ProfilePage;
   public certificationsPage = CertificationsPage;
   public educationPage = EducationPage;
   public jobhistoryPage = JobhistoryPage;
   public resumeUploaderPage = ResumeUploaderPage;
-  public AccountChangePasswordPage = AccountChangePasswordPage;
-  public deleteAccountPage = DeleteAccountPage;
   public privacyPolicyPage = PrivacyPolicyPage;
   public termsOfUsePage = TermsOfUsePage;
-  public httpErrorPage = HttpErrorPage;
+//  public httpErrorPage = HttpErrorPage;
 
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private globals: GlobalStateService,
     public app: App,
     public camera: Camera,
@@ -81,43 +79,6 @@ export class SettingsPage {
     if (DEBUG_MODE) console.log('SettingsPage.constructor() - user:', globals.getUser());
   }
 
-
-  logout() {
-    if (DEBUG_MODE) console.log('SettingsPage.logout()');
-    this.globals.logout();
-  }
-
-  changePassword() {
-    if (DEBUG_MODE) console.log('SettingsPage.changePassword()');
-    this.app.getRootNav().setRoot(AccountChangePasswordPage);
-  }
-
-  deleteAccount() {
-    if (DEBUG_MODE) console.log('SettingsPage.deleteAccount()');
-    let alert = this.alertCtrl.create({
-      title: 'Delete Account',
-      message: 'Are you sure you want to delete your account? This cannot be undone.',
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            if (DEBUG_MODE) console.log('Delete cancelled.');
-          }
-        },
-        {
-          text: 'Delete',
-          handler: () => {
-            this.navCtrl.push(DeleteAccountPage);
-          }
-        }
-      ]
-    }
-    );
-
-    alert.present();
-
-  }
 
   refreshAvatar() {
     if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar()');

@@ -1,0 +1,16 @@
+page-account {
+
+  #list1 {
+      margin-top: 100px;
+  }
+
+  .account-list ion-icon {
+    color: color($colors, secondary);
+  }
+
+  .delete-list ion-icon {
+    color: color($colors, danger);
+  }
+
+
+}

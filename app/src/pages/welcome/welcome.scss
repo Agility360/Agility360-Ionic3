@@ -1,38 +1,11 @@
-.myButton {
-  font-size: 12px;
-}
 
 welcome {
 
-  ion-content {
-    font-size: 16px;
-  }
-
   .main {
-    background-color: #DEDEDE;
+      background: url("https://cdn.agility360app.net/") center center no-repeat;
+      background-size: 200px 200px;
+      background-blend-mode: lighten;
   }
 
-  #top {
-    background: #DEDEDE;
-    color: black;
-    padding-left: 20px;
-    padding-top: 4px;
-  }
-  .title {
-    color: black;
-    font-weight: bold;
-    font-size: 20px;
-  }
-  .full-bleed-background-image {
-    // font-size: 44px;
-    background-color:#EFEFEA;
-    background-image: url("../assets/images/conference_room_unsplash.jpg");
-    background-size:cover;
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-  .image_attribution {
-    font-size: 12px;
-    color:#AAAAAA;
-  }
+
 }
