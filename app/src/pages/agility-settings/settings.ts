@@ -74,7 +74,11 @@ export class SettingsPage {
     });
 
     this.refreshAvatar();
+    this.username = globals.getUsername();
+    this.email = globals.getUser()['email'];
+    this.email_verified = globals.getUser()['email_verified'];
 
+    if (DEBUG_MODE) console.log('SettingsPage.constructor() - user:', globals.getUser());
   }
 
 

@@ -9,10 +9,11 @@ import { CandidateProvider } from '../../providers/candidate';
 import { S3File } from '../../shared/s3file';
 import { GlobalStateService } from '../../services/global-state.service';
 import { NavbarComponent } from '../../components/navbar';
+import { Config } from '../../config/config';
 
 declare var AWS: any;
-declare const aws_user_files_s3_bucket;
-declare const aws_user_files_s3_bucket_region;
+//declare const aws_user_files_s3_bucket;
+//declare const aws_user_files_s3_bucket_region;
 
 
 /**
@@ -54,9 +55,9 @@ export class ResumeUploaderPage {
       this.url = null;
       this.s3 = new AWS.S3({
         'params': {
-          'Bucket': aws_user_files_s3_bucket
+          'Bucket': Config['PROFILE_IMAGES_S3_BUCKET']
         },
-        'region': aws_user_files_s3_bucket_region
+        'region': Config['REGION']
       });
 
       this.documentViewerOptions = {
