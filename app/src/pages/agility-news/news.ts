@@ -28,7 +28,7 @@ export class NewsPage {
 
   posts: WPPost[];
   errMess: string;
-  public pageTitle = "News";
+  public pageTitle: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,

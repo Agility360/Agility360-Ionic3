@@ -32,7 +32,7 @@ export class JobsPage {
   jobApplications: JobApplications[];
   errMess: string;
   showLoading: boolean;
-  public pageTitle = "Jobs";
+  public pageTitle: string;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -42,7 +42,7 @@ export class JobsPage {
   ) {
     if (DEBUG_MODE) console.log('JobsPage.constructor()');
 
-    this.pageTitle = globals.getUserFirstName() + "'s Job Opportunities"
+    //this.pageTitle = globals.getUserFirstName() + "'s Job Opportunities"
     this.showLoading = true;
     this.refreshData(null);
   }

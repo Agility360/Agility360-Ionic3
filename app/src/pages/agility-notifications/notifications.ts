@@ -11,7 +11,7 @@ import { NavbarComponent } from '../../components/navbar';
 })
 export class NotificationsPage {
 
-  public pageTitle = "Notifications";
+  public pageTitle: string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     if (DEBUG_MODE) console.log('NotificationsPage.constructor()');

@@ -26,7 +26,7 @@ export class ResumeTipsPage {
 
   posts: WPPost[];
   errMess: string;
-  public pageTitle = "Resume Tips";
+  public pageTitle: string;
 
 
   constructor(public navCtrl: NavController,

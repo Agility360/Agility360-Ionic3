@@ -5,6 +5,7 @@ import { AlertController }    from 'ionic-angular';
 import { AccountSigninPage }  from '../../pages/account-signin/account-signin';
 import { AccountSignupPage } from '../../pages/account-signup/account-signup';
 import { GlobalStateService } from '../../services/global-state.service';
+import { WelcomePage } from '../../pages/welcome/welcome';
 import { Config }             from '../../config/config';
 import { CognitoUtil, UserLoginService, IUserLogin } from '../../services/account-management.service';
 import { Logger } from '../../services/logger.service';
@@ -163,4 +164,10 @@ export class NavbarComponent {
     alert.present();
   }
 
+  logout() {
+    this.globals.logout(null);
+    this.navCtrl.setRoot(WelcomePage);
+    this.navCtrl.popToRoot({animate: false});
+
+  }
 }

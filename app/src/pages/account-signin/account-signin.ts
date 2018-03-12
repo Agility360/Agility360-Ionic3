@@ -7,7 +7,8 @@ import { AccountForgotPasswordPage } from '../account-forgot-password/account-fo
 import { AccountSignupPage } from '../account-signup/account-signup';
 import { DEBUG_MODE } from '../../shared/constants';
 
-// import { WelcomePage } from '../welcome/welcome';
+import { WelcomePage } from '../welcome/welcome';
+
 
 import {
   UserLoginService, IUserLogin, UserState,

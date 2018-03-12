@@ -3,7 +3,6 @@ import { App, AlertController, ToastController, LoadingController } from 'ionic-
 import { CognitoUtil, UserLoginService, LocalStorage } from './account-management.service';
 import { Logger } from './logger.service';
 import { DEBUG_MODE } from '../shared/constants';
-import { WelcomePage } from '../pages/welcome/welcome';
 import { Config } from '../config/config';
 import { Candidate } from '../shared/candidate';
 
@@ -162,7 +161,6 @@ export class GlobalStateService {
     UserLoginService.signOut();
     this.userId = '';
 
-    this.app.getRootNav().setRoot(WelcomePage);
     this.app.getRootNav().popToRoot({animate: false});
   }
 

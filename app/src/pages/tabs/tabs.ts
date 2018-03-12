@@ -3,7 +3,7 @@ import { NavParams, Tab, Tabs } from 'ionic-angular';
 import { GlobalStateService } from '../../services/global-state.service';
 
 //import { BookingsPage }      from '../bookings/bookings';
-//import { WelcomePage }       from '../welcome/welcome';
+import { WelcomePage }       from '../welcome/welcome';
 //import { LocationListPage } from '../location-list/location-list';
 //import { AccountPage }       from '../account/account';
 
