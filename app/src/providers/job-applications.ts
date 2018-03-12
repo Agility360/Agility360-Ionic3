@@ -31,12 +31,21 @@ export class JobApplicationsProvider {
     return apiURL + 'candidates/' + this.username() + '/jobapplications/';
   }
 
-  get(): Observable<JobApplications[]> {
+  get(id: number): Observable<JobApplications[]> {
 
-    if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.get() with username: ', this.username());
+    let url = this.url();
+    id = id || 0;
+    if (id > 0) {
+        url = url + id.toString();
+    }
+    if (DEBUG_MODE) console.log('JobApplicationsProvider.get() with url: ', id, url);
 
-    return this.http.get(this.url(), apiHttpOptions)
-      .map(jobApplications => { return this.ProcessHttpmsgService.extractData(jobApplications) })
+    return this.http.get(url, apiHttpOptions)
+      .map(
+        jobApplications => {
+          if (DEBUG_MODE) console.log('JobApplicationsProvider.get() - success: ', id, jobApplications);
+          return this.ProcessHttpmsgService.extractData(jobApplications);
+        })
       .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
   }
 

@@ -1,5 +1,16 @@
 page-jobs {
 
+.applied-checkmark {
+  font-size: 3em;
+  color: green;
+
+}
+.applied {
+  color: green;
+  font-weight: bold;
+}
+
+
 ion-list {
   margin-bottom: 20px !important;
 }

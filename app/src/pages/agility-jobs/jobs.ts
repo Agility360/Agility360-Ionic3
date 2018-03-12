@@ -50,7 +50,6 @@ export class JobsPage {
   refreshData(refresher) {
     setTimeout(() => {
       if (DEBUG_MODE) console.log('JobsPage.refreshData()');
-      this.getJobApplications();
       this.getPosts();
       if (refresher) {
         refresher.complete();
@@ -58,11 +57,11 @@ export class JobsPage {
     }, 500);
   }
 
-  getJobApplications() {
+  getJobApplications(postID: number) {
     if (DEBUG_MODE) console.log('JobsPage.getJobApplications()');
     this.errMess = null;
 
-    this.jobApplicationsService.get()
+    this.jobApplicationsService.get(postID)
       .subscribe(
       results => {
         if (DEBUG_MODE) console.log('JobsPage.getJobApplications() - success', results);
@@ -93,8 +92,22 @@ export class JobsPage {
         this.posts = results;
         var self = this;
         this.posts.forEach(function(post, id) {
-          /* if (DEBUG_MODE) console.log(post); */
           self.getMedia(post);
+
+            //check to see if the candidate has applied for this Job Posting.
+            self.jobApplicationsService.get(post.id)
+              .subscribe(
+              results => {
+                if (DEBUG_MODE) console.log('JobsPage.getPosts() - jobApplicationsService.get()', post.id, results);
+                if (typeof results !== 'undefined' && results.length > 0) {
+                      // the array is defined and has at least one element
+                      post.candidate_application_date = results[0].create_date;
+                }
+              },
+              err => {
+                if (DEBUG_MODE) console.log('JobsPage.getPosts() - jobApplicationsService.get() - error:', err);
+              });
+
         });
       },
       err => {

@@ -29,19 +29,16 @@
 
       <button ion-item (click)="viewPost(post)">
         <ion-avatar item-start>
-          <img src="https://cdn.agility360app.net/">
+          <ion-icon *ngIf="post.candidate_application_date" class="applied-checkmark" name="checkmark-circle"></ion-icon>
+          <img *ngIf="!post.candidate_application_date" src="https://cdn.agility360app.net/">
         </ion-avatar>
-        <h2 text-wrap>{{ post.title.rendered }}</h2>
-        <p style="margin-top: 10px;">Posted: {{ post.date | date:"MMM dd, yyyy" }}</p>
+        <h2 text-wrap [class.applied]="post.candidate_application_date">{{ post.title.rendered }}</h2>
+        <p *ngIf="!post.candidate_application_date" style="margin-top: 10px;">Posted: {{ post.date | date:"MMM dd, yyyy" }}</p>
+        <p *ngIf="post.candidate_application_date" class="applied" style="margin-top: 10px;">Applied: {{ post.candidate_application_date | date:"MMM dd, yyyy" }}</p>
       </button>
 
     </ion-list> <!-- *ngFor="let post of posts" -->
   </div> <!-- *ngIf="posts" -->
-
-  <div>
-    <p>Job Applications array:</p>
-    <p>{{ this.jobApplications }}</p>
-  </div>
 
   <div *ngIf="errMess">
     <h2>Error</h2>
