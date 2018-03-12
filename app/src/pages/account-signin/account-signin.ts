@@ -108,14 +108,6 @@ export class AccountSigninPage {
           result => {
             if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidate(). Setting candidate to local storage.', result);
             this.globals.setCandidate(result);
-
-            if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidateAvatarUrl(). Setting candidate profile image signed URL to local storage.');
-            this.globals.setCandidateAvatarUrl()
-            .then(() => {
-              if (DEBUG_MODE) console.log('AccountSigninPage.login() - globals.setCandidateAvatarUrl(). signed URL should now be set to local storage.');
-            });
-
-
           },
           err => {
             if (DEBUG_MODE) console.log('AccountSigninPage.login() - error: ', err);

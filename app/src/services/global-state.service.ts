@@ -28,21 +28,34 @@ export class GlobalStateService {
     public loadingCtrl: LoadingController) {
 
       if (DEBUG_MODE) console.log('GlobalStateService.constructor()');
-      console.log('AWS.config.credentials', AWS.config.credentials);
-
-      //This prevents a race situation from occurring with assignment of AWS.config.credentials in account-management.service
-      UserLoginService.getAwsCredentials().then(() => {
-        this.s3 = new AWS.S3({
-          'credentials': AWS.config.credentials,
-          'params': {
-            'Bucket': Config['PROFILE_IMAGES_S3_BUCKET']
-          },
-          'region': Config['REGION']
-        });
-      });
+      if (DEBUG_MODE) console.log('AWS.config.credentials', AWS.config.credentials);
 
 
+  }
 
+  getS3(): any {
+    if (DEBUG_MODE) console.log('GlobalStateService.getS3()');
+
+    //This prevents a race situation from occurring with assignment of AWS.config.credentials in account-management.service
+    //
+    //more info: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
+    UserLoginService.getAwsCredentials().then(() => {
+
+      if (DEBUG_MODE) console.log('GlobalStateService.getS3 - instantiating AWS S3 object');
+
+    }).catch((err)=>{
+      console.log('GlobalStateService.getS3 - error gaining AWS Credentials', err);
+    });
+
+    this.s3 = new AWS.S3({
+/*      'credentials': AWS.config.credentials, */
+      'params': {
+        'Bucket': Config['PROFILE_IMAGES_S3_BUCKET']
+        },
+        'region': Config['REGION']
+    });
+
+    return this.s3;
   }
 
   getCandidate() : Candidate {
@@ -53,6 +66,7 @@ export class GlobalStateService {
   setCandidate(candidate: Candidate) {
     if (DEBUG_MODE) console.log('GlobalStateService.setCandidate()', candidate);
     CognitoUtil.setCandidate(candidate);
+    this.setCandidateAvatarUrl();
   }
 
   getCandidateAvatarUrl() : string {
@@ -61,16 +75,25 @@ export class GlobalStateService {
   }
 
   setCandidateAvatarUrl() {
-    if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl()', this.s3);
+    if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl()');
 
 
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
 
-      this.s3.getSignedUrl('getObject', { 'Key': 'protected/' + CognitoUtil.getUserId() + '/avatar.jpg' }, (err, url) => {
-        if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl() - successfully retrieve signed URL from S3: ', url, err);
-        CognitoUtil.setCandidateAvatarUrl(url);
-        resolve();
+      UserLoginService.getAwsCredentials().then(() => {
+      if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl() - requesting a signed URL from AWS S3 object');
+        this.getS3().getSignedUrl('getObject', { 'Key': 'protected/' + CognitoUtil.getUserId() + '/avatar.jpg' }, (err, url) => {
+          if (err) console.log('GlobalStateService.setCandidateAvatarUrl() - error', err);
+          if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl() - successfully retrieve signed URL from S3: ', url);
+          CognitoUtil.setCandidateAvatarUrl(url);
+          resolve();
+        });
+
+      }).catch((err)=>{
+        console.log('GlobalStateService.setCandidateAvatarUrl() - error gaining AWS Credentials', err);
+        reject();
       });
+
 
     });
     return promise;

@@ -119,21 +119,6 @@ export class SettingsPage {
     if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar()');
     this.avatarPhoto = this.globals.getCandidateAvatarUrl();
 
-    /*
-    this.s3.getSignedUrl('getObject', { 'Key': 'protected/' + this.globals.getUserId() + '/avatar.jpg' }, (err, url) => {
-      this.avatarPhoto = url;
-      if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar() - url: ', url);
-    });
-    */
-
-    /*
-    this.globals.setCandidateAvatarUrl()
-    .then(() => {
-      if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar() - set was successful. now setting the image in this object.');
-      this.avatarPhoto = this.globals.getCandidateAvatarUrl();
-    });
-    */
-
   }
 
   dataURItoBlob(dataURI) {
@@ -199,7 +184,9 @@ export class SettingsPage {
       }).promise()
       .then(
         (data) => {
-        this.refreshAvatar();
+        this.globals.setCandidateAvatarUrl().then(()=>{
+          this.refreshAvatar();
+        });
         if (DEBUG_MODE) console.log('SettingsPage.upload() - s3.upload - success');
         loading.dismiss();
       }, err => {
