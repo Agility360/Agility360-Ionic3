@@ -2,10 +2,19 @@
 welcome {
 
   .main {
-      background: url("https://cdn.agility360app.net/") center center no-repeat;
-      background-size: 200px 200px;
-      background-blend-mode: lighten;
+      width: 100%;
+      background: -webkit-radial-gradient(#fff, #fff, #fff, #eee, #eee, #eee, #ddd, #ddd); /* Safari 5.1- 6.0 */
+      background: -o-radial-gradient(#fff, #fff, #fff, #eee, #eee, #eee, #ddd, #ddd); /* Opera 11.6-12.0 */
+      background: -moz-radial-gradient(#fff, #fff, #fff, #eee, #eee, #eee, #ddd, #ddd); /* Firefox 3.6-15 */
+      background: radial-gradient(#fff, #fff, #fff, #eee, #eee, #eee, #ddd, #ddd); /* Standard syntax */
   }
 
 
+  .vertical-align-content > *
+  {
+       display: flex!important;
+       align-content: center!important;
+       align-items: center!important;
+  }
+  
 }
