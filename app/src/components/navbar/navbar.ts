@@ -28,7 +28,6 @@ export class NavbarComponent {
   alertCtrl : AlertController = this.globals.getAlertController();
   initialized = false;
   cognitoUtil = null;
-  profileImageUrl: string;
 
   constructor(
     public navCtrl: NavController,
@@ -45,8 +44,6 @@ export class NavbarComponent {
 
     this.platform.ready().then((readySource) => {
       // Platform now ready, execute any required native code
-
-      this.profileImageUrl = this.globals.getCandidateAvatarUrl();
 
       if (this.platform.is('cordova')) {
         // App running on mobile device; Deep linking supported with custom URL schemes
@@ -173,4 +170,10 @@ export class NavbarComponent {
     this.navCtrl.popToRoot({animate: false});
     this.globals.logout(null);
   }
+
+  public candidateProfileImageUrl(): string {
+    return this.globals.getCandidateProfileImageUrl();
+  }
+
+
 }

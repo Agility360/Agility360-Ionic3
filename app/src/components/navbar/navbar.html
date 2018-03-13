@@ -3,7 +3,7 @@
 
       <ion-row>
           <ion-col col-auto>
-              <span left *ngIf="profileImageUrl" class="avatar" [style.background-image]="'url('+ profileImageUrl +')'"></span>
+              <span left *ngIf="candidateProfileImageUrl()" class="avatar" [style.background-image]="'url('+ candidateProfileImageUrl() +')'"></span>
           </ion-col>
           <ion-col col-auto>
       	{{ title }}

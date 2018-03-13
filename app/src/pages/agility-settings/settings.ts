@@ -69,18 +69,26 @@ export class SettingsPage {
       'region': Config['REGION']
     });
 
-    this.refreshAvatar();
     this.username = globals.getUsername();
     this.email = globals.getUser()['email'];
     this.email_verified = globals.getUser()['email_verified'];
 
   }
 
+  private dataURItoBlob(dataURI): Blob {
+    if (DEBUG_MODE) console.log('SettingsPage.dataURItoBlob()');
+    // code adapted from: http://stackoverflow.com/questions/33486352/cant-upload-image-to-aws-s3-from-ionic-camera
+    let binary = atob(dataURI.split(',')[1]);
+    let array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+  };
 
-  refreshAvatar() {
-    if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar()');
-    this.profilePhotoS3SignedUrl = this.globals.getCandidateAvatarUrl();
 
+  public candidateProfileImageUrl(): string {
+    return this.globals.getCandidateProfileImageUrl();
   }
 
 
@@ -93,7 +101,7 @@ export class SettingsPage {
       buttons: [
         {
           text: 'OK',
-          handler: () => { this.openDevicePhotoStorage(); }
+          handler: () => { this.openDeviceCamera(); }
         },
         {
           text: 'Cancel',
@@ -105,15 +113,15 @@ export class SettingsPage {
     alert.present().then(() => {
       console.log('Show logout alert - then');
 
-//      this.openDevicePhotoStorage();
+//      this.openDeviceCamera();
 
     }).catch((ex) => {
       console.log('Show logout alert exception', ex);
     });;
 
   }
-  openDevicePhotoStorage() {
-    if (DEBUG_MODE) console.log('SettingsPage.openDevicePhotoStorage()');
+  openDeviceCamera() {
+    if (DEBUG_MODE) console.log('SettingsPage.openDeviceCamera()');
     const options: CameraOptions = {
       quality: 100,
       targetHeight: 200,
@@ -127,49 +135,41 @@ export class SettingsPage {
     .then(
       (imageData) => {
         this.profilePhotoBlob = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
-        this.upload();
+        this.uploadToS3ProtectedFolder();
       },
       (err) => {
-          console.log('%cSettingsPage.openDevicePhotoStorage() - this.camera.getPicture - error', Logger.LeadInErrorStyle, err);
+          console.log('%cSettingsPage.openDeviceCamera() - this.camera.getPicture - error', Logger.LeadInErrorStyle, err);
           this.avatarInput.nativeElement.click();
     });
   }
 
-  public dataURItoBlob(dataURI): Blob {
-    if (DEBUG_MODE) console.log('SettingsPage.dataURItoBlob()');
-    // code adapted from: http://stackoverflow.com/questions/33486352/cant-upload-image-to-aws-s3-from-ionic-camera
-    let binary = atob(dataURI.split(',')[1]);
-    let array = [];
-    for (let i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  };
 
-  uploadFromFile(event) {
-    if (DEBUG_MODE) console.log('SettingsPage.uploadFromFile()');
+  openFileExplorer(event) {
+    if (DEBUG_MODE) console.log('SettingsPage.openFileExplorer()');
     const files = (<HTMLInputElement>event.target).files;
     console.log('Uploading', files)
     var reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
       this.profilePhotoBlob = this.dataURItoBlob(reader.result);
-      this.upload();
+      this.uploadToS3ProtectedFolder();
     };
     reader.onerror = (error) => {
-      console.log('%cSettingsPage.uploadFromFile() - error', Logger.LeadInErrorStyle);
+      console.log('%cSettingsPage.openFileExplorer() - error', Logger.LeadInErrorStyle);
       alert('Unable to load file. Please try another.')
     }
   }
 
-  upload() {
-    if (DEBUG_MODE) console.log('SettingsPage.upload()');
+  private uploadToS3ProtectedFolder() {
+    if (DEBUG_MODE) console.log('SettingsPage.uploadToS3ProtectedFolder()');
     let loading = this.loadingCtrl.create({
       content: 'Uploading image...'
     });
     loading.present();
 
     if (this.profilePhotoBlob) {
+      console.log('%cAWS.config.credentials:', Logger.LeadInStyle, AWS.config.credentials);
+
       this.s3.upload({
         'Key': 'protected/' + this.globals.getUserId() + '/avatar.jpg',
         'Body': this.profilePhotoBlob,
@@ -177,13 +177,13 @@ export class SettingsPage {
       }).promise()
       .then(
         (data) => {
-        this.globals.setCandidateAvatarUrl().then(()=>{
-          this.refreshAvatar();
+        this.globals.setCandidateProfileImageUrl().then(()=>{
+            // can't think of anything to do here.
         });
-        if (DEBUG_MODE) console.log('SettingsPage.upload() - s3.upload - success');
+        if (DEBUG_MODE) console.log('SettingsPage.uploadToS3ProtectedFolder() - s3.upload - success');
         loading.dismiss();
       }, err => {
-        console.log('%cSettingsPage.upload() - s3.upload - failure', Logger.LeadInErrorStyle, err);
+        console.log('%cSettingsPage.uploadToS3ProtectedFolder() - s3.upload - failure', Logger.LeadInErrorStyle, err);
         loading.dismiss();
       });
     }
@@ -191,7 +191,7 @@ export class SettingsPage {
   }
 
 
-  photoPermissionAlert(): void {
+  private photoPermissionAlert(): void {
     let alert = this.alertCtrl.create({
       title: 'Photo Permission',
       subTitle: 'Agility 360 would like to access your photo gallery for your profile photo upload. Your photos will not be shared without your permission.',

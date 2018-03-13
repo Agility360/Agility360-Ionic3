@@ -145,31 +145,16 @@ export class CognitoUtil {
     return {};
   }
 
-  public static setCandidateProfileImage(img: string) {
+  public static setCandidateProfileImageUrl(url: string) {
     if (CognitoUtil.isSignedIn()) {
-      if (DEBUG_MODE) console.log('CognitoUtil.setCandidateProfileImage()');
-      LocalStorage.set('candidateProfileImage', img);
-    }
-  }
-  public static getCandidateProfileImage(): string {
-    if (CognitoUtil.isSignedIn()) {
-      if (DEBUG_MODE) console.log('CognitoUtil.getCandidateProfileImage()');
-      return LocalStorage.get('candidateProfileImage');
-    }
-    return null;
-  }
-
-
-  public static setCandidateAvatarUrl(url: string) {
-    if (CognitoUtil.isSignedIn()) {
-      if (DEBUG_MODE) console.log('CognitoUtil.setCandidateAvatarUrl()', url);
+      if (DEBUG_MODE) console.log('CognitoUtil.setCandidateProfileImageUrl()', url);
       LocalStorage.set('candidateAvatarUrl', url);
     }
   }
 
-  public static getCandidateAvatarUrl(): string {
+  public static getCandidateProfileImageUrl(): string {
     if (CognitoUtil.isSignedIn()) {
-      if (DEBUG_MODE) console.log('CognitoUtil.getCandidateAvatarUrl()');
+      //if (DEBUG_MODE) console.log('CognitoUtil.getCandidateProfileImageUrl()');
       return LocalStorage.get('candidateAvatarUrl');
     }
     return null;
@@ -190,7 +175,10 @@ export class CognitoUtil {
 
   public static isSignedIn(): boolean {
 //    if (DEBUG_MODE) console.log('CognitoUtil.isSignedIn()');
-    if (this.getUserState() == UserState.SignedIn) return true;
+
+    if (AWS.config.credentials) {
+      return (this.getUserState() == UserState.SignedIn);
+    }
     return false;
   }
   public static getUserState(): UserState {

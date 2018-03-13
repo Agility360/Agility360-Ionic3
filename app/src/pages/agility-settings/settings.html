@@ -19,9 +19,9 @@
     </ion-row>
   </div>
   <div text-center>
-    <div *ngIf="profilePhotoS3SignedUrl" class="avatar" [style.background-image]="'url('+ profilePhotoS3SignedUrl +')'"></div>
+    <div *ngIf="candidateProfileImageUrl()" class="avatar" [style.background-image]="'url('+ candidateProfileImageUrl() +')'"></div>
     <button ion-button clear (click)="selectProfilePhoto()">Change photo</button>
-    <input #avatar class="avatar-input" type="file" (change)="uploadFromFile($event)" />
+    <input #avatar class="avatar-input" type="file" (change)="openFileExplorer($event)" />
   </div>
 
   <ion-list class="profile-list" padding>

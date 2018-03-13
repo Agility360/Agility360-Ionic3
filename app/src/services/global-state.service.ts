@@ -42,10 +42,10 @@ export class GlobalStateService {
     //more info: https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html
     UserLoginService.getAwsCredentials().then(() => {
 
-      if (DEBUG_MODE) console.log('GlobalStateService.getS3 - instantiating AWS S3 object');
+      if (DEBUG_MODE) console.log('%cGlobalStateService.getS3 - instantiating AWS S3 object', Logger.LeadInStyle);
 
     }).catch((err)=>{
-      console.log('GlobalStateService.getS3 - error gaining AWS Credentials', err);
+      console.log('%cGlobalStateService.getS3 - error gaining AWS Credentials', Logger.LeadInErrorStyle, err);
     });
 
     this.s3 = new AWS.S3({
@@ -66,41 +66,43 @@ export class GlobalStateService {
   setCandidate(candidate: Candidate) {
     if (DEBUG_MODE) console.log('GlobalStateService.setCandidate()', candidate);
     CognitoUtil.setCandidate(candidate);
-    this.setCandidateAvatarUrl();
+    this.setCandidateProfileImageUrl();
   }
 
-  setCandidateProfileImage(img: string) {
-    if (DEBUG_MODE) console.log('GlobalStateService.setCandidateProfileImage()');
-    CognitoUtil.setCandidateProfileImage(img);
+  getCandidateProfileImageUrl() : string {
+    //if (DEBUG_MODE) console.log('GlobalStateService.getCandidateProfileImageUrl()');
+    return CognitoUtil.getCandidateProfileImageUrl();
   }
 
-  getCandidateProfileImage(): string {
-    if (DEBUG_MODE) console.log('GlobalStateService.getCandidateProfileImage()');
-    return CognitoUtil.getCandidateProfileImage();
-  }
-
-  getCandidateAvatarUrl() : string {
-    if (DEBUG_MODE) console.log('GlobalStateService.getCandidateAvatarUrl()');
-    return CognitoUtil.getCandidateAvatarUrl();
-  }
-
-  setCandidateAvatarUrl() {
-    if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl()');
+  setCandidateProfileImageUrl() {
+    if (DEBUG_MODE) console.log('GlobalStateService.setCandidateProfileImageUrl()');
 
 
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
 
+      //initialize persistant storage so that we're either left with the signed URL, or nothing at all.
+      CognitoUtil.setCandidateProfileImageUrl(null);
+
       UserLoginService.getAwsCredentials().then(() => {
-      if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl() - requesting a signed URL from AWS S3 object');
+      if (DEBUG_MODE) console.log('GlobalStateService.setCandidateProfileImageUrl() - requesting a signed URL from AWS S3 object');
         this.getS3().getSignedUrl('getObject', { 'Key': 'protected/' + CognitoUtil.getUserId() + '/avatar.jpg' }, (err, url) => {
-          if (err) console.log('GlobalStateService.setCandidateAvatarUrl() - error', err);
-          if (DEBUG_MODE) console.log('GlobalStateService.setCandidateAvatarUrl() - successfully retrieve signed URL from S3: ', url);
-          CognitoUtil.setCandidateAvatarUrl(url);
-          resolve();
+
+          if (err) {
+            if (err) console.log('%cGlobalStateService.setCandidateProfileImageUrl() - error', Logger.LeadInErrorStyle, err);
+            reject();
+            return;
+          }
+          if (url) {
+            if (DEBUG_MODE) console.log('%cGlobalStateService.setCandidateProfileImageUrl() - successfully retrieve signed URL from S3: ', Logger.LeadInStyle, url);
+            CognitoUtil.setCandidateProfileImageUrl(url);
+            resolve();
+          }
+          //catch all bucket.
+          reject();
         });
 
       }).catch((err)=>{
-        console.log('GlobalStateService.setCandidateAvatarUrl() - error gaining AWS Credentials', err);
+        console.log('%cGlobalStateService.setCandidateProfileImageUrl() - error gaining AWS Credentials', Logger.LeadInErrorStyle, err);
         reject();
       });
 
