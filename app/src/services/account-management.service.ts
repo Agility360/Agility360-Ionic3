@@ -145,6 +145,20 @@ export class CognitoUtil {
     return {};
   }
 
+  public static setCandidateProfileImage(img: string) {
+    if (CognitoUtil.isSignedIn()) {
+      if (DEBUG_MODE) console.log('CognitoUtil.setCandidateProfileImage()');
+      LocalStorage.set('candidateProfileImage', img);
+    }
+  }
+  public static getCandidateProfileImage(): string {
+    if (CognitoUtil.isSignedIn()) {
+      if (DEBUG_MODE) console.log('CognitoUtil.getCandidateProfileImage()');
+      return LocalStorage.get('candidateProfileImage');
+    }
+    return null;
+  }
+
 
   public static setCandidateAvatarUrl(url: string) {
     if (CognitoUtil.isSignedIn()) {

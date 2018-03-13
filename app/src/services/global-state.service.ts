@@ -32,6 +32,8 @@ export class GlobalStateService {
 
   }
 
+
+
   getS3(): any {
     if (DEBUG_MODE) console.log('GlobalStateService.getS3()');
 
@@ -65,6 +67,16 @@ export class GlobalStateService {
     if (DEBUG_MODE) console.log('GlobalStateService.setCandidate()', candidate);
     CognitoUtil.setCandidate(candidate);
     this.setCandidateAvatarUrl();
+  }
+
+  setCandidateProfileImage(img: string) {
+    if (DEBUG_MODE) console.log('GlobalStateService.setCandidateProfileImage()');
+    CognitoUtil.setCandidateProfileImage(img);
+  }
+
+  getCandidateProfileImage(): string {
+    if (DEBUG_MODE) console.log('GlobalStateService.getCandidateProfileImage()');
+    return CognitoUtil.getCandidateProfileImage();
   }
 
   getCandidateAvatarUrl() : string {

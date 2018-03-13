@@ -10,7 +10,7 @@ import { TermsOfUsePage } from '../agility-terms-of-use/terms-of-use';
 import { AccountPage } from '../account/account';
 
 import { GlobalStateService } from '../../services/global-state.service';
-import { CandidateProvider } from '../../providers/candidate';
+//import { CandidateProvider } from '../../providers/candidate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { DEBUG_MODE } from '../../shared/constants';
@@ -26,12 +26,13 @@ declare var AWS: any;
 export class SettingsPage {
 
   @ViewChild('avatar') avatarInput;
-  provider: CandidateProvider;
-  public pageTitle = "Candidate Profile";
+//  provider: CandidateProvider;
+//  public pageTitle = "Candidate Profile";
 
   private s3: any;
-  public avatarPhoto: string;
-  public selectedPhoto: Blob;
+  public profilePhotoS3SignedUrl: string;
+  public profilePhotoBlob: Blob;
+
   public attributes: any;
   public username: string;
   public email: string;
@@ -58,8 +59,8 @@ export class SettingsPage {
     if (DEBUG_MODE) console.log('SettingsPage.constructor() - begin');
 
     this.attributes = [];
-    this.avatarPhoto = null;
-    this.selectedPhoto = null;
+    this.profilePhotoS3SignedUrl = null;
+    this.profilePhotoBlob = null;
 
     this.s3 = new AWS.S3({
       'params': {
@@ -73,26 +74,15 @@ export class SettingsPage {
     this.email = globals.getUser()['email'];
     this.email_verified = globals.getUser()['email_verified'];
 
-    if (DEBUG_MODE) console.log('SettingsPage.constructor() - user:', globals.getUser());
   }
 
 
   refreshAvatar() {
     if (DEBUG_MODE) console.log('SettingsPage.refreshAvatar()');
-    this.avatarPhoto = this.globals.getCandidateAvatarUrl();
+    this.profilePhotoS3SignedUrl = this.globals.getCandidateAvatarUrl();
 
   }
 
-  dataURItoBlob(dataURI) {
-    if (DEBUG_MODE) console.log('SettingsPage.dataURItoBlob()');
-    // code adapted from: http://stackoverflow.com/questions/33486352/cant-upload-image-to-aws-s3-from-ionic-camera
-    let binary = atob(dataURI.split(',')[1]);
-    let array = [];
-    for (let i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
-  };
 
   selectProfilePhoto() {
     if (DEBUG_MODE) console.log('SettingsPage.selectAvatar()');
@@ -136,14 +126,25 @@ export class SettingsPage {
     this.camera.getPicture(options)
     .then(
       (imageData) => {
-        this.selectedPhoto = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
+        this.profilePhotoBlob = this.dataURItoBlob('data:image/jpeg;base64,' + imageData);
         this.upload();
       },
       (err) => {
-          console.log('%SettingsPage.openDevicePhotoStorage() - this.camera.getPicture - error', Logger.LeadInErrorStyle, err);
+          console.log('%cSettingsPage.openDevicePhotoStorage() - this.camera.getPicture - error', Logger.LeadInErrorStyle, err);
           this.avatarInput.nativeElement.click();
     });
   }
+
+  public dataURItoBlob(dataURI): Blob {
+    if (DEBUG_MODE) console.log('SettingsPage.dataURItoBlob()');
+    // code adapted from: http://stackoverflow.com/questions/33486352/cant-upload-image-to-aws-s3-from-ionic-camera
+    let binary = atob(dataURI.split(',')[1]);
+    let array = [];
+    for (let i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
+  };
 
   uploadFromFile(event) {
     if (DEBUG_MODE) console.log('SettingsPage.uploadFromFile()');
@@ -152,11 +153,11 @@ export class SettingsPage {
     var reader = new FileReader();
     reader.readAsDataURL(files[0]);
     reader.onload = () => {
-      this.selectedPhoto = this.dataURItoBlob(reader.result);
+      this.profilePhotoBlob = this.dataURItoBlob(reader.result);
       this.upload();
     };
     reader.onerror = (error) => {
-      console.log('%SettingsPage.uploadFromFile() - error', Logger.LeadInErrorStyle);
+      console.log('%cSettingsPage.uploadFromFile() - error', Logger.LeadInErrorStyle);
       alert('Unable to load file. Please try another.')
     }
   }
@@ -168,10 +169,10 @@ export class SettingsPage {
     });
     loading.present();
 
-    if (this.selectedPhoto) {
+    if (this.profilePhotoBlob) {
       this.s3.upload({
         'Key': 'protected/' + this.globals.getUserId() + '/avatar.jpg',
-        'Body': this.selectedPhoto,
+        'Body': this.profilePhotoBlob,
         'ContentType': 'image/jpeg'
       }).promise()
       .then(
@@ -182,7 +183,7 @@ export class SettingsPage {
         if (DEBUG_MODE) console.log('SettingsPage.upload() - s3.upload - success');
         loading.dismiss();
       }, err => {
-        console.log('%SettingsPage.upload() - s3.upload - failure', Logger.LeadInErrorStyle, err);
+        console.log('%cSettingsPage.upload() - s3.upload - failure', Logger.LeadInErrorStyle, err);
         loading.dismiss();
       });
     }
