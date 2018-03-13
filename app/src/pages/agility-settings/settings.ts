@@ -168,8 +168,6 @@ export class SettingsPage {
     loading.present();
 
     if (this.profilePhotoBlob) {
-      console.log('%cAWS.config.credentials:', Logger.LeadInStyle, AWS.config.credentials);
-
       this.s3.upload({
         'Key': 'protected/' + this.globals.getUserId() + '/avatar.jpg',
         'Body': this.profilePhotoBlob,

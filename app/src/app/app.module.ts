@@ -23,6 +23,7 @@ import { TabsPage }                    from '../pages/tabs/tabs';
 import { WelcomePage }                 from '../pages/welcome/welcome';
 import { BrowserModule }               from '@angular/platform-browser';
 import { HttpService }                 from '../services/http-service';
+import { HttpServiceIonic1 }           from '../services/http-service-ionic1';
 import {
   IamAuthorizerClient,
   CustomAuthorizerClient,
@@ -162,6 +163,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     Deeplinks,
     ComponentsModule,
     Camera,
+    { provide: HttpServiceIonic1, useClass: HttpServiceIonic1 },
     { provide: HttpService, useClass: HttpService },
     { provide: CustomAuthorizerClient, useClass: CustomAuthorizerClient },
     { provide: IamAuthorizerClient, useClass: IamAuthorizerClient },

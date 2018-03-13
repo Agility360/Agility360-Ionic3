@@ -14,7 +14,7 @@ import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
-import { HttpService } from '../services/http-service';
+import { HttpServiceIonic1 } from '../services/http-service-ionic1';
 import { Logger } from '../services/logger.service';
 
 
@@ -24,10 +24,10 @@ export class WordpressProvider {
   config: string;
 
   constructor(
-    public http: HttpService,
+    public http: HttpServiceIonic1,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
-    if (DEBUG_MODE) console.log('WordpressProvider.constructor()');
+    if (DEBUG_MODE) console.log('%cWordpressProvider.constructor()', Logger.LeadInStyle);
 
     this.config = "{ 'contentType': 'application/json; charset=utf-8', 'dataType': 'json'}";
 
@@ -84,7 +84,7 @@ export class WordpressProvider {
     })
     /*  .retry(HTTP_RETRIES) */
       .map(res => {
-        if (DEBUG_MODE) console.log('%cWordpressProvider.getPosts() - success', Logger.LeadInStyle, res);
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getPosts() - success', Logger.LeadInStyle, this.urlPosts(), params, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
