@@ -27,12 +27,15 @@ export class MyApp {
   ) {
     if (DEBUG_MODE) console.log('MyApp.constructor()');
     platform.ready().then(() => {
+      Logger.banner("Agility360 Candidate Engagement App");
+      console.log('Technical contact: Lawrence McDaniel | (415) 766-9012 | lpm0073@gmail.com');
       if (DEBUG_MODE) console.log('MyApp.constructor() => platform.ready()');
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       new StatusBar().styleDefault();
       if (globals.isSignedIn()) {
-        if (DEBUG_MODE) console.log('MyApp.constructor() - user is logged in.');
+        if (DEBUG_MODE) console.log('MyApp.constructor() - user is already logged in.');
 
         this.navCtrl.setRoot(TabsPage);
         this.navCtrl.popToRoot({animate: false});

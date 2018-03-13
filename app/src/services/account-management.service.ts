@@ -46,22 +46,27 @@ export class CognitoUtil {
   private static _RESPONSE_TYPE = 'code';
 
   public static getRegion(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getRegion()');
     return CognitoUtil._REGION;
   }
 
   public static getHostedUiLoginMobileUrl(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getHostedUiLoginMobileUrl()');
     return 'https://' + CognitoUtil._USER_POOL_DOMAIN_NAME + '/login?redirect_uri=' + CognitoUtil._MOBILE_REDIRECT_URI + '&response_type=' + CognitoUtil._RESPONSE_TYPE + '&client_id=' + CognitoUtil._CLIENT_ID;
   }
 
   public static getHostedUiLoginWebUrl(): any {
+    if (DEBUG_MODE) console.log('CognitoUtil.getHostedUiLoginWebUrl()');
     return 'https://' + CognitoUtil._USER_POOL_DOMAIN_NAME + '/login?redirect_uri=' + CognitoUtil._WEB_REDIRECT_URI + '&response_type=' + CognitoUtil._RESPONSE_TYPE + '&client_id=' + CognitoUtil._CLIENT_ID;
   }
 
   private static getHostedUiTokenUrl(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getHostedUiTokenUrl()');
     return 'https://' + CognitoUtil._USER_POOL_DOMAIN_NAME + '/oauth2/token'
   }
 
   public static getIdTokenFromAuthCode(authCode, platform: string, http: Http): Promise<any> {
+    if (DEBUG_MODE) console.log('CognitoUtil.getIdTokenFromAuthCode()');
     return new Promise((resolve, reject) => {
       let headers = new Headers();
       let requestRedirectUri;
@@ -89,32 +94,39 @@ export class CognitoUtil {
   }
 
   public static getClientId(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getClientId()');
     return CognitoUtil._CLIENT_ID;
   }
 
   public static getIdentityPoolId(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getIdentityPoolId()');
     return CognitoUtil._IDENTITY_POOL_ID;
   }
 
   public static getUserPoolId(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getUserPoolId()');
     return CognitoUtil._USER_POOL_ID;
   }
 
   public static getCognitoIdentityId(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getCognitoIdentityId()');
     return AWS.config.credentials.identityId;
   }
 
   public static getUsername(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getUsername()');
     // Retrieve username from local storage. Return null if it does not exist
     return LocalStorage.get('userName');
   }
 
   public static setUsername(username: string) {
+    if (DEBUG_MODE) console.log('CognitoUtil.setUsername()');
     LocalStorage.set('userName', username);
   }
 
   public static getUserId(): string {
     // Retrieve user ID from local storage. Return null if it does not exist
+    if (DEBUG_MODE) console.log('CognitoUtil.getUserId()');
     return LocalStorage.get('userId');
   }
 
@@ -152,19 +164,23 @@ export class CognitoUtil {
 
   public static getUserProfile(): Object {
     // Retrieve user profile attributes from local storage
+    if (DEBUG_MODE) console.log('CognitoUtil.getUserProfile()');
     return LocalStorage.getObject('userProfile');
   }
 
   public static getUserGroup(): string {
+    if (DEBUG_MODE) console.log('CognitoUtil.getUserGroup()');
     // Retrieve the user group from the local storage
     return LocalStorage.get("userGroup");
   }
 
   public static isSignedIn(): boolean {
+//    if (DEBUG_MODE) console.log('CognitoUtil.isSignedIn()');
     if (this.getUserState() == UserState.SignedIn) return true;
     return false;
   }
   public static getUserState(): UserState {
+//    if (DEBUG_MODE) console.log('CognitoUtil.getUserState()');
     // Retrieve user state from local storage. Return null if it does not exist
     switch (parseInt(LocalStorage.get('userState'))) {
       case 0:
@@ -181,10 +197,12 @@ export class CognitoUtil {
   };
 
   public static setUserState(userState: UserState) {
+    if (DEBUG_MODE) console.log('CognitoUtil.setUserState()');
     LocalStorage.set('userState', JSON.stringify(userState));
   }
 
   public static getUserPool() {
+    if (DEBUG_MODE) console.log('CognitoUtil.getUserPool()');
     // Initialize Cognito User Pool
     let poolData: Object = {
       UserPoolId: CognitoUtil._USER_POOL_ID,
@@ -201,6 +219,7 @@ export class CognitoUtil {
   }
 
   public static getCognitoUser() {
+    if (DEBUG_MODE) console.log('CognitoUtil.getCognitoUser()');
     let username = LocalStorage.get('userName');
 
     let userData = {
@@ -211,6 +230,7 @@ export class CognitoUtil {
   }
 
   public static getCurrentUser() {
+    if (DEBUG_MODE) console.log('CognitoUtil.getCurrentUser()');
     return CognitoUtil.getUserPool().getCurrentUser();
   }
 }
@@ -219,6 +239,7 @@ export class CognitoUtil {
 export class UserRegistrationService {
 
   public static signUp(signUpData: IUserRegistration): Promise<void> {
+    if (DEBUG_MODE) console.log('UserRegistrationService.signUp()');
 
     let attributeList: IUserAttribute[] = [];
 
@@ -266,6 +287,7 @@ export class UserRegistrationService {
   }
 
   public static confirmSignUp(confirmationCode: string): Promise<void> {
+    if (DEBUG_MODE) console.log('UserRegistrationService.confirmSignUp()');
     let cognitoUser = CognitoUtil.getCognitoUser();
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
       cognitoUser.confirmRegistration(confirmationCode, true, (err: Error, data: any) => {
@@ -281,6 +303,7 @@ export class UserRegistrationService {
   }
 
   public static resendConfirmationCode(): Promise<void> {
+    if (DEBUG_MODE) console.log('UserRegistrationService.resendConfirmationCode()');
     let cognitoParams = {
       ClientId: CognitoUtil.getClientId(),
       Username: CognitoUtil.getUsername()
@@ -308,6 +331,7 @@ export class UserLoginService {
   };
 
   public static getAccessToken() {
+    if (DEBUG_MODE) console.log('UserLoginService.getAccessToken()');
     let accessToken: string = UserLoginService._userTokens.accessToken;
     if (!accessToken) {
       // retrieve from Local Storage if it exists
@@ -318,6 +342,7 @@ export class UserLoginService {
   };
 
   public static getIdToken() {
+    if (DEBUG_MODE) console.log('UserLoginService.getIdToken()');
     let idToken: string = UserLoginService._userTokens.idToken;
     if (!idToken) {
       // retrieve from Local Storage if it exists
@@ -328,6 +353,7 @@ export class UserLoginService {
   };
 
   public static getRefreshToken() {
+    if (DEBUG_MODE) console.log('UserLoginService.getRefreshToken()');
     let refreshToken: string = UserLoginService._userTokens.refreshToken;
     if (!refreshToken) {
       // retrieve from Local Storage if it exists
@@ -338,6 +364,7 @@ export class UserLoginService {
   }
 
   public static getAwsAccessKey() {
+    if (DEBUG_MODE) console.log('UserLoginService.getAwsAccessKey()');
     if (AWS.config.credentials == null) {
       return LocalStorage.get('userTokens.awsAccessKeyId');
     }
@@ -345,14 +372,17 @@ export class UserLoginService {
   }
 
   public static getAwsSecretAccessKey() {
+    if (DEBUG_MODE) console.log('UserLoginService.getAwsSecretAccessKey()');
     return AWS.config.credentials.secretAccessKey || LocalStorage.get('userTokens.awsSecretAccessKey');
   }
 
   public static getAwsSessionToken() {
+    if (DEBUG_MODE) console.log('UserLoginService.getAwsSessionToken()');
     return AWS.config.credentials.sessionToken || LocalStorage.get('userTokens.awsSessionToken');
   }
 
   private static clearUserState() {
+    if (DEBUG_MODE) console.log('UserLoginService.clearUserState()');
     // Clear user tokens
     UserLoginService._userTokens = {
       accessToken: undefined,
@@ -379,6 +409,7 @@ export class UserLoginService {
   };
 
   public static signIn(userLogin: IUserLogin): Promise<void> {
+    if (DEBUG_MODE) console.log('UserLoginService.signIn()');
     let authenticationData = {
       Username: userLogin.username,
       Password: userLogin.password
@@ -386,13 +417,12 @@ export class UserLoginService {
 
     let authenticationDetails = new AWSCognito.CognitoIdentityServiceProvider.AuthenticationDetails(authenticationData);
     CognitoUtil.setUsername(userLogin.username);
-    console.log('Authenticating user ' + userLogin.username);
+    if (DEBUG_MODE) console.log('Authenticating user ' + userLogin.username);
 
     let cognitoUser = CognitoUtil.getCognitoUser();
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
       cognitoUser.authenticateUser(authenticationDetails, {
         onSuccess: function (result) {
-            console.log(result);
           UserLoginService.completeSignIn(result.getAccessToken().getJwtToken(),result.getIdToken().getJwtToken(),result.getRefreshToken().getToken()).then(() => {
             resolve();
           }).catch((err) => {
@@ -415,6 +445,7 @@ export class UserLoginService {
   }
 
   public static completeSignIn(accessToken: string, idToken: string, refreshToken: string): Promise<void> {
+    if (DEBUG_MODE) console.log('UserLoginService.completeSignIn()');
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
       // Save user tokens to local state
       UserLoginService._userTokens.accessToken = accessToken;
@@ -422,11 +453,11 @@ export class UserLoginService {
       UserLoginService._userTokens.refreshToken = refreshToken;
 
       LocalStorage.set('userTokens.idToken', UserLoginService._userTokens.idToken);
-      console.log('%cCognito User Pools Identity Token: ', Logger.LeadInStyle, UserLoginService.getIdToken());
+      if (DEBUG_MODE) console.log('%cCognito User Pools Identity Token: ', Logger.LeadInStyle, UserLoginService.getIdToken());
       LocalStorage.set('userTokens.accessToken', UserLoginService._userTokens.accessToken);
-      console.log('%cCognito User Pools Access Token: ', Logger.LeadInStyle, UserLoginService.getAccessToken());
+      if (DEBUG_MODE) console.log('%cCognito User Pools Access Token: ', Logger.LeadInStyle, UserLoginService.getAccessToken());
       LocalStorage.set('userTokens.refreshToken', UserLoginService._userTokens.refreshToken);
-      console.log('%cCognito User Pools Refresh Token: ', Logger.LeadInStyle, UserLoginService.getRefreshToken());
+      if (DEBUG_MODE) console.log('%cCognito User Pools Refresh Token: ', Logger.LeadInStyle, UserLoginService.getRefreshToken());
 
       /*
       Extract the user group from the identity token.
@@ -448,26 +479,26 @@ export class UserLoginService {
         userGroup = 'clientGroup';
         LocalStorage.set('userGroup', userGroup[0]);
       }
-      console.log('%cCognito User Pools User Groups: ' + '%c%s belongs to group %s', Logger.LeadInStyle, "black",
+      if (DEBUG_MODE) console.log('%cCognito User Pools User Groups: ' + '%c%s belongs to group %s', Logger.LeadInStyle, "black",
         userName, userGroup[0]);
 
       // Set user state to authenticated
       CognitoUtil.setUserState(UserState.SignedIn);
 
       // Read user attributes and write to console
-      console.log('%cCognito User Pools User Attributes: ', Logger.LeadInStyle, idTokenDecoded);
+      if (DEBUG_MODE) console.log('%cCognito User Pools User Attributes: ', Logger.LeadInStyle, idTokenDecoded);
       // Write user profile attributes to local storage
       LocalStorage.setObject('userProfile', idTokenDecoded);
 
       UserLoginService.getAwsCredentials().then(() => {
         LocalStorage.set('userId', CognitoUtil.getCognitoIdentityId());
-        console.log('%cCognito Identity ID: ', Logger.LeadInStyle, CognitoUtil.getCognitoIdentityId());
+        if (DEBUG_MODE) console.log('%cCognito Identity ID: ', Logger.LeadInStyle, CognitoUtil.getCognitoIdentityId());
         LocalStorage.set('userTokens.awsAccessKeyId', AWS.config.credentials.accessKeyId);
-        console.log('%cAWS Access Key ID: ', Logger.LeadInStyle, AWS.config.credentials.accessKeyId);
+        if (DEBUG_MODE) console.log('%cAWS Access Key ID: ', Logger.LeadInStyle, AWS.config.credentials.accessKeyId);
         LocalStorage.set('userTokens.awsSecretAccessKey', AWS.config.credentials.secretAccessKey);
-        console.log('%cAWS Secret Access Key: ', Logger.LeadInStyle, AWS.config.credentials.secretAccessKey);
+        if (DEBUG_MODE) console.log('%cAWS Secret Access Key: ', Logger.LeadInStyle, AWS.config.credentials.secretAccessKey);
         LocalStorage.set('userTokens.awsSessionToken', AWS.config.credentials.sessionToken);
-        console.log('%cAWS Session Token: ', Logger.LeadInStyle, AWS.config.credentials.sessionToken);
+        if (DEBUG_MODE) console.log('%cAWS Session Token: ', Logger.LeadInStyle, AWS.config.credentials.sessionToken);
 
         // Resolve promise if all is successful
         resolve();
@@ -479,6 +510,7 @@ export class UserLoginService {
   }
 
   public static signOut() {
+    if (DEBUG_MODE) console.log('UserLoginService.signOut()');
     // Clear local user state
     UserLoginService.clearUserState();
     // Logout from Cognito service
@@ -487,6 +519,7 @@ export class UserLoginService {
   }
 
   public static globalSignOut() {
+    if (DEBUG_MODE) console.log('UserLoginService.globalSignOut()');
     // Clear local user state
     UserLoginService.clearUserState();
     // Logout from Cognito service
@@ -495,6 +528,7 @@ export class UserLoginService {
   }
 
   public static changePassword(previousPassword: string, proposedPassword: string): Promise<void> {
+    if (DEBUG_MODE) console.log('UserLoginService.changePassword()');
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
       // first, load the valid tokens cached in the local store, if they are available
       // see: https://github.com/aws/amazon-cognito-identity-js/issues/71
@@ -517,6 +551,7 @@ export class UserLoginService {
   }
 
   public static forgotPassword(username: string): Promise<void> {
+    if (DEBUG_MODE) console.log('UserLoginService.forgotPassword()');
     // Set target username
     CognitoUtil.setUsername(username);
 
@@ -540,6 +575,7 @@ export class UserLoginService {
   }
 
   public static confirmForgotPassword(username: string, verificationCode: string, password: string): Promise<void> {
+    if (DEBUG_MODE) console.log('UserLoginService.confirmForgotPassword()');
     // Set target username
     CognitoUtil.setUsername(username);
 
@@ -564,6 +600,7 @@ export class UserLoginService {
   }
 
   public static getAwsCredentials(): Promise<void> {
+    if (DEBUG_MODE) console.log('UserLoginService.getAwsCredentials()');
     let promise: Promise<void> = new Promise<void>((resolve, reject) => {
       // TODO: Integrate this method as needed into the overall module
       // Add the User's Id token to the Cognito credentials login map
@@ -608,6 +645,7 @@ export class UserLoginService {
 
 export class UserProfileService {
   public static getUserAttributes() {
+    if (DEBUG_MODE) console.log('UserProfileService.getUserAttributes()');
     let promise: Promise<Object> = new Promise<Object>((resolve, reject) => {
       let cognitoUser = CognitoUtil.getCognitoUser();
       cognitoUser.getSession((err: Error, session: any) => {

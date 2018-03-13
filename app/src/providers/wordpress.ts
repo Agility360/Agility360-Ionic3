@@ -15,6 +15,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { HttpService } from '../services/http-service';
+import { Logger } from '../services/logger.service';
 
 
 @Injectable()
@@ -67,11 +68,11 @@ export class WordpressProvider {
     })
     /*  .retry(HTTP_RETRIES) */
       .map(res => {
-        if (DEBUG_MODE) console.log('WordpressProvider.getPage() - success', res);
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getPage() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('WordpressProvider.getPage() - error', error);
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getPage() - error', Logger.LeadInErrorStyle, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
   }
@@ -83,11 +84,11 @@ export class WordpressProvider {
     })
     /*  .retry(HTTP_RETRIES) */
       .map(res => {
-        if (DEBUG_MODE) console.log('WordpressProvider.getPosts() - success', res);
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getPosts() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('WordpressProvider.getPosts() - error', error);
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getPosts() - error', Logger.LeadInErrorStyle, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
   }
@@ -97,11 +98,11 @@ export class WordpressProvider {
     if (DEBUG_MODE) console.log('WordpressProvider.getMedia()');
     return this.http.get(this.urlMedia() + id.toString())
       .map(res => {
-        if (DEBUG_MODE) console.log('WordpressProvider.getMedia() - success', res);
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getMedia() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('WordpressProvider.getMedia() - error', error);
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getMedia() - error', Logger.LeadInErrorStyle, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
   }

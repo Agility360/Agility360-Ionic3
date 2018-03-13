@@ -10,6 +10,7 @@ import { S3File } from '../../shared/s3file';
 import { GlobalStateService } from '../../services/global-state.service';
 import { NavbarComponent } from '../../components/navbar';
 import { Config } from '../../config/config';
+import { Logger } from '../../services/logger.service';
 
 declare var AWS: any;
 //declare const aws_user_files_s3_bucket;
@@ -83,7 +84,7 @@ export class ResumeUploaderPage {
       this.s3.getSignedUrl('getObject', { 'Key': this.key() }, (err, url) => {
 
         if (err) {
-          if (DEBUG_MODE) console.log('ResumeUploaderPage.getResume() - this.s3.getSignedUrl - error', err);
+          console.log('%cResumeUploaderPage.getResume() - this.s3.getSignedUrl - error', Logger.LeadInErrorStyle, err);
           return;
         }
         if (DEBUG_MODE) console.log('ResumeUploaderPage.getResume() - this.s3.getSignedUrl - success', url);

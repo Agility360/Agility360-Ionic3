@@ -13,6 +13,7 @@ import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { Logger } from '../services/logger.service';
 
 @Injectable()
 export class JobApplicationsProvider {
@@ -21,7 +22,7 @@ export class JobApplicationsProvider {
     private globals: GlobalStateService,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
-    if (DEBUG_MODE) console.log('constructor - JobApplicationsProvider');
+    if (DEBUG_MODE) console.log('JobApplicationsProvider.constructor()');
     if (DEBUG_MODE) console.log('apiURL: ', apiURL);
 
   }
@@ -43,14 +44,16 @@ export class JobApplicationsProvider {
     return this.http.get(url, apiHttpOptions)
       .map(
         jobApplications => {
-          if (DEBUG_MODE) console.log('JobApplicationsProvider.get() - success: ', id, jobApplications);
+          if (DEBUG_MODE) console.log('%cJobApplicationsProvider.get() - success: ', Logger.LeadInStyle, id, jobApplications);
           return this.ProcessHttpmsgService.extractData(jobApplications);
         })
-      .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
+      .catch(error => {
+        if (DEBUG_MODE) console.log('%cJobApplicationsProvider.get() - error: ', Logger.LeadInErrorStyle, error);
+        return this.ProcessHttpmsgService.handleError(error)
+      });
   }
 
   add(jobApplication: JobApplications): Observable<JobApplications> {
-
     if (DEBUG_MODE) console.log('JobApplicationsProvider.add() - adding', jobApplication);
 
     return this.http.post(this.url(), jobApplication, apiHttpOptions)
@@ -62,7 +65,7 @@ export class JobApplicationsProvider {
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('JobApplicationsProvider.add() - error while posting', this.url(), apiHttpOptions, jobApplication, error);
+        if (DEBUG_MODE) console.log('%cJobApplicationsProvider.add() - error while posting', Logger.LeadInErrorStyle, this.url(), apiHttpOptions, jobApplication, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );

@@ -29,8 +29,6 @@ export class GlobalStateService {
     public loadingCtrl: LoadingController) {
 
       if (DEBUG_MODE) console.log('GlobalStateService.constructor()');
-      if (DEBUG_MODE) console.log('AWS.config.credentials', AWS.config.credentials);
-
 
   }
 
@@ -155,8 +153,8 @@ export class GlobalStateService {
   }
 
   logout(quiet?: boolean) {
+    Logger.banner("Sign Out");
     if (!quiet) {
-      Logger.banner("Sign Out");
       this.showLogoutAlert();
     }
     UserLoginService.signOut();

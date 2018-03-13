@@ -13,6 +13,7 @@ import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { Logger } from '../services/logger.service';
 
 
 @Injectable()
@@ -38,11 +39,11 @@ export class CandidateProvider {
 
     return this.http.get(this.url(), apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('CandidateProvider.get() - success', res);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.get() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('CandidateProvider.get() - error', error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.get() - error', Logger.LeadInErrorStyle, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
   }
@@ -54,13 +55,13 @@ export class CandidateProvider {
     return this.http.post(url, obj, this.config)
       .map(
       res => {
-        if (DEBUG_MODE) console.log('CandidateProvider.add() - success', res);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.add() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       }
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('CandidateProvider.add() - error', this.url, this.config, obj, error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.add() - error', Logger.LeadInErrorStyle, this.url, this.config, obj, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );
@@ -74,13 +75,13 @@ export class CandidateProvider {
     return this.http.patch(this.url(), candidate, this.config)
       .map(
       res => {
-        if (DEBUG_MODE) console.log('CandidateProvider.update() - success', res);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.update() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       }
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('CandidateProvider.update() - error while posting', this.url, this.config, candidate, error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.update() - error while posting', Logger.LeadInErrorStyle, this.url, this.config, candidate, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );
@@ -91,11 +92,11 @@ export class CandidateProvider {
 
     return this.http.delete(this.url(), apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('CandidateProvider.delete() - success.', res);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.delete() - success.', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('CandidateProvider.delete() - error while deleting', this.url(), apiHttpOptions, error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.delete() - error while deleting', Logger.LeadInErrorStyle, this.url(), apiHttpOptions, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
   }
@@ -141,11 +142,11 @@ export class CandidateProvider {
 
     return this.http.get(url, apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('CandidateProvider.checkEmail() - success', res);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.checkEmail() - success', Logger.LeadInStyle, res);
         return this.isEmpty(this.ProcessHttpmsgService.extractData(res))
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('CandidateProvider.checkEmail() - error', error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.checkEmail() - error', Logger.LeadInErrorStyle, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
   }
@@ -157,11 +158,11 @@ export class CandidateProvider {
 
     return this.http.get(url, apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('CandidateProvider.checkUsername() - success', res);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.checkUsername() - success', Logger.LeadInStyle, res);
         return this.isEmpty(this.ProcessHttpmsgService.extractData(res))
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('CandidateProvider.checkUsername() - error', error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.checkUsername() - error', Logger.LeadInErrorStyle, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
   }

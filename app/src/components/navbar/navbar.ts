@@ -54,10 +54,10 @@ export class NavbarComponent {
         this.deeplinks.route({
           '/callback': AccountSigninPage
         }).subscribe((match) => {
-          console.log('Successfully invoked mobile callback deeplink route', match);
+          if (DEBUG_MODE) console.log('Successfully invoked mobile callback deeplink route', match);
           this.completeSignIn(match.$args.code, platform, http);
         }, (nomatch) => {
-          console.error('Got a deeplink that did not match known routes', nomatch);
+          if (DEBUG_MODE) console.error('Got a deeplink that did not match known routes', nomatch);
         });
       } else {
         // App running in browser without Cordova. Deep linking not supported, so redirects used instead
@@ -65,7 +65,7 @@ export class NavbarComponent {
         if (window.location.search) {
           let params = new URLSearchParams(window.location.search);
           let authCode = params.get('?code');
-          console.log('authCode',authCode);
+          if (DEBUG_MODE) console.log('authCode',authCode);
           this.completeSignIn(authCode, platform, http).then(() => {
             // Reset query parameters from URL in browser
             let clean_uri = location.protocol + "//" + location.host + location.pathname;
@@ -78,10 +78,10 @@ export class NavbarComponent {
 
   // this method will be called each time the Ionic View is loaded
   ionViewDidEnter() {
-    Logger.banner("Welcome to SpaceFinder!");
+  if (DEBUG_MODE) console.log('NavbarComponent.ionViewDidEnter()');
 
     if (!this.initialized) {
-      console.log('%cConfiguration: ', Logger.LeadInStyle, Config);
+      if (DEBUG_MODE) console.log('%cConfiguration: ', Logger.LeadInStyle, Config);
       // Auto-login
       if (Config['DEVELOPER_MODE']) {
 
@@ -101,29 +101,31 @@ export class NavbarComponent {
   }
 
   launchHostedUi() {
+    if (DEBUG_MODE) console.log('NavbarComponent.launchHostedUi()');
     if (this.platform.is('cordova')) {
       // You're running in a Cordova app on a device. Use the browser tab plugin.
       this.browserTab.isAvailable()
         .then((isAvailable: boolean) => {
           if (isAvailable) {
-            console.log('Cognito Hosted UI: ', CognitoUtil.getHostedUiLoginMobileUrl());
+            if (DEBUG_MODE) console.log('Cognito Hosted UI: ', CognitoUtil.getHostedUiLoginMobileUrl());
             this.browserTab.openUrl(CognitoUtil.getHostedUiLoginMobileUrl());
           } else {
-            console.log('Browser tab not available');
+            if (DEBUG_MODE) console.log('Browser tab not available');
             // open URL with InAppBrowser instead or SafariViewController
           }
         });
     } else {
       // You're testing in a browser. Redirect to the hosted UI.
-      console.log('Cognito Hosted UI: ', CognitoUtil.getHostedUiLoginWebUrl());
+      if (DEBUG_MODE) console.log('Cognito Hosted UI: ', CognitoUtil.getHostedUiLoginWebUrl());
       window.location.href = CognitoUtil.getHostedUiLoginWebUrl();
     }
   }
 
   completeSignIn(authCode: string, platform: string, http: Http) {
+    if (DEBUG_MODE) console.log('NavbarComponent.completeSignIn()');
     return CognitoUtil.getIdTokenFromAuthCode(authCode, platform, http).then((data) => {
       this.globals.displayLoader('Signing in...');
-      console.log('Sign-in spinner');
+      if (DEBUG_MODE) console.log('Sign-in spinner');
       return UserLoginService.completeSignIn(data.access_token, data.id_token, data.refresh_token)
         .then(() => {
           // Login was successful
@@ -146,6 +148,7 @@ export class NavbarComponent {
   }
 
   showLoginSuccessAlert(username: String, callbackHandler: () => void): void {
+    if (DEBUG_MODE) console.log('NavbarComponent.showLoginSuccessAlert()');
     let subtitle = `You are now signed in.`;
     if (this.globals.isAdminRole()) {
       subtitle = `You are now signed in as an Administrator.`
@@ -165,9 +168,9 @@ export class NavbarComponent {
   }
 
   logout() {
-    this.globals.logout(null);
+    if (DEBUG_MODE) console.log('NavbarComponent.logout()');
     this.navCtrl.setRoot(WelcomePage);
     this.navCtrl.popToRoot({animate: false});
-
+    this.globals.logout(null);
   }
 }

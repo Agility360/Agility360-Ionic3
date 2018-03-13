@@ -19,12 +19,6 @@ import { AccountForgotPasswordPage }   from '../pages/account-forgot-password/ac
 import { AccountPage }                 from '../pages/account/account';
 import { AccountSigninPage }           from '../pages/account-signin/account-signin';
 import { AccountSignupPage }           from '../pages/account-signup/account-signup';
-//import { BookingsPage }                from '../pages/bookings/bookings';
-//import { LocationListPage }            from '../pages/location-list/location-list';
-//import { LocationAddPage }             from '../pages/location-add/location-add';
-//import { ResourceListPage }            from '../pages/resource-list/resource-list';
-//import { ResourceAddPage }             from '../pages/resource-add/resource-add';
-//import { ResourceAvailabilityPage }    from '../pages/resource-availability/resource-availability';
 import { TabsPage }                    from '../pages/tabs/tabs';
 import { WelcomePage }                 from '../pages/welcome/welcome';
 import { BrowserModule }               from '@angular/platform-browser';
@@ -34,7 +28,7 @@ import {
   CustomAuthorizerClient,
   UserPoolsAuthorizerClient,
   NoAuthorizationClient
-} from "../services/spacefinder-api.service";
+} from "../services/api.service";
 
 /* Addded by McDaniel */
 /* ------------------------------------------------------- */
@@ -63,7 +57,6 @@ import { JobsDetailPage } from '../pages/agility-jobs-detail/jobs-detail';
 import { NewsDetailPage } from '../pages/agility-news-detail/news-detail';
 import { SettingsPage } from '../pages/agility-settings/settings';
 
-import { apiURL, cmsURL } from '../shared/constants';
 import { ProcessHttpmsgProvider } from '../providers/process-httpmsg';
 import { CandidateProvider } from '../providers/candidate';
 import { CertificationHistoryProvider } from '../providers/certificationhistory';
@@ -83,17 +76,6 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 
-/*
-export function httpFactory(
-  backend: XHRBackend,
-  defaultOptions: RequestOptions,
-  app: App,
-  loadingCtrl: LoadingController,
-  alertCtrl: AlertController) {
-  return new HttpService(backend, defaultOptions, app, loadingCtrl);
-}
-*/
-
 /* ------------------------------------------------------- */
 @NgModule({
   declarations: [
@@ -103,12 +85,6 @@ export function httpFactory(
     AccountPage,
     AccountSigninPage,
     AccountSignupPage,
-//    BookingsPage,
-//    LocationAddPage,
-//    LocationListPage,
-//    ResourceAddPage,
-//    ResourceListPage,
-//    ResourceAvailabilityPage,
     MyApp,
     TabsPage,
     WelcomePage,
@@ -153,12 +129,6 @@ export function httpFactory(
     AccountPage,
     AccountSigninPage,
     AccountSignupPage,
-//    BookingsPage,
-//    LocationAddPage,
-//    LocationListPage,
-//    ResourceAddPage,
-//    ResourceListPage,
-//    ResourceAvailabilityPage,
     MyApp,
     TabsPage,
     WelcomePage,
@@ -205,8 +175,6 @@ export function httpFactory(
       EducationHistoryProvider,
       JobHistoryProvider,
       JobApplicationsProvider,
-      { provide: 'apiURL', useValue: apiURL },
-      { provide: 'CMSURL', useValue: cmsURL },
       WordpressProvider,
       IndustriesProvider,
       ProfessionsProvider,

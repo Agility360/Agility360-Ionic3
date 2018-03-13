@@ -1,9 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { LoadingController, NavController, App, AlertController } from 'ionic-angular';
-import { DEBUG_MODE } from '../../shared/constants';
-//import { NavbarComponent } from '../../components/navbar';
-
-//import { LoginPage } from '../agility-login/login';
 import { ProfilePage } from '../agility-profile/profile';
 import { CertificationsPage } from '../agility-certifications/certifications';
 import { EducationPage } from '../agility-education/education';
@@ -17,7 +13,9 @@ import { GlobalStateService } from '../../services/global-state.service';
 import { CandidateProvider } from '../../providers/candidate';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
+import { DEBUG_MODE } from '../../shared/constants';
 import { Config } from '../../config/config';
+import { Logger } from '../../services/logger.service';
 
 declare var AWS: any;
 
@@ -47,7 +45,6 @@ export class SettingsPage {
   public resumeUploaderPage = ResumeUploaderPage;
   public privacyPolicyPage = PrivacyPolicyPage;
   public termsOfUsePage = TermsOfUsePage;
-//  public httpErrorPage = HttpErrorPage;
 
 
   constructor(
@@ -115,6 +112,7 @@ export class SettingsPage {
         this.upload();
       },
       (err) => {
+          console.log('%SettingsPage.selectAvatar() - this.camera.getPicture - error', Logger.LeadInErrorStyle, err);
           this.avatarInput.nativeElement.click();
     });
   }
@@ -130,6 +128,7 @@ export class SettingsPage {
       this.upload();
     };
     reader.onerror = (error) => {
+      console.log('%SettingsPage.uploadFromFile() - error', Logger.LeadInErrorStyle);
       alert('Unable to load file. Please try another.')
     }
   }
@@ -155,7 +154,7 @@ export class SettingsPage {
         if (DEBUG_MODE) console.log('SettingsPage.upload() - s3.upload - success');
         loading.dismiss();
       }, err => {
-        if (DEBUG_MODE) console.log('SettingsPage.upload() - s3.upload - failure', err);
+        console.log('%SettingsPage.upload() - s3.upload - failure', Logger.LeadInErrorStyle, err);
         loading.dismiss();
       });
     }

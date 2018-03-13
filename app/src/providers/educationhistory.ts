@@ -13,6 +13,7 @@ import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { Logger } from '../services/logger.service';
 
 
 @Injectable()
@@ -37,8 +38,15 @@ export class EducationHistoryProvider {
     if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.get() with username: ', this.username());
 
     return this.http.get(this.url(), apiHttpOptions)
-      .map(res => { return this.ProcessHttpmsgService.extractData(res) })
-      .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
+      .map(
+        res => {
+          if (DEBUG_MODE) console.log('%cEducationHistoryProvider.get() - success', Logger.LeadInStyle, res);
+          return this.ProcessHttpmsgService.extractData(res)
+        })
+      .catch(error => {
+        if (DEBUG_MODE) console.log('%cEducationHistoryProvider.get() - error', Logger.LeadInErrorStyle, error);
+        return this.ProcessHttpmsgService.handleError(error)
+      });
   }
 
   add(obj: Education): Observable<Education> {
@@ -48,13 +56,13 @@ export class EducationHistoryProvider {
     return this.http.post(this.url(), obj, apiHttpOptions)
       .map(
       res => {
-        if (DEBUG_MODE) console.log('EducationHistoryProvider.add() - success', res);
+        if (DEBUG_MODE) console.log('%cEducationHistoryProvider.add() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       }
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('EducationHistoryProvider.add() - error while posting', this.url(), apiHttpOptions, obj, error);
+        if (DEBUG_MODE) console.log('%cEducationHistoryProvider.add() - error while posting', Logger.LeadInErrorStyle, this.url(), apiHttpOptions, obj, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );
@@ -64,9 +72,13 @@ export class EducationHistoryProvider {
   update(job: Education): Observable<Education> {
 
     return this.http.patch(this.url() + job.id.toString(), job, apiHttpOptions)
-      .map(res => { return this.ProcessHttpmsgService.extractData(res) })
+      .map(
+        res => {
+          if (DEBUG_MODE) console.log('%cEducationHistoryProvider.update() - success', Logger.LeadInStyle, res);
+          return this.ProcessHttpmsgService.extractData(res)
+        })
       .catch(error => {
-        if (DEBUG_MODE) console.log('EducationHistoryProvider.update() - error while posting', this.url() + job.id.toString(), apiHttpOptions, job, error);
+        if (DEBUG_MODE) console.log('%cEducationHistoryProvider.update() - error while posting', Logger.LeadInErrorStyle, this.url() + job.id.toString(), apiHttpOptions, job, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
 
@@ -76,11 +88,11 @@ export class EducationHistoryProvider {
 
     return this.http.delete(this.url() + id.toString(), apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('EducationHistoryProvider.delete() - success.', res);
+        if (DEBUG_MODE) console.log('%cEducationHistoryProvider.delete() - success', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('EducationHistoryProvider.delete() - error while deleting', this.url() + id.toString(), apiHttpOptions, error);
+        if (DEBUG_MODE) console.log('%cEducationHistoryProvider.delete() - error while deleting', Logger.LeadInErrorStyle, this.url() + id.toString(), apiHttpOptions, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
 

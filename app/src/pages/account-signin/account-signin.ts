@@ -50,6 +50,7 @@ export class AccountSigninPage {
   }
 
   onSignIn(form) {
+    if (DEBUG_MODE) console.log('AccountSigninPage.onSignIn()');
     this.signInButtonClicked = true;
     this.forgotPasswordButtonClicked = false;
 
@@ -59,6 +60,7 @@ export class AccountSigninPage {
   }
 
   onForgotPassword(form) {
+    if (DEBUG_MODE) console.log('AccountSigninPage.onForgotPassword()');
     if (!this.allowButtonPresses) {
       return;
     }
@@ -93,6 +95,7 @@ export class AccountSigninPage {
 
   // return a LoginStatus
   login(): void {
+  if (DEBUG_MODE) console.log('AccountSigninPage.login()');
     // prevent multiple clicks
     if (!this.allowButtonPresses) {
       return;
@@ -131,6 +134,7 @@ export class AccountSigninPage {
   }
 
   displayAlertError(err: Error) {
+    if (DEBUG_MODE) console.log('AccountSigninPage.displayAlertError()');
     switch (CognitoUtil.getUserState()) {
     case UserState.InvalidCredentials:
       console.log('Sign-in failed: ' + err);
@@ -155,6 +159,7 @@ export class AccountSigninPage {
   }
 
   showLoginSuccessAlert(username: String, callbackHandler: () => void): void {
+    if (DEBUG_MODE) console.log('AccountSigninPage.showLoginSuccessAlert()');
     let subtitle = `You are now signed in.`;
     if (this.globals.isAdminRole()) {
       subtitle = `You are now signed in as an Administrator.`
@@ -177,6 +182,7 @@ export class AccountSigninPage {
   }
 
   showResendSuccessAlert(callbackHandler: () => void): void {
+    if (DEBUG_MODE) console.log('AccountSigninPage.showResendSuccessAlert()');
     let alert = this.alertCtrl.create({
       title: 'Verification code sent',
       subTitle: `A new verification code has been emailed to your account. Once you receive it, please try signing in again.`,
@@ -192,6 +198,7 @@ export class AccountSigninPage {
   }
 
   showOneTimeVerificationAlert(username: String, callbackHandler: () => void): void {
+    if (DEBUG_MODE) console.log('AccountSigninPage.showOneTimeVerificationAlert()');
     let alert = this.alertCtrl.create({
       title: 'One-time verification',
       subTitle: `When you registered, a verification code was emailed to you. Please enter the code, and click "Verify". Or click "Re-send" to receive another code.`,
@@ -242,6 +249,7 @@ export class AccountSigninPage {
   }
 
   showConfirmationFailureAlert(err: Error): void {
+    if (DEBUG_MODE) console.log('AccountSigninPage.showConfirmationFailureAlert()');
     let alert = this.alertCtrl.create({
       title: 'Verification failed',
       subTitle: err.message,
@@ -255,6 +263,7 @@ export class AccountSigninPage {
 
 
   showLoginFailureAlert(username: String, message: String): void {
+    if (DEBUG_MODE) console.log('AccountSigninPage.showLoginFailureAlert()');
     let alert = this.alertCtrl.create({
       title: 'Login was unsuccessful',
       subTitle: `${message}`,
@@ -267,6 +276,7 @@ export class AccountSigninPage {
   }
 
   showForgotPasswordFailureAlert(err): void {
+    if (DEBUG_MODE) console.log('AccountSigninPage.showForgotPasswordFailureAlert()');
     let alert = this.alertCtrl.create({
       title: 'Error encountered',
       subTitle: `An error was encountered when attempting to initiate the password change process: [${err}]. Please try again.`,
@@ -281,6 +291,7 @@ export class AccountSigninPage {
 
   ionViewDidEnter() {
     Logger.banner("Sign-In");
+    if (DEBUG_MODE) console.log('AccountSigninPage.ionViewDidEnter()');
     this.allowButtonPresses = true;
   }
 }

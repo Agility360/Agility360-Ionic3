@@ -13,6 +13,8 @@ import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { Logger } from '../services/logger.service';
+
 
 @Injectable()
 export class JobHistoryProvider {
@@ -22,20 +24,8 @@ export class JobHistoryProvider {
     private globals: GlobalStateService,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
-    if (DEBUG_MODE) console.log('constructor - JobHistoryProvider');
+    if (DEBUG_MODE) console.log('JobHistoryProvider.constructor()');
     if (DEBUG_MODE) console.log('apiURL: ', apiURL);
-
-    /*
-      headers: {'Authorization': 'xxxyyyzzz'}
-
-      https://angular.io/api/http/RequestOptions
-
-      let headers = new Headers({ 'Content-Type': 'application/json' });
-      let options = new RequestOptions({ headers: headers });
-
-      return this.http.post(this.url, book, options)
-
-    */
 
   }
 
@@ -46,11 +36,18 @@ export class JobHistoryProvider {
 
   get(): Observable<Job[]> {
 
-    if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.get() with username: ', this.username());
+    if (DEBUG_MODE) console.log('JobHistoryProvider.get() with username: ', this.username());
 
     return this.http.get(this.url(), apiHttpOptions)
-      .map(res => { return this.ProcessHttpmsgService.extractData(res) })
-      .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
+      .map(
+        res => {
+          if (DEBUG_MODE) console.log('%cJobHistoryProvider.get() - success ', Logger.LeadInStyle, res);
+          return this.ProcessHttpmsgService.extractData(res)
+        })
+      .catch(error => {
+        if (DEBUG_MODE) console.log('%cJobHistoryProvider.get() - error ', Logger.LeadInErrorStyle, error);
+        return this.ProcessHttpmsgService.handleError(error)
+      });
   }
 
   add(job: Job): Observable<Job> {
@@ -60,13 +57,13 @@ export class JobHistoryProvider {
     return this.http.post(this.url(), job, apiHttpOptions)
       .map(
       res => {
-        if (DEBUG_MODE) console.log('JobHistoryProvider.add() - success', res);
+        if (DEBUG_MODE) console.log('%cJobHistoryProvider.add() - success ', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       }
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('JobHistoryProvider.add() - error while posting', this.url(), apiHttpOptions, job, error);
+        if (DEBUG_MODE) console.log('%cJobHistoryProvider.add() - error while posting', Logger.LeadInErrorStyle, this.url(), apiHttpOptions, job, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );
@@ -78,11 +75,11 @@ export class JobHistoryProvider {
 
     return this.http.patch(this.url() + job.id.toString(), job, apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('JobHistoryProvider.update() - updated. result: ', res);
+        if (DEBUG_MODE) console.log('%cJobHistoryProvider.update() - success ', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('JobHistoryProvider.update() - error while posting', this.url() + job.id.toString(), apiHttpOptions, job, error);
+        if (DEBUG_MODE) console.log('%cJobHistoryProvider.update() - error while posting', Logger.LeadInErrorStyle, this.url() + job.id.toString(), apiHttpOptions, job, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
 
@@ -93,11 +90,11 @@ export class JobHistoryProvider {
 
     return this.http.delete(this.url() + id.toString(), apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('JobHistoryProvider.delete() - success.', res);
+        if (DEBUG_MODE) console.log('%cJobHistoryProvider.delete() - success ', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('JobHistoryProvider.delete() - error while deleting', this.url() + id.toString(), apiHttpOptions, error);
+        if (DEBUG_MODE) console.log('%cJobHistoryProvider.delete() - error while deleting', Logger.LeadInErrorStyle, this.url() + id.toString(), apiHttpOptions, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
 

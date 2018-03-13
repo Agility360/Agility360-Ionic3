@@ -13,6 +13,7 @@ import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import { Logger } from '../services/logger.service';
 
 
 @Injectable()
@@ -33,12 +34,18 @@ export class CertificationHistoryProvider {
   }
 
   get(): Observable<Certification[]> {
-
-    if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.get() with username: ', this.username());
+    if (DEBUG_MODE) console.log('CertificationHistoryProvider.get() with username: ', this.username());
 
     return this.http.get(this.url(), apiHttpOptions)
-      .map(res => { return this.ProcessHttpmsgService.extractData(res) })
-      .catch(error => { return this.ProcessHttpmsgService.handleError(error) });
+      .map(
+        res => {
+          if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.get() - success ', Logger.LeadInStyle, res);
+          return this.ProcessHttpmsgService.extractData(res)
+        })
+      .catch(error => {
+        if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.get() - error ', Logger.LeadInErrorStyle, error);
+        return this.ProcessHttpmsgService.handleError(error)
+      });
   }
 
   add(obj: Certification): Observable<Certification> {
@@ -48,13 +55,13 @@ export class CertificationHistoryProvider {
     return this.http.post(this.url(), obj, apiHttpOptions)
       .map(
       res => {
-        if (DEBUG_MODE) console.log('CertificationHistoryProvider.add() - success', res);
+        if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.add() - success ', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       }
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('CertificationHistoryProvider.add() - error while posting', this.url(), apiHttpOptions, obj, error);
+        if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.add() - error', Logger.LeadInErrorStyle, this.url(), apiHttpOptions, obj, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );
@@ -63,12 +70,14 @@ export class CertificationHistoryProvider {
 
   update(obj: Certification): Observable<Certification> {
 
-    if (DEBUG_MODE) console.log('CertificationHistoryProvider.update() - error while posting', this.url() + obj.id.toString(), apiHttpOptions, obj);
-
     return this.http.patch(this.url() + obj.id.toString(), obj, apiHttpOptions)
-      .map(res => { return this.ProcessHttpmsgService.extractData(res) })
+      .map(
+        res => {
+          if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.update() - success ', Logger.LeadInStyle, res);
+          return this.ProcessHttpmsgService.extractData(res)
+        })
       .catch(error => {
-        if (DEBUG_MODE) console.log('CertificationHistoryProvider.update() - error while posting', this.url() + obj.id.toString(), apiHttpOptions, obj, error);
+        if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.update() - error', Logger.LeadInErrorStyle, this.url() + obj.id.toString(), apiHttpOptions, obj, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
 
@@ -78,11 +87,11 @@ export class CertificationHistoryProvider {
 
     return this.http.delete(this.url() + id.toString(), apiHttpOptions)
       .map(res => {
-        if (DEBUG_MODE) console.log('CertificationHistoryProvider.delete() - success.', res);
+        if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.delete() - success ', Logger.LeadInStyle, res);
         return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
-        if (DEBUG_MODE) console.log('CertificationHistoryProvider.delete() - error while deleting', this.url() + id.toString(), apiHttpOptions, error);
+        if (DEBUG_MODE) console.log('%cCertificationHistoryProvider.delete() - error', Logger.LeadInErrorStyle, this.url() + id.toString(), apiHttpOptions, error);
         return this.ProcessHttpmsgService.handleError(error)
       });
 
