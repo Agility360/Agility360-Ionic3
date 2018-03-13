@@ -94,8 +94,36 @@ export class SettingsPage {
     return new Blob([new Uint8Array(array)], { type: 'image/jpeg' });
   };
 
-  selectAvatar() {
+  selectProfilePhoto() {
     if (DEBUG_MODE) console.log('SettingsPage.selectAvatar()');
+
+    let alert = this.alertCtrl.create({
+      title: 'Photo Permission',
+      subTitle: 'Agility 360 would like to access your photo gallery for your profile photo upload. Your photos will not be shared without your permission.',
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => { this.openDevicePhotoStorage(); }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    alert.present().then(() => {
+      console.log('Show logout alert - then');
+
+//      this.openDevicePhotoStorage();
+
+    }).catch((ex) => {
+      console.log('Show logout alert exception', ex);
+    });;
+
+  }
+  openDevicePhotoStorage() {
+    if (DEBUG_MODE) console.log('SettingsPage.openDevicePhotoStorage()');
     const options: CameraOptions = {
       quality: 100,
       targetHeight: 200,
@@ -112,7 +140,7 @@ export class SettingsPage {
         this.upload();
       },
       (err) => {
-          console.log('%SettingsPage.selectAvatar() - this.camera.getPicture - error', Logger.LeadInErrorStyle, err);
+          console.log('%SettingsPage.openDevicePhotoStorage() - this.camera.getPicture - error', Logger.LeadInErrorStyle, err);
           this.avatarInput.nativeElement.click();
     });
   }
@@ -159,7 +187,28 @@ export class SettingsPage {
       });
     }
     loading.dismiss();
+  }
 
+
+  photoPermissionAlert(): void {
+    let alert = this.alertCtrl.create({
+      title: 'Photo Permission',
+      subTitle: 'Agility 360 would like to access your photo gallery for your profile photo upload. Your photos will not be shared without your permission.',
+      buttons: [
+        {
+          text: 'OK',
+          role: 'ok'
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        }
+      ]
+    });
+    alert.present().then(() => {
+    }).catch((ex) => {
+      console.log('Show logout alert exception', ex);
+    });;
   }
 
 

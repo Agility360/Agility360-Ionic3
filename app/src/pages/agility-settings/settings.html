@@ -20,7 +20,7 @@
   </div>
   <div text-center>
     <div *ngIf="avatarPhoto" class="avatar" [style.background-image]="'url('+ avatarPhoto +')'"></div>
-    <button ion-button clear (click)="selectAvatar()">Change photo</button>
+    <button ion-button clear (click)="selectProfilePhoto()">Change photo</button>
     <input #avatar class="avatar-input" type="file" (change)="uploadFromFile($event)" />
   </div>
 
