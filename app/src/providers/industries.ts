@@ -6,7 +6,7 @@
 import { Injectable } from '@angular/core';
 import { Industries } from '../shared/industries';
 import { Observable } from 'rxjs/Observable';
-import { HttpService } from '../services/http-service';
+import { HttpServiceIonic1 } from '../services/http-service-ionic1';
 import { apiURL, apiHttpOptions, DEBUG_MODE, HTTP_RETRIES } from '../shared/constants';
 import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
@@ -19,7 +19,7 @@ export class IndustriesProvider {
 
   config: string;
 
-  constructor(public http: HttpService,
+  constructor(public http: HttpServiceIonic1,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
     if (DEBUG_MODE) console.log('IndustriesProvider.constructor()');

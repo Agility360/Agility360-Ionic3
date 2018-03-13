@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 import { GlobalStateService } from '../services/global-state.service';
 import { JobApplications } from '../shared/job-applications';
 import { Observable } from 'rxjs/Observable';
-import { HttpService } from '../services/http-service';
+import { HttpServiceIonic1 } from '../services/http-service-ionic1';
 import { apiURL, apiHttpOptions, DEBUG_MODE, HTTP_RETRIES } from '../shared/constants';
 import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
@@ -18,7 +18,7 @@ import { Logger } from '../services/logger.service';
 @Injectable()
 export class JobApplicationsProvider {
 
-  constructor(public http: HttpService,
+  constructor(public http: HttpServiceIonic1,
     private globals: GlobalStateService,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
@@ -72,13 +72,13 @@ export class JobApplicationsProvider {
 
   }
 
-  new() {
+  new(): JobApplications {
     return {
       account_name: this.username(),
       id: null,
-      candidate_id: null,
+      candidate_id: this.globals.getCandidate().candidate_id,
       wordpress_post_id: null,
-      create_date: ''
+      create_date: null
     };
   }
 
