@@ -13,6 +13,7 @@ import { ProcessHttpmsgProvider } from './process-httpmsg';
 import 'rxjs/add/operator/delay';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+
 import { Logger } from '../services/logger.service';
 
 
@@ -40,7 +41,10 @@ export class CandidateProvider {
     return this.http.get(this.url(), apiHttpOptions)
       .map(res => {
         if (DEBUG_MODE) console.log('%cCandidateProvider.get() - success', Logger.LeadInStyle, res);
-        return this.ProcessHttpmsgService.extractData(res)
+        if (this.isEmpty(this.ProcessHttpmsgService.extractData(res))) {
+          //this is a new user
+          return this.cloneCognitoUser();
+        } else return this.ProcessHttpmsgService.extractData(res)
       })
       .catch(error => {
         if (DEBUG_MODE) console.log('%cCandidateProvider.get() - error', Logger.LeadInErrorStyle, error);
@@ -102,7 +106,6 @@ export class CandidateProvider {
   }
 
 
-
   new() {
     if (DEBUG_MODE) console.log('CandidateProvider.new()');
     return {
@@ -129,6 +132,33 @@ export class CandidateProvider {
       resume_filename: null
     };
   }
+
+  cloneCognitoUser() {
+    if (DEBUG_MODE) console.log('%cCandidateProvider.cloneCognitoUser()', Logger.LeadInStyle);
+    let candidate = this.new();
+
+    candidate.email = this.globals.getUserEmail();
+    candidate.account_name = this.globals.getUsername();
+    candidate.first_name = this.globals.getUserFirstName();
+    candidate.last_name = this.globals.getUserLastName();
+
+
+    let promise: Promise<void> = new Promise<void>((resolve, reject) => {
+
+      this.add(candidate).subscribe(
+        res => {
+          if (DEBUG_MODE) console.log('%cCandidateProvider.cloneCognitoUser() - success', Logger.LeadInStyle, res);
+          resolve();
+        },
+        err => {
+          if (DEBUG_MODE) console.log('%cCandidateProvider.cloneCognitoUser() - success', Logger.LeadInErrorStyle, err);
+          reject();
+        }
+      );
+    });
+    return promise;
+  }
+
 
   username() {
     if (DEBUG_MODE) console.log('CandidateProvider.username()');
@@ -168,6 +198,8 @@ export class CandidateProvider {
   }
 
   private isEmpty(obj) {
+    console.log('isEmpty: ', obj);
+
     for (var prop in obj) {
       if (obj.hasOwnProperty(prop))
         return false;

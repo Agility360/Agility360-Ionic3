@@ -4,6 +4,7 @@ import {Config} from '../config/config'
 import {Logger} from './logger.service';
 import * as sjcl from '../assets/vendor/sjcl';
 import { DEBUG_MODE } from '../shared/constants';
+import { Candidate } from '../shared/candidate';
 
 declare const AWS: any;
 declare const AWSCognito: any;
@@ -120,9 +121,37 @@ export class CognitoUtil {
   }
 
   public static setUsername(username: string) {
-    if (DEBUG_MODE) console.log('CognitoUtil.setUsername()');
+    if (DEBUG_MODE) console.log('CognitoUtil.setUsername()', username);
     LocalStorage.set('userName', username);
   }
+
+  public static getUserFirstName(): string {
+    return LocalStorage.get('userFirstName');
+  }
+
+  public static setUserFirstName(userFirstName: string) {
+    if (DEBUG_MODE) console.log('CognitoUtil.setUserFirstName()', userFirstName);
+    LocalStorage.set('userFirstName', userFirstName);
+  }
+
+  public static getUserLastName(): string {
+    return LocalStorage.get('userLastName');
+  }
+
+  public static setUserLastName(userLastName: string) {
+    if (DEBUG_MODE) console.log('CognitoUtil.setUserLastName()', userLastName);
+    LocalStorage.set('userLastName', userLastName);
+  }
+
+  public static getUserEmail(): string {
+    return LocalStorage.get('userEmail');
+  }
+
+  public static setUserEmail(userEmail: string) {
+    if (DEBUG_MODE) console.log('CognitoUtil.setUserEmail()', userEmail);
+    LocalStorage.set('userEmail', userEmail);
+  }
+
 
   public static getUserId(): string {
     // Retrieve user ID from local storage. Return null if it does not exist
@@ -130,19 +159,23 @@ export class CognitoUtil {
     return LocalStorage.get('userId');
   }
 
-  public static setCandidate(candidate: object) {
+  public static setCandidate(candidate: Candidate) {
     if (CognitoUtil.isSignedIn()) {
       if (DEBUG_MODE) console.log('CognitoUtil.setCandidate()', candidate);
+
+      candidate.first_name = this.getUserFirstName();
+      candidate.last_name = this.getUserLastName();
+      candidate.email = this.getUserEmail();
       LocalStorage.setObject('candidate', candidate);
     }
   }
 
-  public static getCandidate(): object {
+  public static getCandidate(): Candidate {
     if (CognitoUtil.isSignedIn()) {
       if (DEBUG_MODE) console.log('CognitoUtil.getCandidate()');
       return LocalStorage.getObject('candidate');
     }
-    return {};
+    return null;
   }
 
   public static setCandidateProfileImageUrl(url: string) {
@@ -408,6 +441,9 @@ export class UserLoginService {
     // Clear username and user ID attributes
     LocalStorage.set('userId', null);
     LocalStorage.set('userName', null);
+    LocalStorage.set('userFirstName', null);
+    LocalStorage.set('userLastName', null);
+    LocalStorage.set('userEmail', null);
 
     //Clear user profile image URL
     LocalStorage.set('candidateProfileImageUrl', null);
@@ -473,6 +509,10 @@ export class UserLoginService {
       let idTokenPayload = UserLoginService._userTokens.idToken.split('.')[1];
       let idTokenDecoded = JSON.parse(sjcl.codec.utf8String.fromBits(sjcl.codec.base64url.toBits(idTokenPayload)));
       CognitoUtil.setUsername(idTokenDecoded["cognito:username"]);
+      CognitoUtil.setUserFirstName(idTokenDecoded["given_name"]);
+      CognitoUtil.setUserLastName(idTokenDecoded["family_name"]);
+      CognitoUtil.setUserEmail(idTokenDecoded["email"]);
+
       let userName = idTokenDecoded["cognito:username"];
       let userGroup = idTokenDecoded["cognito:groups"];
       if (userGroup && userGroup.length > 0) {

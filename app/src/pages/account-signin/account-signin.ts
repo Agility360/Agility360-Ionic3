@@ -7,8 +7,6 @@ import { AccountForgotPasswordPage } from '../account-forgot-password/account-fo
 import { AccountSignupPage } from '../account-signup/account-signup';
 import { DEBUG_MODE } from '../../shared/constants';
 
-import { WelcomePage } from '../welcome/welcome';
-
 
 import {
   UserLoginService, IUserLogin, UserState,
@@ -213,19 +211,14 @@ export class AccountSigninPage {
             UserRegistrationService.confirmSignUp(data.verificationCode)
             .then(() => {
                 // now, sign in
-              UserLoginService.signIn(this.userData).then(() => {
+              UserLoginService.signIn(this.userData)
+              .then(() => {
                 // Login was successful
-                //this.showLoginSuccessAlert(this.userData.username, () => {
-                //  this.globals.userId = this.globals.getUserId();
-                //  this.navCtrl.popToRoot({animate: false});
-                  // this.navCtrl.push(WelcomePage);
-                //});
+
               }).catch((err: Error): void => {
                 // Login was unsuccessful
                 this.displayAlertError(err);
               });
-              // this.navCtrl.popToRoot({animate: false});
-              // this.navCtrl.pop();
             }).catch((err: Error) => {
               console.error(err);
               this.showConfirmationFailureAlert(err);

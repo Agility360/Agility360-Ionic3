@@ -45,7 +45,7 @@ export class HttpServiceIonic1 extends Http {
    * @returns {Observable<Response>}
    */
   request(url: string | Request, options?: RequestOptionsArgs): Observable<Response> {
-    if (DEBUG_MODE) console.log('%cHttpService.request()', Logger.LeadInStyle, url, options);
+    if (DEBUG_MODE) console.log('HttpService.request()', url, options);
 
     return super.request(url, options)
     .timeout(TIMEOUT);

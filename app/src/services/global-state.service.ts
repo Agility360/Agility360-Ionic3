@@ -130,15 +130,21 @@ export class GlobalStateService {
 
 
   getUserFirstName(): string {
-    return this.getCandidate().first_name;
+    //return this.getCandidate().first_name;
+    return CognitoUtil.getUserFirstName();
   }
 
   getUserLastName(): string {
-    return this.getCandidate().last_name;
+    //return this.getCandidate().last_name;
+    return CognitoUtil.getUserLastName();
   }
 
   getUserFullName(): string {
-    return this.getCandidate().first_name + ' ' + this.getCandidate().last_name;
+    return this.getUserFirstName() + ' ' + this.getUserLastName();
+  }
+
+  getUserEmail(): string {
+    return CognitoUtil.getUserEmail();
   }
 
   getViewAdminFeaturesOverride() {
