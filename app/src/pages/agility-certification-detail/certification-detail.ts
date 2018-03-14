@@ -123,6 +123,7 @@ export class CertificationDetailPage {
     this.errorMsg = null;
 
     //begin business rule validations.
+/*
     if (this.obj.expire_date < this.obj.date_received) {
       let alert = this.alertCtrl.create({
         title: 'Error',
@@ -132,7 +133,7 @@ export class CertificationDetailPage {
       alert.present();
       return false;
     }
-
+*/
     if (this.formGroup.valid) {
       return true;
     }

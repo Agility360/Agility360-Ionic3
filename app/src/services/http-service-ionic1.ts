@@ -228,52 +228,8 @@ export class HttpServiceIonic1 extends Http {
   private onSubscribeError(error: any): void {
     console.log('%cHttpService.onSubscribeError() - error:', Logger.LeadInErrorStyle, error);
 
-    this.moveToHttpError();
+    //this.moveToHttpError();
     return;
-
-    /*
-    if (error.name) {
-      if (error.name == "TimeoutError") {
-        if (DEBUG_MODE) console.log('HttpService.onSubscribeError() - timeout error:', error);
-      }
-    }
-    switch (error.status) {
-      case 401:
-        if (DEBUG_MODE) console.log('HttpService.onSubscribeError() - error 401:', error);
-        this.moveToLogin();
-        break;
-      case 500:
-        if (DEBUG_MODE) console.log('HttpService.onSubscribeError() - error 500:', error);
-        let errObj: any;
-        let errMsg: any;
-        if (error instanceof Response) {
-          if (DEBUG_MODE) console.log('onSubscribeError() - 500 Response Object');
-          if (DEBUG_MODE) console.log('i am a Response instance', error.text())
-          errObj = JSON.parse(error.text());
-          errMsg = errObj.errorType + ': ' + errObj.errorMessage;
-          if (DEBUG_MODE) console.log('onSubscribeError() - 500 Response Object:', errObj);
-        }
-        let alert = this.alertCtrl.create({
-          title: 'Server Error',
-          message: errMsg,
-          buttons: [
-            {
-              text: 'Ok',
-              role: 'ok',
-              handler: () => {
-                if (DEBUG_MODE) console.log('onSubscribeError() - alert - ok clicked.');
-              }
-            }
-          ]
-        });
-        alert.present();
-      default:
-        if (DEBUG_MODE) console.log('HttpService.onSubscribeError() - error default:', error);
-        this.moveToHttpError();
-        break;
-    }
-    */
-
   }
 
   /**
@@ -289,21 +245,11 @@ export class HttpServiceIonic1 extends Http {
     this.responseInterceptor();
   }
 
-  /**
-   * moveToLogin
-   private moveToLogin(): void {
-     if (DEBUG_MODE) console.log('HttpService.moveToLogin()');
-     let view = this.app.getRootNav().getActive();
-     if (view.instance instanceof LoginPage) { }
-     else { this.app.getRootNav().setRoot(LoginPage); }
-   }
-   */
-
   private moveToHttpError(): void {
     if (DEBUG_MODE) console.log('HttpService.moveToHttpError()');
-    let view = this.app.getRootNav().getActive();
-    if (view.instance instanceof HttpErrorPage) { }
-    else { this.app.getRootNav().setRoot(HttpErrorPage); }
+//    let view = this.app.getRootNav().getActive();
+//    if (view.instance instanceof HttpErrorPage) { }
+//    else { this.app.getRootNav().setRoot(HttpErrorPage); }
   }
 
 }

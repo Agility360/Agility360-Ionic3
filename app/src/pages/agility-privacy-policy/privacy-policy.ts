@@ -79,7 +79,7 @@ export class PrivacyPolicyPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PrivacyPolicyPage');
+    if (DEBUG_MODE) console.log('ionViewDidLoad PrivacyPolicyPage');
   }
 
 }

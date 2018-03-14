@@ -214,7 +214,7 @@ export class CandidateProvider {
   }
 
   private isEmpty(obj) {
-    console.log('isEmpty: ', obj);
+    if (DEBUG_MODE) console.log('isEmpty: ', obj);
 
     for (var prop in obj) {
       if (obj.hasOwnProperty(prop))

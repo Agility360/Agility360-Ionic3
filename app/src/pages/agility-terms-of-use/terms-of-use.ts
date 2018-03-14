@@ -79,7 +79,7 @@ export class TermsOfUsePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad TermsOfUsePage');
+    if (DEBUG_MODE) console.log('ionViewDidLoad TermsOfUsePage');
   }
 
 }

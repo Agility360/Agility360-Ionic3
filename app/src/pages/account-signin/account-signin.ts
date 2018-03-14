@@ -135,21 +135,28 @@ export class AccountSigninPage {
     if (DEBUG_MODE) console.log('AccountSigninPage.displayAlertError()');
     switch (CognitoUtil.getUserState()) {
     case UserState.InvalidCredentials:
-      console.log('Sign-in failed: ' + err);
-      let errorMessage = 'Incorrect username or password entered. Please try again.'
+      if (DEBUG_MODE) console.log('%cSign-in failed: ', Logger.LeadInErrorStyle, err);
+
+      let errorMessage: string;
+
+      if (err.toString() != "NetworkingError: Network Failure") errorMessage = err.toString()
+                                                                                  .replace("NotAuthorizedException:", "")
+                                                                                  .replace("UserNotFoundException:", "")
+      else errorMessage = 'There is no connection to the Internet. Please try again in a while.'
+
       this.showLoginFailureAlert(this.userData.username, errorMessage);
       break;
     case UserState.PendingConfirmation:
       // If a user has registered, but has not yet confirmed the registration code, then
       // display a dialog where he/she can input the verification code. Alternatively,
       // the user can request a new verification code be emailed.
-      console.log('User has not confirmed verification code: ' + err);
+      if (DEBUG_MODE) console.log('User has not confirmed verification code: ' + err);
       this.showOneTimeVerificationAlert(this.userData.username, () => {
         this.navCtrl.pop();
       });
       break;
     default:
-      console.log('Sign-in failed: ' + err);
+      if (DEBUG_MODE) console.log('%cSign-in failed', Logger.LeadInErrorStyle, err);
       errorMessage = `The login failed: ${err}`;
       this.showLoginFailureAlert(this.userData.username, errorMessage);
       break;
@@ -258,7 +265,7 @@ export class AccountSigninPage {
   showLoginFailureAlert(username: String, message: String): void {
     if (DEBUG_MODE) console.log('AccountSigninPage.showLoginFailureAlert()');
     let alert = this.alertCtrl.create({
-      title: 'Login was unsuccessful',
+      title: 'Login Unsuccessful',
       subTitle: `${message}`,
       buttons: [{ text: 'OK' }]
     });

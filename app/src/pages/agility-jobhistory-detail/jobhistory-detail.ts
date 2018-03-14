@@ -116,7 +116,7 @@ export class JobhistoryDetailPage {
 
       this.formGroup.valueChanges
         .subscribe(data => {
-          if (DEBUG_MODE) console.log('formGroup.valueChanges.subscribe()');
+          //if (DEBUG_MODE) console.log('formGroup.valueChanges.subscribe()');
           this.errorMsg = null;
         });
 
@@ -172,7 +172,7 @@ export class JobhistoryDetailPage {
       if (DEBUG_MODE) console.log('JobhistoryDetailPage.processForm() - Adding obj: ', this.obj);
       this.provider.add(this.obj)
         .subscribe(job => {
-          if (DEBUG_MODE) console.log('JobhistoryDetailPage.processForm() - Added obj: ', this.obj);
+          //if (DEBUG_MODE) console.log('JobhistoryDetailPage.processForm() - Added obj: ', this.obj);
           toast.present();
           this.shouldConfirmWindowClose = false;
           /* this.navCtrl.getActiveChildNav() */
@@ -215,6 +215,7 @@ export class JobhistoryDetailPage {
 
   ionViewCanLeave() {
     if (this.shouldConfirmWindowClose && this.formGroup.dirty) {
+      if (DEBUG_MODE) console.log('JobhistoryDetailPage.ionViewCanLeave()');
       let alert = this.alertCtrl.create({
         title: 'Exit',
         message: 'Discard changes?',
@@ -241,6 +242,7 @@ export class JobhistoryDetailPage {
   }
 
   private exitPage() {
+    if (DEBUG_MODE) console.log('JobhistoryDetailPage.exitPage()');
     this.shouldConfirmWindowClose = false;
     this.navCtrl.pop();
   }
