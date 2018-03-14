@@ -24,7 +24,7 @@ export class ProcessHttpmsgProvider {
   }
 
   public extractData(res: Response) {
-    if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.extractData()', res);
+    //if (DEBUG_MODE) console.log('ProcessHttpmsgProvider.extractData()', res);
     let body = res.json();
     return body || { };
   }
@@ -43,9 +43,7 @@ export class ProcessHttpmsgProvider {
     }
 
     if (DEBUG_MODE) console.log(errMsg);
-    return Observable.throw(errMsg);
+    return errMsg;
   }
-
-
 
 }

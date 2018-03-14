@@ -698,18 +698,18 @@ export class UserLoginService {
       let cognitoUser = CognitoUtil.getCognitoUser();
       cognitoUser.getSession((err: Error, session: any) => {
         if (err) {
-          if (DEBUG_MODE) console.log('UserProfileService.getUserAttributes() - cognitoUser.getSession() - error', Logger.LeadInErrorStyle, err);
+          if (DEBUG_MODE) console.log('%cUserProfileService.getUserAttributes() - cognitoUser.getSession() - error', Logger.LeadInErrorStyle, err);
           reject(err);
           return;
         }
         cognitoUser.deleteUser( (err: Error, result: any) => {
           if (err) {
-            if (DEBUG_MODE) console.log('UserProfileService.getUserAttributes() - cognitoUser.DeleteUser() - error', Logger.LeadInErrorStyle, err);
+            if (DEBUG_MODE) console.log('%cUserProfileService.getUserAttributes() - cognitoUser.DeleteUser() - error', Logger.LeadInErrorStyle, err);
             reject(err);
             return;
           }
 
-          if (DEBUG_MODE) console.log('UserProfileService.getUserAttributes() - cognitoUser.DeleteUser() - success', Logger.LeadInStyle, result);
+          if (DEBUG_MODE) console.log('%cUserProfileService.getUserAttributes() - cognitoUser.DeleteUser() - success', Logger.LeadInStyle, result);
           resolve(result);
         });
       });

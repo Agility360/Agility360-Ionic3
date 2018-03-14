@@ -4,6 +4,8 @@ import {
   ResponseContentType, RequestOptionsArgs
 } from "@angular/http";
 import {Observable} from "rxjs";
+import { Logger } from './logger.service'
+import { apiURL, apiHttpOptions, DEBUG_MODE, HTTP_RETRIES } from '../shared/constants';
 
 /**
  * We dont extend from Http since by doing that, it requires binding
@@ -18,6 +20,7 @@ export class HttpService {
   protected _backend;
   protected _defaultOptions;
   constructor(public http: Http) {
+    if (DEBUG_MODE) console.log('HttpService.constructor()');
     this._backend = (<any>http)._backend;
     this._defaultOptions = (<any>http)._defaultOptions;
   }
@@ -26,31 +29,34 @@ export class HttpService {
    * Performs a request with `get` http method.
    */
   get(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.requestImpl(url, RequestMethod.Get);
+    return this.requestImpl(url, RequestMethod.Get, options);
   }
   /**
    * Performs a request with `post` http method.
    */
   post(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.requestImpl(url, RequestMethod.Post, body);
+    options.body = body;
+    return this.requestImpl(url, RequestMethod.Post, options);
   }
   /**
    * Performs a request with `put` http method.
    */
   put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.requestImpl(url, RequestMethod.Put, body);
+    options.body = body;
+    return this.requestImpl(url, RequestMethod.Put, options);
   }
   /**
    * Performs a request with `delete` http method.
    */
   delete(url: string, options?: RequestOptionsArgs): Observable<Response> {
-    return this.requestImpl(url, RequestMethod.Delete);
+    return this.requestImpl(url, RequestMethod.Delete, options);
   }
   /**
    * Performs a request with `patch` http method.
    */
   patch(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
-    return this.requestImpl(url, RequestMethod.Patch, body);
+    options.body = body;
+    return this.requestImpl(url, RequestMethod.Patch, options);
   }
   /**
    * Performs a request with `head` http method.
@@ -70,6 +76,8 @@ export class HttpService {
   }
 
   requestImpl(url:string, method:RequestMethod, opt?: RequestOptionsArgs):Observable<Response>{
+    console.log('%cHttpService.requestImpl()', Logger.LeadInStyle, url, method, opt);
+
     let headers = new Headers();
     let options: RequestOptions = new BaseRequestOptions();
     if (!opt) {
@@ -88,7 +96,6 @@ export class HttpService {
     if (this.interceptor) {
       this.interceptor(options);
     }
-    // let request = new Request(options);
     return this.http.request(url, options);
   }
 

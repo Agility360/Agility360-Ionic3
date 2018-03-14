@@ -154,16 +154,17 @@ export class HttpServiceIonic1 extends Http {
   delete(url: string, options?: RequestOptionsArgs): Observable<any> {
     if (DEBUG_MODE) console.log('%cHttpService.delete()', Logger.LeadInStyle, url, options);
     this.requestInterceptor();
-    return super.delete(this.getFullUrl(url), options)
-      .catch(this.onCatch)
-      .do((res: Response) => {
-        this.onSubscribeSuccess(res);
-      }, (error: any) => {
-        this.onSubscribeError(error);
-      })
-      .finally(() => {
-        this.onFinally();
-      });
+
+    return super.delete(this.getFullUrl(url), this.requestOptions(options))
+          .catch(this.onCatch)
+          .do((res: Response) => {
+            this.onSubscribeSuccess(res);
+          }, (error: any) => {
+            this.onSubscribeError(error);
+          })
+          .finally(() => {
+            this.onFinally();
+          });
   }
 
 
@@ -208,7 +209,7 @@ export class HttpServiceIonic1 extends Http {
    * @returns {ErrorObservable}
    */
   private onCatch(error: any, caught: Observable<any>): Observable<any> {
-    if (DEBUG_MODE) console.log('HttpService.onCatch()');
+    if (DEBUG_MODE) console.log('%cHttpService.onCatch()', Logger.LeadInErrorStyle, error);
     return Observable.throw(error);
   }
 
@@ -217,7 +218,7 @@ export class HttpServiceIonic1 extends Http {
    * @param res
    */
   private onSubscribeSuccess(res: Response): void {
-    if (DEBUG_MODE) console.log('HttpService.onSubscribeSuccess() - res:', res);
+    if (DEBUG_MODE) console.log('%cHttpService.onSubscribeSuccess() - res:', Logger.LeadInStyle, res);
   }
 
   /**

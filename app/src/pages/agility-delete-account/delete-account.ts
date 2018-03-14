@@ -4,7 +4,9 @@ import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic
 import { DEBUG_MODE } from '../../shared/constants';
 import { LoginPage } from '../agility-login/login';
 import { UserLoginService } from '../../services/account-management.service';
+import { Logger } from '../../services/logger.service';
 import { GlobalStateService } from '../../services/global-state.service';
+import { CandidateProvider } from '../../providers/candidate';
 import { NavbarComponent } from '../../components/navbar';
 import { WelcomePage } from '../welcome/welcome';
 
@@ -28,7 +30,8 @@ export class DeleteAccountPage {
     public app: App,
     private alertCtrl: AlertController,
     private globals: GlobalStateService,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public candidateProvider: CandidateProvider) {
 
       if (DEBUG_MODE) console.log('DeleteAccountPage.constructor()');
 
@@ -57,6 +60,16 @@ export class DeleteAccountPage {
 
             // hack workaround: instantiation so that the code can be loaded in time for the IonViewDidEnter() method
 
+            //this deletes the persisted objects of the current user (ie, a cascade delete)
+            this.candidateProvider.delete()
+            .then(result => {
+              if (DEBUG_MODE) console.log('%cDeleteAccountPage.deleteAccount() - candidateProvider.delete - success.', Logger.LeadInStyle, result);
+            })
+            .catch(error => {
+              if (DEBUG_MODE) console.log('%cDeleteAccountPage.deleteAccount() - candidateProvider.delete - error.', Logger.LeadInErrorStyle, error);
+            });
+
+            //delete the Cognito user
             UserLoginService.deleteUser()
             .then(
               result => {

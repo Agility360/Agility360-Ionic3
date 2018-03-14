@@ -4,6 +4,7 @@
 * For candidate entity from agility REST api
 * ====================================================================*/
 import { Injectable } from '@angular/core';
+import { Http, XHRBackend, Request, RequestOptions, RequestOptionsArgs, Response } from '@angular/http';
 import { GlobalStateService } from '../services/global-state.service';
 import { Candidate } from '../shared/candidate';
 import { Observable } from 'rxjs/Observable';
@@ -20,15 +21,18 @@ import { Logger } from '../services/logger.service';
 @Injectable()
 export class CandidateProvider {
 
-  config: string;
+  //config: string;
 
-  constructor(public http: HttpServiceIonic1,
+  constructor(
+    public httpX: Http,
+    public http: HttpServiceIonic1,
     private globals: GlobalStateService,
     private ProcessHttpmsgService: ProcessHttpmsgProvider) {
 
     if (DEBUG_MODE) console.log('CandidateProvider.constructor()');
-    this.config = "{ 'contentType': 'application/json; charset=utf-8', 'dataType': 'json'}";
+    //this.config = "{ 'contentType': 'application/json; charset=utf-8', 'dataType': 'json'}";
   }
+
 
   url() {
     if (DEBUG_MODE) console.log('CandidateProvider.url()');
@@ -36,6 +40,7 @@ export class CandidateProvider {
   }
 
   get(): Observable<Candidate> {
+    Logger.banner("Get Candidate");
     if (DEBUG_MODE) console.log('CandidateProvider.get() with username: ', this.username());
 
     return this.http.get(this.url(), apiHttpOptions)
@@ -53,10 +58,11 @@ export class CandidateProvider {
   }
 
   add(obj: Candidate): Observable<Candidate> {
+    Logger.banner("Add Candidate");
 
     if (DEBUG_MODE) console.log('CandidateProvider.add() - adding', obj);
     var url = apiURL + 'candidates/';
-    return this.http.post(url, obj, this.config)
+    return this.http.post(url, obj, apiHttpOptions)
       .map(
       res => {
         if (DEBUG_MODE) console.log('%cCandidateProvider.add() - success', Logger.LeadInStyle, res);
@@ -65,7 +71,7 @@ export class CandidateProvider {
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('%cCandidateProvider.add() - error', Logger.LeadInErrorStyle, this.url, this.config, obj, error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.add() - error', Logger.LeadInErrorStyle, this.url, obj, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );
@@ -75,8 +81,9 @@ export class CandidateProvider {
 
 
   update(candidate: Candidate): Observable<Candidate[]> {
+    Logger.banner("Update Candidate");
 
-    return this.http.patch(this.url(), candidate, this.config)
+    return this.http.patch(this.url(), candidate, apiHttpOptions)
       .map(
       res => {
         if (DEBUG_MODE) console.log('%cCandidateProvider.update() - success', Logger.LeadInStyle, res);
@@ -85,24 +92,33 @@ export class CandidateProvider {
       )
       .catch(
       error => {
-        if (DEBUG_MODE) console.log('%cCandidateProvider.update() - error while posting', Logger.LeadInErrorStyle, this.url, this.config, candidate, error);
+        if (DEBUG_MODE) console.log('%cCandidateProvider.update() - error while posting', Logger.LeadInErrorStyle, this.url, candidate, error);
         return this.ProcessHttpmsgService.handleError(error)
       }
       );
   }
 
-  delete(): Observable<Candidate> {
-    if (DEBUG_MODE) console.log('CandidateProvider.delete()', this.url(), apiHttpOptions);
+  delete() {
+    Logger.banner("Delete Candidate");
 
-    return this.http.delete(this.url(), apiHttpOptions)
-      .map(res => {
-        if (DEBUG_MODE) console.log('%cCandidateProvider.delete() - success.', Logger.LeadInStyle, res);
-        return this.ProcessHttpmsgService.extractData(res)
-      })
-      .catch(error => {
-        if (DEBUG_MODE) console.log('%cCandidateProvider.delete() - error while deleting', Logger.LeadInErrorStyle, this.url(), apiHttpOptions, error);
-        return this.ProcessHttpmsgService.handleError(error)
-      });
+
+    return new Promise((resolve, reject) => {
+
+      this.http.delete(this.url(), apiHttpOptions)
+      .subscribe(
+        result => {
+          if (DEBUG_MODE) console.log('%cCandidateProvider.delete() - success.', Logger.LeadInStyle, result);
+          return this.ProcessHttpmsgService.extractData(result)
+        },
+        error => {
+          if (DEBUG_MODE) console.log('%cCandidateProvider.delete() - error while deleting', Logger.LeadInErrorStyle, error);
+          return this.ProcessHttpmsgService.handleError(error)
+        }
+      );
+
+    });
+
+
   }
 
 

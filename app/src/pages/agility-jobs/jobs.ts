@@ -19,6 +19,7 @@ import { JobApplicationsProvider } from '../../providers/job-applications';
 import { JobsDetailPage } from '../agility-jobs-detail/jobs-detail';
 import { NavbarComponent } from '../../components/navbar';
 import { GlobalStateService } from '../../services/global-state.service';
+import { Logger } from '../../services/logger.service';
 
 @IonicPage()
 @Component({
@@ -75,6 +76,7 @@ export class JobsPage {
 
 
   getPosts() {
+    Logger.banner("Get Jobs");
     if (DEBUG_MODE) console.log('JobsPage.getPosts()');
     this.errMess = null;
 
