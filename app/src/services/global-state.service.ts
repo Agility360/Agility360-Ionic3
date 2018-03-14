@@ -6,8 +6,6 @@ import { DEBUG_MODE } from '../shared/constants';
 import { Config } from '../config/config';
 import { Candidate } from '../shared/candidate';
 
-//import { TabsPage } from '../pages/tabs/tabs';
-
 declare var AWS: any;
 
 @Injectable()
@@ -174,7 +172,6 @@ export class GlobalStateService {
     UserLoginService.signOut();
     this.userId = '';
 
-    this.app.getRootNav().popToRoot({animate: false});
   }
 
   showLogoutAlert(): void {

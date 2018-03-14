@@ -148,14 +148,14 @@ export class CognitoUtil {
   public static setCandidateProfileImageUrl(url: string) {
     if (CognitoUtil.isSignedIn()) {
       if (DEBUG_MODE) console.log('CognitoUtil.setCandidateProfileImageUrl()', url);
-      LocalStorage.set('candidateAvatarUrl', url);
+      LocalStorage.set('candidateProfileImageUrl', url);
     }
   }
 
   public static getCandidateProfileImageUrl(): string {
     if (CognitoUtil.isSignedIn()) {
       //if (DEBUG_MODE) console.log('CognitoUtil.getCandidateProfileImageUrl()');
-      return LocalStorage.get('candidateAvatarUrl');
+      return LocalStorage.get('candidateProfileImageUrl');
     }
     return null;
   }
@@ -408,6 +408,10 @@ export class UserLoginService {
     // Clear username and user ID attributes
     LocalStorage.set('userId', null);
     LocalStorage.set('userName', null);
+
+    //Clear user profile image URL
+    LocalStorage.set('candidateProfileImageUrl', null);
+
   };
 
   public static signIn(userLogin: IUserLogin): Promise<void> {
@@ -643,6 +647,37 @@ export class UserLoginService {
     });
     return promise;
   }
+
+  // Added by mcdaniel, march-2018
+  public static deleteUser(): Promise<void> {
+    Logger.banner("Delete Account");
+
+    let promise: Promise<void> = new Promise<void>((resolve, reject) => {
+      // first, load the valid tokens cached in the local store, if they are available
+      // see: https://github.com/aws/amazon-cognito-identity-js/issues/71
+      let cognitoUser = CognitoUtil.getCognitoUser();
+      cognitoUser.getSession((err: Error, session: any) => {
+        if (err) {
+          if (DEBUG_MODE) console.log('UserProfileService.getUserAttributes() - cognitoUser.getSession() - error', Logger.LeadInErrorStyle, err);
+          reject(err);
+          return;
+        }
+        cognitoUser.deleteUser( (err: Error, result: any) => {
+          if (err) {
+            if (DEBUG_MODE) console.log('UserProfileService.getUserAttributes() - cognitoUser.DeleteUser() - error', Logger.LeadInErrorStyle, err);
+            reject(err);
+            return;
+          }
+
+          if (DEBUG_MODE) console.log('UserProfileService.getUserAttributes() - cognitoUser.DeleteUser() - success', Logger.LeadInStyle, result);
+          resolve(result);
+        });
+      });
+    });
+    return promise;
+  }
+
+
 }
 
 export class UserProfileService {

@@ -3,9 +3,10 @@ import { IonicPage, NavController, NavParams, App, AlertController } from 'ionic
 //import { User } from '../../providers/providers';
 import { DEBUG_MODE } from '../../shared/constants';
 import { LoginPage } from '../agility-login/login';
-import { CognitoUtil } from '../../services/account-management.service';
+import { UserLoginService } from '../../services/account-management.service';
 import { GlobalStateService } from '../../services/global-state.service';
 import { NavbarComponent } from '../../components/navbar';
+import { WelcomePage } from '../welcome/welcome';
 
 /**
  * Generated class for the DeleteAccountPage page.
@@ -21,7 +22,6 @@ import { NavbarComponent } from '../../components/navbar';
 })
 export class DeleteAccountPage {
   private username: string;
-  private cognitoUtil: any;
 
   constructor(
     public navCtrl: NavController,
@@ -40,7 +40,7 @@ export class DeleteAccountPage {
 
   deleteAccount() {
     if (DEBUG_MODE) console.log('DeleteAccountPage.deleteAccount()');
-    let alert = this.alertCtrl.create({
+    let alertConfirm = this.alertCtrl.create({
       title: 'Delete Account',
       message: 'Are you sure you want to delete your account? This cannot be undone.',
       buttons: [
@@ -56,27 +56,28 @@ export class DeleteAccountPage {
           handler: () => {
 
             // hack workaround: instantiation so that the code can be loaded in time for the IonViewDidEnter() method
-            this.cognitoUtil = new CognitoUtil();
-            this.cognitoUtil.getCognitoUser().deleteUser(function(err, result) {
-                if (err) {
-                    let alert = this.alertCtrl.create({
-                      title: 'Error',
-                      message: err,
-                      buttons: ['OK']
-                    });
 
-                    alert.present(alert);
-                    return;
-                }
-                let alert = this.alertCtrl.create({
-                  title: 'Account Deleted',
-                  message: result,
+            UserLoginService.deleteUser()
+            .then(
+              result => {
+                this.globals.logout();
+                this.navCtrl.setRoot(WelcomePage);
+                this.navCtrl.popToRoot({animate: false});
+                return;
+              }
+            ).catch(
+              err => {
+                let alertError = this.alertCtrl.create({
+                  title: 'Error',
+                  message: err,
                   buttons: ['OK']
                 });
 
-                alert.present(alert);
-                this.globals.logout();
-            });
+                alertError.present();
+                return;
+              }
+            );
+
 
           }
         }
@@ -84,7 +85,7 @@ export class DeleteAccountPage {
     }
     );
 
-    alert.present();
+    alertConfirm.present();
 
   }
 
