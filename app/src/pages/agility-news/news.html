@@ -20,14 +20,36 @@
 
   <div *ngIf="posts">
     <ion-list *ngFor="let post of posts">
-      <ion-card (click)="viewPost(post)">
-        <img src="{{ post.featured_media_url }}">
+      <ion-card (click)="viewPost(post)" class="agility-box-shadow">
+        <ion-card-title>
+          <p class="news-article-category">Category</p>
+          <p class="news-article-title">{{ post.title.rendered }}</p>
+          <p class="news-article-author">Author name</p>
+          <div class="news-article-title-rule"><hr /></div>
+
+        </ion-card-title>
+
+        <ion-row>
+            <ion-col left col-6>
+              <div
+                *ngIf="post.featured_media_url"
+                class="news-article-image"
+                [style.background-image]="'url('+ post.featured_media_url +')'">
+              </div>
+            </ion-col>
+            <ion-col right col-6>
+              <div class="news-article-excerpt">
+                <p class="news-article-date">Posted: {{ post.date | date:"MMM dd, yyyy" }}</p>
+                <p class="news-article-excerpt" [innerHtml]="post.excerpt.rendered | safeHtml"></p>
+              </div>
+            </ion-col>
+        </ion-row>
+
+<!--
         <ion-card-content>
-          <ion-card-title>
-            {{ post.title.rendered }}
-          </ion-card-title>
           <p class="publish-date">{{ post.date | date:"MMM dd, yyyy" }}</p>
         </ion-card-content>
+-->
       </ion-card>
 
 

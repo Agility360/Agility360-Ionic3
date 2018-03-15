@@ -1,17 +1,59 @@
 page-news {
-  .card-title-block {
-    margin-left: 2px;
-    margin-right: 2px;
-    border-bottom: 1px solid #ddd;
+
+// Title box
+  p.news-article-category {
+    font-size: 18px;
+    font-weight: 200;
+  }
+  p.news-article-title {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: 800;
+    font-size: larger;
+    line-height: 1;
+    color: #444;
+  }
+  p.news-article-author {
+    font-style: italic;
+    font-weight: 200;
   }
 
-  p.publish-date {
+  div.news-article-title-rule {
+    padding-left: 0%;
+    padding-right: 0%;
+  }
+
+  div.news-article-title-rule hr {
+    margin-bottom: 0;
+  }
+
+// Excerpt columns
+  div.news-article-image {
+    height: 30vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+
+  div.news-article-excerpt {
+    //height: 0;    // hack to squeeze div height around size of the post image
+    height: 30vh;
+    overflow: hidden !important;
+  }
+
+  p.news-article-date {
     color: gray;
     font-style: italic;
   }
 
+
+  p.news-article-excerpt {
+    text-align: justify;
+    padding-right: 5px;
+  }
+
   ion-card-title {
-    font-size: 1.25em !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
   }
 
   ion-card {

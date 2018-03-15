@@ -19,7 +19,7 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <div class="leader">
+  <div class="leader agility-box-shadow">
     <h3 style="color: #2897C2;">A thoughtful question?</h3>
     <p>Migas tattooed hot chicken chia, raclette flannel DIY pug gluten-free kombucha yuccie. Bushwick viral unicorn ugh pitchfork cardigan austin microdosing salvia put a bird on it 90's direct trade authentic normcore. </p>
   </div>
@@ -27,7 +27,7 @@
   <div *ngIf="posts">
     <ion-list *ngFor="let post of posts">
 
-      <button ion-item (click)="viewPost(post)">
+      <button ion-item (click)="viewPost(post)" class="agility-box-shadow">
         <ion-avatar item-start>
           <ion-icon *ngIf="post.candidate_application_date" class="applied-checkmark" name="checkmark-circle"></ion-icon>
           <img *ngIf="!post.candidate_application_date" src="https://cdn.agility360app.net/">

@@ -56,7 +56,7 @@
                 <p>Date Received</p>
               </ion-col>
               <ion-col text-right>
-                <p>{{ card.date_received | date:"MMM dd, yyyy" }}</p>
+                <p>{{ makeDate(card.date_received) | date:"MMM dd, yyyy" }}</p>
               </ion-col>
             </ion-row>
             <ion-row *ngIf="card.expire_date">
@@ -64,7 +64,7 @@
                 <p>Expiration Date</p>
               </ion-col>
               <ion-col text-right>
-                <p>{{ card.expire_date | date:"MMM dd, yyyy" }}</p>
+                <p>{{ makeDate(card.expire_date) | date:"MMM dd, yyyy" }}</p>
               </ion-col>
             </ion-row>
           </ion-item>

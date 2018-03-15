@@ -19,7 +19,8 @@
     </ion-row>
   </div>
   <div text-center>
-    <div class="profile-image" [style.background-image]="'url('+ candidateProfileImageUrl() +')'"></div>
+    <div *ngIf="!candidateProfileImageUrl()" class="profile-image" [style.background-image]="'url(/assets/img/blank_profile.png)'"></div>
+    <div *ngIf="candidateProfileImageUrl()" class="profile-image" [style.background-image]="'url('+ candidateProfileImageUrl() +')'"></div>
     <button ion-button clear (click)="selectProfilePhoto()">Change photo</button>
     <input #avatar class="profile-image-input" type="file" (change)="openFileExplorer($event)" />
   </div>

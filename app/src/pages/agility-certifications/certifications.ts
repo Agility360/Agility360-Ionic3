@@ -27,6 +27,10 @@ export class CertificationsPage {
     if (DEBUG_MODE) console.log('constructor JobhistoryPage');
   }
 
+  makeDate(str: string): Date {
+    return new Date(str);
+  }
+
   ionViewWillEnter() {
     if (DEBUG_MODE) console.log('JobhistoryPage.ionViewWillEnter()');
     this.get();

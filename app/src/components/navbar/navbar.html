@@ -2,8 +2,9 @@
     <ion-title>
 
       <ion-row>
-          <ion-col col-auto>
-              <span left class="profile-image" [style.background-image]="'url('+ candidateProfileImageUrl() +')'"></span>
+          <ion-col left col-auto>
+            <span *ngIf="!candidateProfileImageUrl()" left class="profile-image profile-image-border" [style.background-image]="'url(/assets/img/blank_profile.png)'"></span>
+            <span *ngIf="candidateProfileImageUrl()" left class="profile-image profile-image-border" [style.background-image]="'url('+ candidateProfileImageUrl() +')'"></span>
           </ion-col>
           <ion-col col-auto>
       	{{ title }}
