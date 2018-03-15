@@ -54,11 +54,11 @@ export class WordpressProvider {
   }
 
   paramsNews() {
-    return { categories: '3' };
+    return { categories: '3,4' };
   }
 
   paramsResume() {
-    return { categories: '4' };
+    return { categories: '999' };
   }
 
   getPage(page: any, params: any): Observable<WPPost[]> {

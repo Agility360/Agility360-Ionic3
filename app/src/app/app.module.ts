@@ -41,7 +41,6 @@ import { ProfilePage } from '../pages/agility-profile/profile';
 import { ProfileEditPage } from '../pages/agility-profile-edit/profile-edit';
 import { JobsPage } from '../pages/agility-jobs/jobs';
 import { NewsPage } from '../pages/agility-news/news';
-import { ResumeTipsPage } from '../pages/agility-resume-tips/resume-tips';
 import { NotificationsPage } from '../pages/agility-notifications/notifications';
 import { CertificationsPage } from '../pages/agility-certifications/certifications';
 import { EducationPage } from '../pages/agility-education/education';
@@ -96,7 +95,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     JobsPage,
     NewsPage,
-    ResumeTipsPage,
     NotificationsPage,
     CertificationsPage,
     EducationPage,
@@ -139,7 +137,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     TabsPage,
     JobsPage,
     NewsPage,
-    ResumeTipsPage,
     NotificationsPage,
     CertificationsPage,
     EducationPage,

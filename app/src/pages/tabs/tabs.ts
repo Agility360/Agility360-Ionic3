@@ -11,7 +11,6 @@ import { WelcomePage }       from '../welcome/welcome';
 import { SettingsPage } from '../agility-settings/settings';
 import { JobsPage } from '../agility-jobs/jobs';
 import { NewsPage } from '../agility-news/news';
-import { ResumeTipsPage } from '../agility-resume-tips/resume-tips';
 import { NotificationsPage } from '../agility-notifications/notifications';
 
 
@@ -24,9 +23,8 @@ export class TabsPage {
   // should be each tab's root Page
   tab1Root: any = JobsPage;
   tab2Root = NewsPage;
-  tab3Root = ResumeTipsPage;
-  tab4Root = NotificationsPage;
-  tab5Root = SettingsPage;
+  tab3Root = NotificationsPage;
+  tab4Root = SettingsPage;
   mySelectedIndex: number;
 
   constructor(navParams: NavParams, public globals: GlobalStateService) {

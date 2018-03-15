@@ -105,4 +105,27 @@ export class NewsPage {
 
   }
 
+  categoryText(categoryId: number): string {
+    let retval: string = "";
+
+    switch(categoryId) {
+      case 3: {
+        retval = "News";
+        break;
+      }
+      case 4: {
+        retval = "Resume Tips";
+        break;
+      }
+      case 5: {
+        retval = "Job Posting";
+        break;
+      }
+      default: {
+
+        break;
+      }
+    }
+    return retval;
+  }
 }
