@@ -55,8 +55,10 @@ export class JobsDetailPage {
   setApplyNowButtonText() {
     if (!this.post.candidate_application_date) return;
 
-    let d = new Date(this.post.candidate_application_date.toString());
-    this.applyNowButtonText = "Applied: " + this.formatDate(d);
+    //let d = new Date(this.post.candidate_application_date).toISOString();
+    //this.applyNowButtonText = "Applied: " + this.formatDate(d);
+
+    this.applyNowButtonText = "Applied";
   }
   getApplyNowButtonText(): string {
     return this.applyNowButtonText;

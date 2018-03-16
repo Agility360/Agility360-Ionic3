@@ -33,7 +33,7 @@ export interface WPPost {
   curies: object[];
   featured_media_obj: object;
   featured_media_url: string;
-  candidate_application_date: Date;     /* added march-2018. only applicable to Jobs Postings. value from agility API. */
+  candidate_application_date: string;     /* added march-2018. only applicable to Jobs Postings. value from agility API. */
 
 }
 

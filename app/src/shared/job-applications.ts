@@ -3,5 +3,5 @@ export interface JobApplications {
   id: number;
   candidate_id: number;
   wordpress_post_id: number;
-  create_date: Date;
+  create_date: string;
 }
