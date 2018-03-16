@@ -41,6 +41,7 @@ export class JobsPage {
     private jobApplicationsService: JobApplicationsProvider,
     public globals: GlobalStateService
   ) {
+    Logger.banner("Job Postings Page");
     if (DEBUG_MODE) console.log('JobsPage.constructor()');
 
     //this.pageTitle = globals.getUserFirstName() + "'s Job Opportunities"

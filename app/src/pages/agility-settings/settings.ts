@@ -56,6 +56,7 @@ export class SettingsPage {
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController) {
 
+      Logger.banner("User Settings Page");
     if (DEBUG_MODE) console.log('SettingsPage.constructor() - begin');
 
     this.attributes = [];

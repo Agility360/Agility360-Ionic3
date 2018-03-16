@@ -32,7 +32,7 @@ export class NotificationsPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad NotificationsPage');
+    if (DEBUG_MODE) console.log('ionViewDidLoad NotificationsPage');
   }
 
 }

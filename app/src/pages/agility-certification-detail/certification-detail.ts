@@ -5,7 +5,7 @@ import { Certification } from '../../shared/certification';
 import { CertificationHistoryProvider } from '../../providers/certificationhistory';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NavbarComponent } from '../../components/navbar';
-
+import { Logger } from '../../services/logger.service';
 
 @IonicPage()
 @Component({
@@ -32,6 +32,7 @@ export class CertificationDetailPage {
     private alertCtrl: AlertController,
     public formBuilder: FormBuilder) {
 
+      Logger.banner("Certifications Detail Page");
     if (DEBUG_MODE) console.log('CertificationDetailPage.constructor() with obj: ', this.obj, this.action);
 
     this.obj = navParams.get('obj');

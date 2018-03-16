@@ -51,6 +51,7 @@ export class ResumeUploaderPage {
     public loadingCtrl: LoadingController,
     private candidateProvider: CandidateProvider) {
 
+      Logger.banner("Resume Uploader Page");
       if (DEBUG_MODE) console.log('ResumeUploaderPage.constructor()');
 
       this.url = null;

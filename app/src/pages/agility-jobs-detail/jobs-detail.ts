@@ -95,7 +95,7 @@ export class JobsDetailPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad JobsDetailPage');
+    if (DEBUG_MODE) console.log('ionViewDidLoad JobsDetailPage');
   }
 
   refreshData(refresher) {

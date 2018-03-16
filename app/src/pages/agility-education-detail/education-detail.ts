@@ -5,6 +5,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { Education } from '../../shared/education';
 import { EducationHistoryProvider } from '../../providers/educationhistory';
 import { NavbarComponent } from '../../components/navbar';
+import { Logger } from '../../services/logger.service';
 
 
 @IonicPage()
@@ -33,6 +34,7 @@ export class EducationDetailPage {
     private alertCtrl: AlertController,
     public formBuilder: FormBuilder) {
 
+      Logger.banner("Education History Detail Page");
     if (DEBUG_MODE) console.log('EducationDetailPage.constructor() with obj: ', this.obj, this.action);
 
     this.obj = navParams.get('obj');

@@ -1,4 +1,4 @@
-export const DEBUG_MODE = true
+export const DEBUG_MODE = false
 /*
 AWS REST api parameter values.
 More info on REST api here: https://github.com/Agility360/AWS
