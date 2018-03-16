@@ -22,7 +22,7 @@
     <ion-list *ngFor="let post of posts">
       <ion-card (click)="viewPost(post)" class="agility-box-shadow">
         <ion-card-title>
-          <p class="news-article-category">{{ categoryText(post.categories[0]) }}</p>
+          <p class="news-article-category">{{ categoryName(post.categories[0]) }}</p>
           <p class="news-article-title">{{ post.title.rendered }}</p>
           <p class="news-article-author">Author name</p>
           <div class="news-article-title-rule"><hr /></div>

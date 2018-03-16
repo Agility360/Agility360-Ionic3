@@ -12,11 +12,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { DEBUG_MODE } from '../../shared/constants';
-import { WPPost } from '../../shared/wppost';
+import { WPPost, WPCategories } from '../../shared/wppost';
 import { WordpressProvider } from '../../providers/wordpress';
 import { NewsDetailPage } from '../agility-news-detail/news-detail';
 import { NavbarComponent } from '../../components/navbar';
-
+import { Logger } from '../../services/logger.service';
 
 @IonicPage()
 @Component({
@@ -27,6 +27,8 @@ import { NavbarComponent } from '../../components/navbar';
 export class NewsPage {
 
   posts: WPPost[];
+  categories: WPCategories[];
+
   errMess: string;
   public pageTitle: string;
 
@@ -34,7 +36,9 @@ export class NewsPage {
     public navParams: NavParams,
     private wpservice: WordpressProvider
   ) {
+    Logger.banner("News Feed");
     if (DEBUG_MODE) console.log('constructor NewsPage');
+    this.getCategories();
     this.getPosts();
   }
 
@@ -75,6 +79,22 @@ export class NewsPage {
       });
   }
 
+  getCategories() {
+    if (DEBUG_MODE) console.log('NewsPage.getCategories()');
+    this.errMess = null;
+
+    this.wpservice.getCategories(null)
+      .subscribe(
+      results => {
+        if (DEBUG_MODE) console.log('NewsPage.getCategories() - success', results);
+        this.categories = results
+      },
+      err => {
+        if (DEBUG_MODE) console.log('NewsPage.getCategories() - error', err);
+        this.errMess = <any>err
+      });
+  }
+
   getMedia(post: WPPost) {
 
     if (DEBUG_MODE) console.log('NewsPage.getMedia()', post);
@@ -105,27 +125,16 @@ export class NewsPage {
 
   }
 
-  categoryText(categoryId: number): string {
-    let retval: string = "";
+  categoryName(categoryId: number): string {
+    //if (DEBUG_MODE) console.log('NewsPage.categoryName()', categoryId);
 
-    switch(categoryId) {
-      case 3: {
-        retval = "News";
-        break;
+    this.categories.forEach(function(category, id) {
+      if (category.id == categoryId) {
+        return category.name || "";
       }
-      case 4: {
-        retval = "Resume Tips";
-        break;
-      }
-      case 5: {
-        retval = "Job Posting";
-        break;
-      }
-      default: {
+    });
 
-        break;
-      }
-    }
-    return retval;
+    return "";
+
   }
 }

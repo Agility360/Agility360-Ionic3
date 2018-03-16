@@ -6,7 +6,7 @@
  *        see: https://developer.wordpress.org/rest-api/
  *------------------------------------------------------*/
 import { Injectable } from '@angular/core';
-import { WPPost, WPMedia } from '../shared/wppost';
+import { WPPost, WPMedia, WPCategories } from '../shared/wppost';
 import { Observable } from 'rxjs/Observable';
 import { cmsURL, DEBUG_MODE, HTTP_RETRIES } from '../shared/constants';
 import { ProcessHttpmsgProvider } from './process-httpmsg';
@@ -33,20 +33,24 @@ export class WordpressProvider {
 
   }
 
-  urlPrivacyPolicy() {
-    return cmsURL + 'pages?slug=privacy-policy/';
-  }
-
-  urlTermsOfUse() {
-    return cmsURL + 'pages?slug=terms-of-use/';
-  }
-
   urlPosts() {
     return cmsURL + 'posts/';
   }
 
   urlMedia() {
     return cmsURL + 'media/';
+  }
+
+  urlCategories() {
+    return cmsURL + 'categories/';
+  }
+
+  urlPrivacyPolicy() {
+    return cmsURL + 'pages?slug=privacy-policy/';
+  }
+
+  urlTermsOfUse() {
+    return cmsURL + 'pages?slug=terms-of-use/';
   }
 
   paramsJobs() {
@@ -93,6 +97,22 @@ export class WordpressProvider {
       });
   }
 
+  getCategories(params: any): Observable<WPCategories[]> {
+    if (DEBUG_MODE) console.log('WordpressProvider.getCategories()');
+    return this.http.get(this.urlCategories(), {
+      params: params
+    })
+    /*  .retry(HTTP_RETRIES) */
+      .map(res => {
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getCategories() - success', Logger.LeadInStyle, this.urlCategories(), params, res);
+        return this.ProcessHttpmsgService.extractData(res)
+      })
+      .catch(error => {
+        if (DEBUG_MODE) console.log('%cWordpressProvider.getCategories() - error', Logger.LeadInErrorStyle, error);
+        return this.ProcessHttpmsgService.handleError(error)
+      });
+  }
+
 
   getMedia(id: number): Observable<WPMedia> {
     if (DEBUG_MODE) console.log('WordpressProvider.getMedia()');
@@ -106,6 +126,8 @@ export class WordpressProvider {
         return this.ProcessHttpmsgService.handleError(error)
       });
   }
+
+
 
   newMedia() {
     if (DEBUG_MODE) console.log('WordpressProvider.newMedia()');
