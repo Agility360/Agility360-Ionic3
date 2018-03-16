@@ -128,13 +128,15 @@ export class NewsPage {
   categoryName(categoryId: number): string {
     //if (DEBUG_MODE) console.log('NewsPage.categoryName()', categoryId);
 
-    this.categories.forEach(function(category, id) {
-      if (category.id == categoryId) {
-        return category.name || "";
+    let retval: string = "";
+
+    this.categories.forEach(function(cat, id) {
+      if (cat.id == categoryId) {
+        retval = cat.name || "";
       }
     });
 
-    return "";
+    return retval;
 
   }
 }

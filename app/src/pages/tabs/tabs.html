@@ -1,7 +1,7 @@
 <ion-tabs #mainTabs [selectedIndex]="mySelectedIndex">
 
   <ion-tab [root]="tab1Root" [enabled]="isLoggedIn()" tabTitle="Jobs"     (ionSelect)="showRoot(mainTabs,0)" tabIcon="briefcase"></ion-tab>
-  <ion-tab [root]="tab2Root" [enabled]="isLoggedIn()" tabTitle="News"       (ionSelect)="showRoot(mainTabs,4)" tabIcon="globe"></ion-tab>
+  <ion-tab [root]="tab2Root" [enabled]="isLoggedIn()" tabTitle="News"       (ionSelect)="showRoot(mainTabs,1)" tabIcon="globe"></ion-tab>
   <ion-tab [root]="tab3Root" [enabled]="isLoggedIn()" tabTitle="Notifications"    (ionSelect)="showRoot(mainTabs,2)" tabIcon="information-circle"></ion-tab>
   <ion-tab [root]="tab4Root" [enabled]="isLoggedIn()" tabTitle="Profile"     (ionSelect)="showRoot(mainTabs,3)" tabIcon="contact"></ion-tab>
 
