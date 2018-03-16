@@ -45,8 +45,7 @@
                   large
                   [disabled]="post.candidate_application_date"
                   >
-                  <span *ngIf="!post.candidate_application_date">Apply Now</span>
-                  <span *ngIf="post.candidate_application_date">Applied: {{ post.candidate_application_date | date:"MMM dd, yyyy" }}</span>
+          <span>{{ getApplyNowButtonText() }}</span>
           </button>
         </ion-item>
       </ion-card-content>

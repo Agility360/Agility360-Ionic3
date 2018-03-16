@@ -10,8 +10,7 @@ export const apiKey = '0nnoTnFyq85ZSm1x31nX44lah1pWsqp9D8vEoE3h'
 export const apiClientCertificate = 'aaxbh4'
 
 export const apiHttpOptions = {
-  'contentType': 'application/json; charset=utf-8',
-  'dataType': 'json',
+  'Content-Type': 'application/json; charset=utf-8',
   'X-Api-Key': apiKey
 }
 

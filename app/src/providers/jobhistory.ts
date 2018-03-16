@@ -54,6 +54,14 @@ export class JobHistoryProvider {
 
     if (DEBUG_MODE) console.log('JobHistoryProvider.add() - adding', job);
 
+    job.company_name = job.company_name || '';
+    job.department = job.department || '';
+    job.job_title = job.job_title || '';
+    job.end_date = job.end_date || '';
+    job.start_date = job.start_date || '';
+    job.description = job.description || '';
+
+
     return this.http.post(this.url(), job, apiHttpOptions)
       .map(
       res => {

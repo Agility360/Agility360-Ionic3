@@ -16,7 +16,8 @@ export class JobsDetailPage {
 
   post: WPPost;
   errMess: string;
-  public pageTitle = "Jobs";
+  public pageTitle: string = "Jobs";
+  public applyNowButtonText: string = "Apply Now"
 
   constructor(
       public navCtrl: NavController,
@@ -26,6 +27,7 @@ export class JobsDetailPage {
 
     if (DEBUG_MODE) console.log('JobsDetailPage.constructor()');
     this.post = navParams.get('post');
+    this.setApplyNowButtonText();
 
   }
 
@@ -50,6 +52,16 @@ export class JobsDetailPage {
 
   }
 
+  setApplyNowButtonText() {
+    if (!this.post.candidate_application_date) return;
+
+    let d = new Date(this.post.candidate_application_date.toString());
+    this.applyNowButtonText = "Applied: " + this.formatDate(d);
+  }
+  getApplyNowButtonText(): string {
+    return this.applyNowButtonText;
+  }
+
   private addJobApplication() {
     let jobApp = this.provider.new();
 
@@ -59,6 +71,7 @@ export class JobsDetailPage {
       results =>{
         if (DEBUG_MODE) console.log('%cJobsDetailPage.applyNow() - provider.add() - success', Logger.LeadInStyle, results);
         this.post.candidate_application_date = results[0].create_date;
+        this.setApplyNowButtonText();
 
         let alert = this.alertCtrl.create({
           title: 'Success!',
@@ -91,6 +104,21 @@ export class JobsDetailPage {
 
       refresher.complete();
     }, 500);
+  }
+
+  private formatDate(date) {
+    var monthNames = [
+      "January", "February", "March",
+      "April", "May", "June", "July",
+      "August", "September", "October",
+      "November", "December"
+    ];
+
+    var day = date.getDate();
+    var monthIndex = date.getMonth();
+    var year = date.getFullYear();
+
+    return monthNames[monthIndex] + ' ' + day + ', ' + year;
   }
 
 

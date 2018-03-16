@@ -5,6 +5,7 @@ import { DEBUG_MODE } from '../../shared/constants';
 import { Job } from '../../shared/job';
 import { JobHistoryProvider } from '../../providers/jobhistory';
 import { NavbarComponent } from '../../components/navbar';
+import { Logger } from '../../services/logger.service';
 
 @IonicPage()
 @Component({
@@ -30,33 +31,34 @@ export class JobhistoryDetailPage {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     public formBuilder: FormBuilder) {
+      Logger.banner("Job History Detail Form");
 
-    if (DEBUG_MODE) console.log('JobhistoryDetailPage.constructor() with obj: ', this.obj, this.action);
+      if (DEBUG_MODE) console.log('JobhistoryDetailPage.constructor() with obj: ', this.obj, this.action);
 
-    this.obj = navParams.get('obj');
-    this.action = navParams.get('action').toLowerCase();
-    this.shouldConfirmWindowClose = true;
+      this.obj = navParams.get('obj');
+      this.action = navParams.get('action').toLowerCase();
+      this.shouldConfirmWindowClose = true;
 
-    /*----------------------------------------------
-     * some explanation is merited for the following.
-     * the Ionic Date Picker control uses a 2-way to a string representation of a date
-     * formatted in ISO 8601 format. meanwhile, the underlying Date object
-     * uses [some other format] which will result in the Date Picker
-     * object not being initialized to a value.
-     *
-     * to resolve this cunundrum the following code converts the string representation to a date object
-     * and then back to a string; albeit in ISO 8601 format.
-     */
-     var s: string;
-     var y, m, d: number;
+      /*----------------------------------------------
+       * some explanation is merited for the following.
+       * the Ionic Date Picker control uses a 2-way to a string representation of a date
+       * formatted in ISO 8601 format. meanwhile, the underlying Date object
+       * uses [some other format] which will result in the Date Picker
+       * object not being initialized to a value.
+       *
+       * to resolve this cunundrum the following code converts the string representation to a date object
+       * and then back to a string; albeit in ISO 8601 format.
+       */
+       var s: string;
+       var y, m, d: number;
 
-     if (this.obj.start_date) {
-       s = this.obj.start_date.toString();
-       y = parseInt(s.substring(0, 5));
-       m = parseInt(s.substring(5, 7)) - 1;
-       d = parseInt(s.substring(8, 10));
+       if (this.obj.start_date) {
+         s = this.obj.start_date.toString();
+         y = parseInt(s.substring(0, 5));
+         m = parseInt(s.substring(5, 7)) - 1;
+         d = parseInt(s.substring(8, 10));
 
-       this.start_date = new Date(y, m, d, 0, 0, 0, 0).toISOString();
+         this.start_date = new Date(y, m, d, 0, 0, 0, 0).toISOString();
      }
      if (this.obj.end_date) {
        s = this.obj.end_date.toString();
